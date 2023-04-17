@@ -1,0 +1,12 @@
+from System.Collections.Generic import Dictionary
+
+if not WaitForContext('self', 'Vendor Search', 5000):
+    Stop()
+WaitForGump(0xf3ec8, 5000)
+
+
+dict = Dictionary[int, str]();
+
+dict[1] = 'seed'
+
+ReplyGump(0xf3ec8, 1, None, dict)

@@ -1,0 +1,2 @@
+from Assistant import Engine
+print Engine.Player.Holding

@@ -1,0 +1,3 @@
+import wpf
+from System.Windows import Clipboard
+print Clipboard.ContainsText()

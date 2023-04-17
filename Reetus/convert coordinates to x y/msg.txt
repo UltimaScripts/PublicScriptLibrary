@@ -1,0 +1,45 @@
+from Assistant import Engine
+import math, re
+
+#https://github.com/andreakarasho/EnhancedMap/blob/efaa3918287448b0c41e6e2ef21b175bc1910083/Core/Utility.cs#L188
+
+def GetLatLong(degreeLat, minLat, degreeLong, minLong, direction1, direction2):
+    lat = degreeLat + minLat / 100.0
+    longi = degreeLong + minLong / 100.0
+    
+    return (GetXFromLatLong(lat, longi, direction1, direction2), GetYFromLatLong(lat, longi, direction1, direction2))
+
+def GetXFromLatLong(lat, lon, direction1, direction2):
+    centerX = 1323
+    tempLon = math.floor(lon) * 60.0 + lon % 1 * 100.0 if direction2 != 'W' else -1.0 * math.ceil(lon) * 60.0 + lon % 1 * 100.0
+    resultX = int((tempLon / 21600.0 * 5120.0) + centerX)
+    if resultX < 0:
+        resultX += 5120
+    if resultX >= 5120:
+        resultX -= 5120
+        
+    return resultX
+    
+def GetYFromLatLong(lat, lon, direction1, direction2):
+    centerY = 1624
+    tempLat = math.floor(lat) * 60.0 + lat % 1 * 100.0 if direction1 != 'N' else -1.0 * math.ceil(lat) * 60.0 + lat % 1.0 * 100.0
+    resultY = int((tempLat / 21600.0 * 4096.0) + centerY)
+    if resultY < 0:
+        resultY += 4096
+    if resultY >= 4096:
+        resultY -= 4096
+    
+    return resultY
+
+res, gump = Engine.Gumps.GetGump(0x550a461b)
+
+if res:
+    element = gump.GetElementByXY(35, 240)
+    result = re.search("^(\d+)°(\d+)'(\w),(\d+)°(\d+)'(\w)$", element.Text)
+    
+    if result:
+        [degreeLat, minLat, direction1, degreeLong, minLong, direction2] = result.groups()
+        print element.Text
+        [x, y] = GetLatLong(int(degreeLat), int(minLat), int(degreeLong), int(minLong), direction1, direction2)
+        print "{}, {}".format(x, y)
+    

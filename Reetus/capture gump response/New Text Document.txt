@@ -1,0 +1,22 @@
+from Assistant import Engine
+from ClassicAssist.UO.Network.PacketFilter import *
+from ClassicAssist.UO.Data import PacketReader
+
+conditions = Array[PacketFilterCondition](
+    [PacketFilterConditions.IntAtPositionCondition(0x554b87f3, 7)]
+)
+
+pwe = Engine.PacketWaitEntries.Add(
+    PacketFilterInfo(0xB1, conditions), PacketDirection.Outgoing, True
+)
+
+pwe.Lock.WaitOne()
+
+reader = PacketReader(pwe.Packet, pwe.Packet.Length, False)
+
+reader.ReadInt32();
+reader.ReadInt32();
+
+button = reader.ReadInt32();
+
+print button

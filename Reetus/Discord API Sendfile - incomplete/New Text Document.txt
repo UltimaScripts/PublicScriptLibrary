@@ -1,0 +1,23 @@
+import clr
+import json
+clr.AddReference('System.Net.Http')
+from System.Net.Http import HttpClient, MultipartFormDataContent, ByteArrayContent
+from System.Net.Http.Headers import MediaTypeHeaderValue
+from System.IO import File
+
+    
+def DiscordImage(file):
+    webhook = '<webhook here>'
+    bytes = File.ReadAllBytes(file)
+    
+    content = MultipartFormDataContent()
+        
+    imageContent = ByteArrayContent(bytes)
+    imageContent.Headers.ContentType = MediaTypeHeaderValue.Parse("image/jpeg")
+    
+    content.Add(imageContent, "@file1", "image.jpg");    
+    
+    response = HttpClient().PostAsync( webhook, content )
+    return response.Result.IsSuccessStatusCode
+            
+print DiscordImage("image.jpg")

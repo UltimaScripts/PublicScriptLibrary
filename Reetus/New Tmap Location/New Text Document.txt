@@ -1,0 +1,43 @@
+import clr
+import System
+from System import Array
+from ClassicAssist.UO.Data import PacketWriter, PacketReader
+from ClassicAssist.UO.Network.PacketFilter import PacketFilterInfo, PacketFilterCondition, PacketFilterConditions, PacketDirection
+from Assistant import Engine
+
+def getMapLocation(serial, timeout = 5000):
+    pfiMapDetails = PacketFilterInfo(0xF5, System.Array[PacketFilterCondition]([PacketFilterConditions.IntAtPositionCondition(serial, 1)]))
+    pfiMapPlot = PacketFilterInfo(0x56, System.Array[PacketFilterCondition]([PacketFilterConditions.IntAtPositionCondition(serial, 1),PacketFilterConditions.ByteAtPositionCondition(1, 5)]))
+    
+    pweMapDetails = Engine.PacketWaitEntries.Add(pfiMapDetails, PacketDirection.Incoming, True)
+    pweMapPlot = Engine.PacketWaitEntries.Add(pfiMapPlot, PacketDirection.Incoming, True)
+    
+    UseObject(serial)
+    
+    if not pweMapDetails.Lock.WaitOne(timeout):
+        return (-1, -1, -1)
+    
+    reader = PacketReader(pweMapDetails.Packet, pweMapDetails.Packet.Length, True)
+    reader.ReadInt32()
+    image = reader.ReadInt16()
+    x1 = reader.ReadUInt16()
+    y1 = reader.ReadUInt16()
+    x2 = reader.ReadUInt16()
+    y2 = reader.ReadUInt16()       
+    width = reader.ReadUInt16()
+    height = reader.ReadUInt16()               
+    facet = reader.ReadUInt16()               
+        
+    if not pweMapPlot.Lock.WaitOne(timeout):
+        return (-1, -1, -1)
+    
+    reader2 = PacketReader(pweMapPlot.Packet, pweMapPlot.Packet.Length, True)
+    reader2.ReadInt32()
+    reader2.ReadUInt16()
+    x = reader2.ReadUInt16()
+    y = reader2.ReadUInt16()
+    
+    return (x1 + x, y1 + y, facet)
+    
+x, y, facet = getMapLocation(0x4002c39d)
+HeadMsg('X: {}, Y: {}, Facet: {}'.format(x, y, facet))

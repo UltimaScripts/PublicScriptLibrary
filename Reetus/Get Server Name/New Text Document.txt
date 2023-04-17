@@ -1,0 +1,3 @@
+from Assistant import Engine
+
+print Engine.CurrentShard.Name

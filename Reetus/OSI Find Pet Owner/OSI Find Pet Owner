@@ -1,0 +1,17 @@
+import clr
+import System
+clr.AddReference("System.Core")
+clr.ImportExtensions(System.Linq)
+from Assistant import Engine
+
+def FindPetOwner(serial):
+    mobile = Engine.Mobiles.FirstOrDefault(lambda m: m.Pets is not None and m.Pets.Contains(serial))
+    
+    return mobile
+    
+owner = FindPetOwner(0x5a6447)    
+    
+if owner == None:
+    print 'No owner found'
+else:
+    print owner.Name + ' is the owner'

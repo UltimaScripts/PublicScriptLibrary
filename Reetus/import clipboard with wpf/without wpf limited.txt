@@ -1,0 +1,16 @@
+import clr
+clr.AddReference('System.Windows.Forms')
+from System.Windows.Forms import Clipboard
+from System.Threading import Thread, ThreadStart, ApartmentState
+
+def Stuff():
+    try:
+        print Clipboard.ContainsText()
+    except Exception as e:
+        # if you don't catch these, an exception will likely take down CUO/CA
+        print e
+
+t = Thread(ThreadStart(Stuff))
+t.SetApartmentState(ApartmentState.STA)
+t.Start()
+t.Join()

@@ -1,0 +1,16 @@
+import clr
+import System
+clr.AddReference("System.Core")
+clr.ImportExtensions(System.Linq)
+from Assistant import Engine
+from ClassicAssist.UO.Network import IncomingPacketHandlers
+
+res, gump = Engine.Gumps.GetGump(0x81592303)
+
+if res:
+    for ele in gump.GumpElements.Where(lambda i: i.Type.ToString() == 'itemproperty'):
+        print ele.Serial
+        
+        if IncomingPacketHandlers.PropertyCache.ContainsKey(ele.Serial):
+            for p in IncomingPacketHandlers.PropertyCache[ele.Serial]:
+                print p.Text

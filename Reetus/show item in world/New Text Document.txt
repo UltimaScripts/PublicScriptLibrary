@@ -1,0 +1,25 @@
+from ClassicAssist.UO.Data import PacketWriter
+from Assistant import Engine
+from System import *
+
+def SAWorldItem(serial, itemId, amount, x, y, z, hue):
+      length = 26 if Engine.ClientVersion >= Version( 7, 0, 9, 0 ) else 24
+      writer = PacketWriter(length)
+      writer.Write(Byte( 0xF3 ))
+      writer.Write(Int16( 1 ))
+      writer.Write(Byte( 0 ))
+      writer.Write(Int32(serial))
+      writer.Write(Int16( itemId ))
+      writer.Write(Byte( 0 ))
+      writer.Write(Int16( amount ))
+      writer.Write(Int16( amount ))
+      writer.Write(Int16( x ))
+      writer.Write(Int16( y ))
+      writer.Write(SByte( z ))
+      writer.Write(Byte( 0 ))
+      writer.Write(Int16( hue ))
+      writer.Write(Byte( 0x20 ))
+      writer.Fill()
+      return writer
+        
+Engine.SendPacketToClient(SAWorldItem(0x40000001, 0x1f14, 1, X(), Y(), Z(), 35))

@@ -1,0 +1,39 @@
+from Assistant import Engine
+import re
+
+class Stats:
+    def __init__(self):
+        self.hits = -1
+        self.mana = -1
+        self.stam = -1
+        
+
+def GetAnimalStats(serial):
+    stats = Stats()
+    UseSkill('Animal Lore')
+    if WaitForTarget(5000):
+        Target(serial)
+        if WaitForGump(0xf07e5730, 5000):
+            res, gump = Engine.Gumps.GetGump(0xf07e5730)
+            if res:
+                hitsEle = gump.Pages[1].GetElementByXY(280, 168)
+                if hitsEle != None:
+                    result = re.search(r"<div.*>(.*)/(.*)</div>", hitsEle.Text)
+                    stats.hits = result.groups()[0]
+                stamEle = gump.Pages[1].GetElementByXY(280, 186)
+                if stamEle != None:
+                    result = re.search(r"<div.*>(.*)/(.*)</div>", stamEle.Text)
+                    stats.stam = result.groups()[0]
+                manaEle = gump.Pages[1].GetElementByXY(280, 204)
+                if manaEle != None:
+                    result = re.search(r"<div.*>(.*)/(.*)</div>", manaEle.Text)
+                    stats.mana = result.groups()[0]                
+
+            ReplyGump(0xf07e5730, 0)
+    return stats
+        
+stats = GetAnimalStats(0x39199)
+
+print stats.hits
+print stats.stam
+print stats.mana

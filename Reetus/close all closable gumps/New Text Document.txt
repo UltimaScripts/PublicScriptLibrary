@@ -1,0 +1,8 @@
+from Assistant import Engine
+
+res, gumps = Engine.Gumps.GetGumps()
+
+for x in gumps:
+    print hex(x.ID)
+    if x.Closable:
+        ReplyGump(x.ID, 0)

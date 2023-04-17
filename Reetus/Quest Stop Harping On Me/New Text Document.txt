@@ -1,0 +1,30 @@
+from Assistant import Engine
+
+def GetQuests():
+    quests = []
+    OpenQuestsGump()
+    WaitForGump(0x4c4c6db0, 5000)
+    res, gump = Engine.Gumps.GetGump(0x4c4c6db0)
+    
+    if gump:
+        for x in range(140, 350, 21):
+            ele = gump.GetElementByXY(98, x)
+            
+            if ele:
+                quests.append(ele.Text)
+                
+    return quests
+                
+print GetQuests()
+
+while not 'Stop Harping on Me' in GetQuests():
+    UseObject(0x13b2)
+    WaitForGump(0x4c4c6db0, 5000)
+
+    res,gump = Engine.Gumps.GetGump(0x4c4c6db0)
+    
+    if res:
+        ele = gump.GetElementByXY(160, 70)
+        
+        if ele.Text == 'Stop Harping on Me':
+            ReplyGump(0x4c4c6db0, 4)

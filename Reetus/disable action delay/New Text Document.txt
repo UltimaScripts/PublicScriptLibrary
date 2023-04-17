@@ -1,0 +1,3 @@
+from ClassicAssist.Data import Options
+
+Options.CurrentOptions.ActionDelay = False

@@ -1,0 +1,7 @@
+from ClassicAssist.UO.Network.Packets import MobileUpdate
+from Assistant import Engine
+
+player = Engine.Player
+
+mu = MobileUpdate(player.Serial, player.ID, player.Hue, player.Status, player.X, player.Y, 100, player.Direction)
+Engine.SendPacketToClient(mu)

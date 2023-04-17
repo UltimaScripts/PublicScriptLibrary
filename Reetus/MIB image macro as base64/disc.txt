@@ -1,0 +1,18 @@
+not going to get sucked into doing it for you like i did for AF yesterday, but just as a mock up of the UI...
+to show you can put an image in your macro as base64
+message
+you'd just want to make it small
+doing some research
+instead of the image, you want a canvas, with the background set to the map
+then you can draw circles on the canvas, with the map in the background
+eg.
+IMG1
+you'll want a map file thats perfect scale of original map to make life easier
+(not a graphics guy, and i suck at maths)
+IMG2
+definitely stopping now
+but confident can do everything you need
+message2
+
+img3
+message3

@@ -1,0 +1,8 @@
+from Assistant import Engine
+from ClassicAssist.UO.Network.PacketFilter import PacketFilterInfo, PacketFilterCondition, PacketFilterConditions
+from System import Array
+
+itemIds = [0x1a82, 0x1a83, 0x1a86, 0x1b54, 0x1a87, 0x1a88, 0x1a8b]
+
+for itemId in itemIds:
+    Engine.AddReceiveFilter(PacketFilterInfo(0xF3, Array[PacketFilterCondition]([PacketFilterConditions.ShortAtPositionCondition(itemId, 8)])))

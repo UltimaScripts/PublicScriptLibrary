@@ -1,0 +1,19 @@
+import clr
+import System
+clr.AddReference("System.Core")
+clr.ImportExtensions(System.Linq)
+from Assistant import Engine
+from ClassicAssist.Data.Organizer import OrganizerManager
+
+def GetOrganizerItemIDs(name):
+    manager = OrganizerManager.GetInstance()
+    
+    organizerEntry = manager.Items.FirstOrDefault(lambda e: e.Name.Equals(name))
+    
+    if organizerEntry == None:
+        return []
+    
+    return organizerEntry.Items.Select(lambda e: e.ID).ToArray()
+    
+for id in GetOrganizerItemIDs('Organizer-1'):
+    print id

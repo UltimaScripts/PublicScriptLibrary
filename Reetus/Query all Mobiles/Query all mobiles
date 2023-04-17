@@ -1,0 +1,13 @@
+from ClassicAssist.UO.Commands import MobileQuery
+from Assistant import Engine
+
+def QueryAllMobiles():
+    mobiles = Engine.Mobiles.GetMobiles()
+
+    for x in range(len(mobiles)):
+        mobile = mobiles[x]
+        if (mobile != None and mobile.Distance < 16):
+            MobileQuery(mobile.Serial)
+
+QueryAllMobiles()
+Pause(5000)
