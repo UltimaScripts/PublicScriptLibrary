@@ -1,6 +1,8 @@
 # PublicScriptLibrary
 This Repo is a garbage heap of scripts for ClassisAssist I've found or wrote.
 
+None of it is polished, this is a dump.
+
 
 Thanks to Reetus for ClassisAssist, Ultima Online ClassicUO assistant program.
 
