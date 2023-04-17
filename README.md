@@ -1,5 +1,5 @@
 # PublicScriptLibrary
-This Repo is a garbage heap of scripts for ClassisAssist I've found or wrote.
+This Repo is a garbage heap of scripts for ClassisAssist I've found, editted or wrote.
 
 None of it is polished, this is a dump.
 
