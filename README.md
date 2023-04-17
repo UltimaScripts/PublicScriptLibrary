@@ -1,6 +1,8 @@
 # PublicScriptLibrary
 This Repo is a garbage heap of scripts for ClassisAssist I've found, editted or wrote.
 
+It's purpose is for Script Examples.
+
 None of it is polished, this is a dump. Many scripts may be personalized for my own use.
 
 If you have trouble understanding these scripts, look up python tutorials.
