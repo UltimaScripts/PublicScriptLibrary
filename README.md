@@ -11,3 +11,10 @@ https://github.com/Reetus/ClassicAssist
 Thanks to Karasho and all contributors for ClassicUO.
 
 https://github.com/ClassicUO/ClassicUO
+
+## Warning ##
+Always be careful running other users scripts. ClassicAssist uses ironpython and can access files or even keystrokes.
+
+Always review a script in full to ensure it's not malicious.
+
+None of the scripts I added contain any malicious code, double check anyways!!
