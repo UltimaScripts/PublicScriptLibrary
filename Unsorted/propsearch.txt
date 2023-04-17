@@ -1,0 +1,29 @@
+from Assistant import Engine
+
+def GetBodValues(serial, cliloc):
+    results = []
+    
+    item = Engine.Items.GetItem(serial)
+    
+    BodProps = item.Properties.Where(lambda i: cliloc.Contains(i.Cliloc))
+    
+    for bodprop in BodProps:
+        res = str(bodprop.Arguments[0])
+    
+    return res
+
+def PropertyExists(serial, cliloc):
+	item = Engine.Items.GetItem(serial)
+
+	if (item == None or item.Properties == None):
+		return False
+
+	for x in item.Properties:
+		if x.Cliloc == cliloc:
+			print item.Properties.Arguments[0]
+			return True
+
+	return False
+SysMessage(str(GetBodValues(0x40070f06, 1060451)))
+Stop()
+SysMessage(str(PropertyExists(0x40070f06, 1060451)))

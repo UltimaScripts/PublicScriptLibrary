@@ -1,0 +1,15 @@
+import clr
+import System
+clr.AddReference("System.Core")
+clr.ImportExtensions(System.Linq)
+from Assistant import Engine
+
+while not Dead("self"):
+	def FindByName(name, distance):
+		return Engine.Mobiles.Where(lambda e: e.Name.Trim().Equals(name) and e.Distance < distance)
+
+	for x in FindByName('a grizzly bear', 4):
+		UseSkill("Animal Taming")
+		WaitForTarget(5000)
+		Target(x)
+		Pause(13000)

@@ -1,0 +1,4 @@
+if Skill("Archery") >= 75:
+	PlaySound("Bike Horn.wav")
+	Stop()
+Pause(1000)

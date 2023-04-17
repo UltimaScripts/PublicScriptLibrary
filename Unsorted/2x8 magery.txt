@@ -1,0 +1,24 @@
+x = X("self")
+y = Y("self")
+xx = x + 9
+while not Dead("self"):
+	s = Skill("Magery")
+	ss = s + 0.7
+	while s < ss:	
+		Cast("Invisibility")
+		WaitForTargetOrFizzle(5000)
+		Target("self")
+		Pause(700)
+		s = Skill("Magery")
+		if Mana("self") < 20:
+			UseSkill("Meditation")
+			Pause(12000)
+	x1 = X("self")
+	y1 = Y("self")
+	CancelTarget()
+	if x1 == x and y1 == y:
+		Pathfind(xx, y, 0)
+		Pause(4000)
+	if x1 == xx and y1 == y:
+		Pathfind(x, y, 0)
+		Pause(4000)

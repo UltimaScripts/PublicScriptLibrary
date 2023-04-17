@@ -1,0 +1,7 @@
+def is_subsequence(sub, string):
+    if sub in string:
+        return True #if sub is a subsequence of str otherwise False
+    return False
+
+test = is_subsequence("20 cow is","20 brown cow is")
+print test

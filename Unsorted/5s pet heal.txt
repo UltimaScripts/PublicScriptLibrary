@@ -1,0 +1,24 @@
+HeadMsg("Target your pet", "self")
+PromptAlias("MyPet")
+
+while not Dead('self'):
+	if Poisoned(GetAlias('MyPet')):
+		Cast("Cure", GetAlias('MyPet'))
+		WaitForTarget(5000)
+		Target(GetAlias('MyPet'))
+	else:
+		Cast("Greater Heal")
+		WaitForTarget(5000)
+		Target(GetAlias('MyPet'))
+		if Poisoned(GetAlias('MyPet')):
+			Cast("Cure", GetAlias('MyPet'))
+			WaitForTarget(5000)
+			Target(GetAlias('MyPet'))
+	Pause(2000)
+	HeadMsg("3", "MyPet",4)
+	Pause(1000)
+	HeadMsg("2", "MyPet",4)
+	Pause(1000)
+	HeadMsg("1", "MyPet",4)
+	Pause(1000)
+	HeadMsg("Healing Pet", "MyPet",4)

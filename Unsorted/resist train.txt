@@ -1,0 +1,10 @@
+if Skill("Resisting Spells") >= 100:
+	StopAll()
+if Mana('self') >= 20:
+	while Mana('self') >= 4:
+		Cast("Clumsy")
+		WaitForTarget(5000)
+		Target("self")
+		Pause(1000)
+else:
+	Pause(1000)

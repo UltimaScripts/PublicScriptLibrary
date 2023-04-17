@@ -1,0 +1,91 @@
+#0 to 90 Spellweaving trainer
+#3 FC / 6 FCR / 0 LMC
+#Dont afk, with a tamed mount, reaper form will dismount you.
+#0 to 20 stand on an arcane circle
+#immolate requires an equipt weapon
+#Summon Fey needs at least 1 follower slot
+#Wildfire can not be cast in town
+#past 90 skill, you should use Mana Shield Mastery
+
+SetQuietMode(True)
+
+#Increase Ping_Delay if you have a high ping -
+#and pause times aren't long enough
+Ping_Delay = 0
+#Immolating Weapon
+#Must be Equal to or Higher Than 10
+Immolate_Start_Skill = 20
+#Reaper Form
+#Must be Equal to or Higher Than 24
+Reaper_Start_Skill = 33
+#Summon Fey
+#Must be Equal to or Higher Than 38
+Fey_Start_Skill = 38
+#Summon Fey
+#Must be Equal to or Higher Than 52
+Essence_Start_Skill = 60
+#Wildfire
+#Must be Equal to or Higher Than 66
+Wildfire_Start_Skill = 66
+#Set this to the skill total you want to stop at
+Stopping_Skill = 90
+
+#==================================
+
+#If run in background is checked, this will spam.
+if Skill("Spellweaving") >= Stopping_Skill:
+    RemoveTimer("med")
+    HeadMsg("SW Training Complete, Stopping", "self")
+    PlaySound("Bike Horn.wav")
+    Stop()
+
+if Skill("Spellweaving") >= 0 and Skill("Spellweaving") < Immolate_Start_Skill:
+    if not FindType(0x307f,0):
+        HeadMsg("Stand on an Arcane Circle, Stopping", "self")
+        Stop()
+    Mananeed = 24
+    Cast("Arcane Circle")
+    Pause(1000 + Ping_Delay)
+elif Skill("Spellweaving") >= Immolate_Start_Skill and Skill("Spellweaving") < Reaper_Start_Skill:
+    Mananeed = 32
+    Cast("Immolating Weapon")
+    Pause(1000 + Ping_Delay)
+elif Skill("Spellweaving") >= Reaper_Start_Skill and Skill("Spellweaving") < Fey_Start_Skill:
+    Mananeed = 34
+    Cast("Reaper Form")
+    Pause(2000 + Ping_Delay)
+elif Skill("Spellweaving") >= Fey_Start_Skill and Skill("Spellweaving") < Essence_Start_Skill:
+    if FindType(0x80,3) and Followers() == 5:
+        WaitForContext('found', 5, 5000)
+        Pause(1100 + Ping_Delay)
+        IgnoreObject("found")
+    if Followers() == 5:
+        HeadMsg("Too Many Followers, Stopping", "self")
+        Stop()
+    Mananeed = 10
+    Cast("Summon Fey")
+    Pause(2000 + Ping_Delay)
+elif Skill("Spellweaving") >= Essence_Start_Skill and Skill("Spellweaving") < Wildfire_Start_Skill:
+    Mananeed = 40
+    Cast("Essence of Wind")
+    Pause(3000 + Ping_Delay)
+elif Skill("Spellweaving") >= Wildfire_Start_Skill and Skill("Spellweaving") < Stopping_Skill:
+    Mananeed = 50
+    Cast("Wildfire")
+    WaitForTarget(5000)
+    Target('self')
+    Pause(1000 + Ping_Delay)
+else:
+    RemoveTimer("med")
+    Stop()
+
+while Mana("self") < Mananeed:
+    if TimerExists("med"):
+        while Timer("med") < 12000:
+            Pause(100)
+    SetTimer("med", 0)
+    UseSkill("Meditation")
+    while Timer("med") < 12000:
+        Pause(100)
+        if Mana("self") >= Mananeed:
+            break

@@ -1,0 +1,26 @@
+while not Dead('self'):
+    Pause(50)
+    if Poisoned("self") or Hits("self") < MaxHits("self"):
+        if FindType(0xe21, 0, 'backpack', 0):
+            UseType(0xe21, 0, 'backpack')
+            WaitForTarget(1000)
+            while not TargetExists("Any"):
+                UseType(0xe21, 0, 'backpack')
+                WaitForTarget(500)
+            Target("self")
+            SetTimer("selfbandage", 0)
+        else:
+            HeadMsg("No Bandages, Halting", "self")
+            Stop()
+            Pause(5000)
+        ClearJournal()
+        while Timer("selfbandage") < 10000:
+            Pause(50)
+            if InJournal("You finish applying the bandages.", "system"):
+                HeadMsg("[banded]", "self", 88)
+                SetTimer("selfbandage", 0)
+                break
+            if InJournal("You apply the bandages, but they barely help.", "system"):
+                HeadMsg("[barely banded]", "self", 88)
+                SetTimer("selfbandage", 0)
+                break

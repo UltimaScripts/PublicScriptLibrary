@@ -1,0 +1,7 @@
+SetQuietMode(True)
+if FindType(0x6f5,2):
+    UseObject("found")
+    Stop()
+elif FindType(0x6f6,2):
+    UseObject("found")
+    Stop()

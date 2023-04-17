@@ -1,0 +1,7 @@
+Pause(1000)
+if Str() >= 100:
+	SetStatus('str', 'locked')
+if Dex() >= 100:
+	SetStatus('dex', 'locked')
+#if Int() >= 50:
+#	SetStatus('int', 'locked')

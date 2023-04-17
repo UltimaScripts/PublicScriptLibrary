@@ -1,0 +1,39 @@
+import clr
+import System
+clr.AddReference("System.Core")
+clr.ImportExtensions(System.Linq)
+
+dist = 19
+humans = 0x190, 0x191
+mobile1 = None
+mobile2 = None
+
+def GetMobiles(ids = None, notorieties = None, includeFriends = False, includeIgnored = False, maxDistance = 32, orderBy = lambda m: m.Distance):
+	mobiles = Engine.Mobiles.Where(lambda m: (ids == None or ids.Contains(m.ID))
+                                             	and m.Distance < maxDistance
+                                             	and m.Serial != Engine.Player.Serial
+                                             	and (notorieties == None or notorieties.Contains(m.Notoriety.ToString()))
+						and (includeFriends or not InFriendList(m.Serial))
+						and (includeIgnored or not InIgnoreList(m.Serial))).OrderBy(orderBy)
+
+# Possible notorieties
+# Innocent, Ally, Attackable, Criminal, Enemy, Murderer, Invulnerable
+mobiles = GetMobiles( ids = humans, notorieties = [ 'Murderer', 'Enemy', 'Criminal', 'Attackable' ], maxDistance = dist ).Take(2)
+
+listMobiles = []
+for m in mobiles:
+	listMobiles.append( m.Serial )
+
+mobileCount = len( listMobiles )
+if mobileCount >= 1:
+	mobile1 = listMobiles[ 0 ]
+elif mobileCount == 0:
+	Stop()
+if mobileCount >= 2:
+	mobile2 = listMobiles[ 1 ]
+
+enemy = GetAlias( 'enemy' )
+if enemy == mobile1 and mobile2:
+	SetEnemy( mobile2 )
+else:
+	SetEnemy( mobile1 )

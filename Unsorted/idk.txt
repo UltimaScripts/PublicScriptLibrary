@@ -1,0 +1,36 @@
+from Assistant import Engine
+import json
+
+gumpId = 0x38920abd
+buttons = []
+
+res, gump = Engine.Gumps.GetGump(gumpId)
+
+for cat in range (80, 280, 20):
+	catEle = gump.Pages[0].GetElementByXY(15, cat)
+	
+	#print catEle.ElementID
+	ReplyGump(gumpId, catEle.ElementID)
+	WaitForGump(gumpId, 5000)
+	
+	res, gump = Engine.Gumps.GetGump(gumpId)
+	
+	for page in range(1, gump.Pages.Count):
+		for itm in range(60,260,20):
+			btnEle = gump.Pages[page].GetElementByXY(220, itm)
+			if btnEle == None:
+				break
+			buttonId = btnEle.ElementID
+			nameEle = gump.Pages[page].GetElementByXY(255, itm+3)
+			if nameEle == None:
+				break
+			
+			item = dict()
+			item["category"] = catEle.ElementID
+			item["button"] = buttonId
+			item["name"] = nameEle.Text
+			
+			buttons.append(item)
+
+with open('buttons.json', 'a') as f:
+	f.write(json.dumps(buttons))

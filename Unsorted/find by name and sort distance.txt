@@ -1,0 +1,15 @@
+ClearIgnoreList()
+mytrash = {}
+while FindType(-1):
+    Pause(10)
+    name = Name("found")
+    if "bloody water" in name:
+        dist = Distance(GetAlias("found"))
+        seri = GetAlias("found")
+        mytrash[seri]=dist
+    IgnoreObject("found")
+sorted_trash = sorted(mytrash.items(), key=lambda x: x[1])
+for x in sorted_trash:
+    Pause(500)
+    print(x)
+Stop()

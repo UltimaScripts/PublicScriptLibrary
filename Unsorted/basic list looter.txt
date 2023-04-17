@@ -1,0 +1,22 @@
+import clr
+from Assistant import Engine
+
+itemglist = [0xeed,0xe1f]
+
+if FindType(0x2006, 2):
+	SetAlias("DaCorpse", "found")
+	UseObject("DaCorpse")
+	HeadMsg("x", "DaCorpse")
+	IgnoreObject("DaCorpse")
+	Pause(700)
+	container = Engine.Items.GetItem(GetAlias("DaCorpse")).Container
+	if container == None:
+		print('Problem')
+		Stop()
+	for item in container.GetItems():
+		itemg = Graphic(item)
+		##if find item in itemglist
+		if itemg in itemglist:
+	  		MoveItem(item.Serial, 'backpack')
+	  		Pause(700)
+	HeadMsg("Done", "DaCorpse")

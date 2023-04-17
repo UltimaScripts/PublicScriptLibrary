@@ -1,0 +1,48 @@
+import wpf
+import clr
+import System
+clr.AddReference('System.Core')
+clr.ImportExtensions(System.Linq)
+from System.Windows import Window, Thickness, SizeToContent
+from System.Windows.Controls import Button, StackPanel, ScrollViewer
+from System.Threading import Thread, ThreadStart, ApartmentState
+from Assistant import Engine
+from ClassicAssist.UO.Data import Notoriety
+
+class MyWindow(Window):
+    def __init__(self):
+        self.SizeToContent = SizeToContent.Width
+        self.Height = 200
+        self.Topmost = True
+        
+        scrollViewer = ScrollViewer()
+        
+        panel = StackPanel()
+        panel.Margin = Thickness(10,10,10,0)
+        panel.Width = 200
+        self.Content = scrollViewer
+        scrollViewer.Content = panel
+        
+        for mobile in Engine.Mobiles.Where(lambda m: m.Notoriety != Notoriety.Invulnerable):
+            btn = Button()
+            btn.Margin = Thickness(0,0,0,10)
+            btn.Content = mobile.Name
+            btn.Click += self.clicked
+            btn.Tag = mobile
+            panel.Children.Add(btn)
+
+    def clicked(self, sender, args):
+        print sender.Tag
+
+def ShowWindow():
+    try:
+        w = MyWindow()
+        w.ShowDialog()
+    except Exception as e:
+        print e
+
+t = Thread(ThreadStart(ShowWindow))
+t.SetApartmentState(ApartmentState.STA)
+t.Start()
+
+t.Join()

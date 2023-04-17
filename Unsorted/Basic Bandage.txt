@@ -1,0 +1,5 @@
+while not Dead('self'):
+	Pause(100)
+	if Hits('self') < MaxHits('self'):
+		BandageSelf()
+		Pause(11000)

@@ -1,0 +1,23 @@
+#SetQuietMode(True)
+UseObject('backpack')
+#while FindType(0x4911, -1, 'backpack'):
+#	UseType(0x4911)
+#	Pause(800)
+#SysMessage("Done Opening")
+
+from Assistant import Engine
+
+ChestList1 = [0x4911]
+
+sourcebag = 'backpack'
+
+container = Engine.Items.GetItem(GetAlias(sourcebag)).Container
+for item in container.GetItems():
+	itemg = Graphic(item)
+	if itemg in ChestList1:
+  		UseObject(item)
+  		Pause(800)
+  	if Weight() >= MaxWeight():
+  		SysMessage("Weight")
+  		Stop()
+SysMessage("Chest Open Compelte")

@@ -1,0 +1,24 @@
+import clr
+import System
+clr.AddReference("System.Core")
+clr.ImportExtensions(System.Linq)
+from Assistant import Engine
+
+skillClilocs = [1060451, 1060452, 1060453, 1060454, 1060455]
+
+def GetSkillValues(serial):
+    results = []
+    
+    item = Engine.Items.GetItem(serial)
+    
+    skillProps = item.Properties.Where(lambda i: skillClilocs.Contains(i.Cliloc))
+    
+    for skillProp in skillProps:
+        res = dict()
+        res['skillName'] = skillProp.Arguments[0]
+        res['value'] = skillProp.Arguments[1]
+        results.append(res)
+    
+    return results
+    
+print GetSkillValues(0x40143985)

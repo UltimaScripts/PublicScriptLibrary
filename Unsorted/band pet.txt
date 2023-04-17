@@ -1,0 +1,27 @@
+thepet = 0x1ffb
+
+if not FindType(0xe21,0,'backpack'):
+    HeadMsg("No Bands, Halting", "self")
+    Stop()
+else:
+    SetAlias("bands", 'found')
+
+if not DiffHitsPercent(thepet) > 5:
+    Stop()
+
+if Distance(thepet) > 1 or Distance(thepet) < 0:
+    HeadMsg("Pet Too Far", "self")
+    Stop()
+
+while not TargetExists('any'):
+    UseObject("bands")
+    Pause(200)
+    if TargetExists("any"):
+        break
+Target(thepet)
+
+ClearJournal()
+while not InJournal("finish applying", "system"):
+    Pause(100)
+
+HeadMsg("Band Done", "self")

@@ -1,0 +1,29 @@
+
+ChestList = [0xe40,0xe42,0x9ab,0xe41,0xe7c]
+
+for chestnum in ChestList:
+	if FindType(chestnum, 1):
+		HeadMsg("x", "found")
+		SetAlias("thechest", "found")
+		while True:
+			if FindType(0x14fc, -1, "backpack"):
+				SetAlias("lockpicks", "found")
+				UseObject("lockpicks")
+				WaitForTarget(5000)
+				Target("thechest")
+				Pause(500)
+				ClearJournal()
+				while True:
+					Pause(50)
+					if InJournal("You are unable to pick the lock."):
+						#HeadMsg("fail", 'self')
+						break
+					if InJournal("The lock quickly yields to your skill."):
+						Cast("Telekinesis")
+						Stop()
+					if InJournal("This does not appear to be locked.", "system"):
+						HeadMsg("chest not locked", 'self')
+						Stop()
+		else:
+			HeadMsg("No Lockpicks", "self")
+			

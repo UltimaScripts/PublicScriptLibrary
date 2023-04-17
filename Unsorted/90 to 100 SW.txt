@@ -1,0 +1,8 @@
+while not Dead("self") and Skill("spellweaving") < 100:
+    Pause(50)
+    if Mana("self") > 39:
+        Cast("Mana Shield")
+        Pause(2500)
+        if BuffExists("Mana Shield"):
+            Cast("Mana Shield")
+            Pause(600)

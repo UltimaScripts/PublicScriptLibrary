@@ -1,0 +1,20 @@
+#need female garg
+IgnoreObject("self")
+IgnoreObject(0x7b6a)
+PlayerGFX = [0x190, 0x191, 0x25d, 0x25e, 0x29a]
+
+while not Dead("self"):
+    Pause(100)
+    for peep in PlayerGFX:
+        Pause(100)
+        while FindType(peep, 30):
+            Pause(500)
+            while Invulnerable("found") and (Name("found") == "Dan" or Name("found") == "Tasanar"):
+                PlaySound("Bike Horn.wav")
+                Pause(900)
+            if Innocent("found"):
+                for alerts in range(0, 2):
+                    PlaySound("alert5.wav")
+                    Pause(900)
+            #else:
+                #IgnoreObject("found")

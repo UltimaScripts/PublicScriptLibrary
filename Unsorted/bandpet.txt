@@ -1,0 +1,6 @@
+if Distance(0xe3b7) < 3 and Distance(0xe3b7) > -1:
+    UseType(0xe21,0,'backpack')
+    WaitForTarget(1000)
+    Target(0xe3b7)
+    Pause(2800)
+Pause(50)

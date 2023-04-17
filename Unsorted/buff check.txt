@@ -1,0 +1,8 @@
+while not Dead('self'):
+    Pause(50)
+    if Mana('self') >= 20 and not BuffExists("Consecrate Weapon"):
+        Cast("Consecrate Weapon")
+        Pause(1000)
+    if Mana('self') >= 7 and not BuffExists("Lightning Strike"):
+        Cast("Lightning Strike")
+        Pause(1000)

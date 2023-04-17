@@ -1,0 +1,12 @@
+from Assistant import Engine
+
+OrganizeList = [0xf7b,0xf8c]
+sourcebag = 'backpack'
+destinationbag = 0x40033f91
+
+container = Engine.Items.GetItem(GetAlias(sourcebag)).Container
+for item in container.GetItems():
+    itemg = Graphic(item)
+    if itemg in OrganizeList:
+          MoveItem(item.Serial, destinationbag)
+          Pause(700)

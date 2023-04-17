@@ -1,0 +1,33 @@
+while not Dead("self"):
+	h = Skill("hiding")
+	hs = h + 0.8
+	while h < hs:
+		UseSkill("Hiding")
+		Pause(12000)
+		h = Skill("hiding")
+	x = X("self")
+	y = Y("self")
+	if x == 2471 and y == 3121:	
+		Pathfind(2480, 3121, 0)
+		Pause(4000)
+	if x == 2480 and y == 3121:	
+		Pathfind(2480, 3130, 0)
+		Pause(4000)
+	if x == 2480 and y == 3130:	
+		Pathfind(2471, 3130, 0)
+		Pause(4000)
+	if x == 2471 and y == 3130:	
+		Pathfind(2471, 3121, 0)
+		Pause(4000)
+
+	if h >= 100:
+		Stop()
+	
+#NW Corner
+#Pathfind(2471, 3121, 0)
+#NE Corner
+#Pathfind(2480, 3121, 0)
+#SE Corner
+#Pathfind(2480, 3130, 0)
+#SW Corner
+#Pathfind(2471, 3130, 0)

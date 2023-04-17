@@ -1,0 +1,101 @@
+from Assistant import Engine
+
+#30 - 49 = Fancy Shirt (8 Cloths)
+#49 - 50 Cloak
+#50 - 60 = Fur Boots (12 Cloths)
+#65 - 72 = Kasa (10 Cloths)
+#72 - 78 = Ninja Tabi (10 Cloths)
+#74.6 - 99.6 = Oil Cloth (1 Cloths)
+#99.6 - 105 = Elven Shirt (10 Cloths)
+#105 - 110 = Studded Hiro Sode (8 Leathers)
+#110 - 120 - Studded Do (14 Leathers)
+
+trashbarrel = 0x400c6c64
+
+for i in range(0,5):
+	if Skill("Tailoring") >= 30 and Skill("Tailoring") < 50:
+		UseType(0xf9d,-1,'backpack')
+		WaitForGump(0x38920abd, 5000)
+		ReplyGump(0x38920abd, 8)
+		WaitForGump(0x38920abd, 5000)
+		ReplyGump(0x38920abd, 16)
+		WaitForGump(0x38920abd, 5000)
+		if FindType(0x1efd, -1, 'backpack'):
+			UseType(0xf9f,-1,'backpack')
+			WaitForTarget(5000)
+			Target('found')
+			Pause(600)
+	elif Skill("Tailoring") >= 50 and Skill("Tailoring") < 60:
+		UseType(0xf9d,-1,'backpack')
+		WaitForGump(0x38920abd, 5000)
+		ReplyGump(0x38920abd, 29)
+		WaitForGump(0x38920abd, 5000)
+		ReplyGump(0x38920abd, 9)
+		WaitForGump(0x38920abd, 5000)
+		if FindType(0x2307, -1, 'backpack'):
+			UseType(0xf9f,-1,'backpack')
+			WaitForTarget(5000)
+			Target('found')
+			Pause(600)
+	elif Skill("Tailoring") >= 60 and Skill("Tailoring") < 72:
+		UseType(0xf9d,-1,'backpack')
+		WaitForGump(0x38920abd, 5000)
+		ReplyGump(0x38920abd, 1)
+		WaitForGump(0x38920abd, 5000)
+		ReplyGump(0x38920abd, 100)
+		WaitForGump(0x38920abd, 5000)
+		if FindType(0x2798, -1, 'backpack'):
+			UseType(0xf9f,-1,'backpack')
+			WaitForTarget(5000)
+			Target('found')
+			Pause(600)
+	elif Skill("Tailoring") >= 72 and Skill("Tailoring") < 78:
+		UseType(0xf9d,-1,'backpack')
+		WaitForGump(0x38920abd, 5000)
+		ReplyGump(0x38920abd, 29)
+		WaitForGump(0x38920abd, 5000)
+		ReplyGump(0x38920abd, 16)
+		WaitForGump(0x38920abd, 5000)
+		if FindType(0x2797, -1, 'backpack'):
+			UseType(0xf9f,-1,'backpack')
+			WaitForTarget(5000)
+			Target('found')
+			Pause(600)
+	elif Skill("Tailoring") >= 78 and Skill("Tailoring") < 99:
+		UseType(0xf9d,-1,'backpack')
+		WaitForGump(0x38920abd, 5000)
+		ReplyGump(0x38920abd, 22)
+		WaitForGump(0x38920abd, 5000)
+		ReplyGump(0x38920abd, 72)
+		WaitForGump(0x38920abd, 5000)
+		if FindType(0x175d, -1, 'backpack'):
+			if Hue('found') == 2001:
+				UseType(0xf9f,-1,'backpack')
+				WaitForTarget(5000)
+				Target('found')
+				Pause(600)
+	elif Skill("Tailoring") >= 99 and Skill("Tailoring") < 105:
+		UseType(0xf9d,-1,'backpack')
+		WaitForGump(0x38920abd, 5000)
+		ReplyGump(0x38920abd, 8)
+		WaitForGump(0x38920abd, 5000)
+		ReplyGump(0x38920abd, 135)
+		WaitForGump(0x38920abd, 5000)
+		if FindType(0x3175, -1, 'backpack'):
+			UseType(0xf9f,-1,'backpack')
+			WaitForTarget(5000)
+			Target('found')
+			Pause(600)
+	else:
+		SysMessage("Next")
+		Stop()
+container = Engine.Items.GetItem(GetAlias('backpack')).Container
+for item in container.GetItems():
+	itemg = Graphic(item)
+	if itemg == 0x1766:
+  		MoveItem(item.Serial, 0x400c4549)
+  		Pause(700)
+  	#if itemg == 0x175d and Hue(item) == 2001:
+	#	MoveItem(item.Serial, trashbarrel)
+	#	Pause(700)
+

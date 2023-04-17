@@ -1,0 +1,109 @@
+from ClassicAssist.UO.Data import Statics, TileFlags, MapInfo
+from ClassicAssist.UO import UOMath
+from Assistant import Engine
+from System import Convert
+from Assistant import Engine
+from ClassicAssist.UO import UOMath
+from ClassicAssist.UO.Data import Direction
+import System
+import clr
+clr.AddReference('System.Core')
+clr.ImportExtensions(System.Linq)
+
+mymaxweight = 550
+orelist = [0x19b9, 0x19b8, 0x3193, 0x3194, 0x3195, 0x3196, 0x3197]
+rockignorelist = []
+RockIDs = [561, 562, 563, 564, 565, 566, 567, 568, 569,
+		570, 571, 572, 573, 574, 575, 576, 577, 578, 579]
+
+def isMiningTile(x, y):
+	maptile = MapInfo.GetLandTile(int(Engine.Player.Map), x, y).ID
+	if maptile != None:
+		if RockIDs.Contains(maptile):
+			return True
+
+	return False
+
+def Mine(Spotx,Spoty):
+	while not Dead("self"):
+		if Weight() > mymaxweight:
+			for x in orelist:
+				while FindType(x,0,"backpack"):
+					theore = GetAlias("found")
+					MoveItem(theore, 0x4115667f)
+					Pause(600)
+		if not FindType(0xe86,0,"backpack"):
+			print "no pickaxe"
+			for x in orelist:
+				while FindType(x,0,"backpack"):
+					theore = GetAlias("found")
+					MoveItem(theore, 0x4115667f)
+					Pause(600)
+			Stop()
+		ClearJournal()
+		UseType(0xe86)
+		WaitForTarget(5000)
+		TargetXYZ(Spotx, Spoty, 0)
+		while not Dead("self"):
+			Pause(50)
+			if InJournal("loosen some rocks") or InJournal("You put some"):
+				Pause(100)
+				break
+			if InJournal("no metal here"):
+				print "done"
+				return
+			if InJournal("can't mine") or InJournal("cannot be"):
+				print "bad spot"
+				Stop()
+			if InJournal("world is saving"):
+				ClearJournal()
+				Pause(4000)
+				break
+	return
+
+def starter():
+	for num in range(1,2):
+		for x in range(Engine.Player.X-num, Engine.Player.X+num):
+			for y in range(Engine.Player.Y-num, Engine.Player.Y+num): 
+				if isMiningTile(x, y) == True:
+					Spotx = x
+					Spoty = y
+					ix = str(Spotx/8)
+					iy = str(Spoty/8)
+					it = ix + "," + iy
+					if it not in rockignorelist:
+						move_rock(Spotx,Spoty)
+						Mine(Spotx,Spoty)
+						rockignorelist.append(it)
+
+	print "no spots"
+	Stop()
+
+def Impassable(x, y, map = int(Engine.Player.Map)):
+	statictilescheck = Statics.GetStatics( map, x, y )
+	if statictilescheck != None:
+		for impx in statictilescheck:
+			if impx.Flags.HasFlag(TileFlags.Impassable):
+				return True
+	return False
+
+def move_rock(Spotx,Spoty):
+	validloc = []
+	#if tree == None:
+	#	SysMessage("No More Trees, Halting. (or an error)")
+	#	Stop()
+	for mtx in range(Spotx-2, Spotx+2):
+		for mty in range(Spoty-2, Spoty+2):
+			if not Impassable(mtx, mty, 0):
+				validloc.append({'X': mtx, 'Y': mty, 'Distance': UOMath.Distance(Engine.Player.X, Engine.Player.Y, mtx, mty)})
+	validtile = validloc.OrderBy(lambda i: i['Distance']).FirstOrDefault()
+	mapnum = int(Engine.Player.Map)
+	Pathfind(validtile['X'], validtile['Y'], mapnum)
+	Pause(1000)
+
+	while Engine.Player.X != validtile['X'] and Engine.Player.Y != validtile['Y']:
+		Pathfind(validtile['X'], validtile['Y'], mapnum)
+		Pause(1000)
+
+while True:
+	starter()

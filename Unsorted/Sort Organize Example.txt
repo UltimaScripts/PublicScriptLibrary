@@ -1,0 +1,33 @@
+from Assistant import Engine
+
+OrganizeList1 = [0xf7b,0xf8c,0xf88,0xf86,0xf84,0xf8d,0xf7a,0xf8f,0xf8f,0xf8e,0xf78,0xf7e,0xf8a,0xf7d,0x4077,0xf81,0xf80,0xe24,0xf8b,0x97a,0xe1f,0xf85,0xf7e]
+OrganizeList2 = [0xeed,0xef3]
+GemList = [
+    3855, 3856, 3857, 3858, 3859, 3860, 3861, 3862, 3863, 
+    3864, 3865, 3866, 3867, 3868, 3869, 3870, 3871, 3872, 
+    3873, 3874, 3875, 3876, 3877, 3878, 3879, 3880, 3881, 
+    3882, 3883, 3884, 3885, 3886, 3887, 3888, 25568, 25569, 
+    25570, 25571, 25572, 25573, 25574, 25575, 25576, 25577, 
+    25578, 25579, 25580, 25581, 25582, 25583, 25584, 25585, 
+    25586, 25587, 25588, 25589, 25590, 25591, 25592, 25593, 
+    25594, 25595, 25596, 25597, 25598, 25599, 25600, 25601, 
+    25602,0x33fa,0xf89,0x26b7,0x33f6,0x33f7,0xf91
+    ]
+sourcebag = 'backpack'
+destinationbag1 = 0x40125e12
+destinationbag2 = 0x40171d01
+gembag = 0x40125e12
+
+container = Engine.Items.GetItem(GetAlias(sourcebag)).Container
+for item in container.GetItems():
+    itemg = Graphic(item)
+    if itemg in OrganizeList1:
+        MoveItem(item.Serial, destinationbag1)
+        Pause(700)
+    if itemg in OrganizeList2:
+        MoveItem(item.Serial, destinationbag2)
+        Pause(700)
+    if itemg in GemList:
+        MoveItem(item.Serial, gembag)
+        Pause(700)
+SysMessage("Organize Complete")

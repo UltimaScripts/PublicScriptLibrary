@@ -1,0 +1,25 @@
+rockschest = 0x401c2629
+gemschest = 0x401c4e99
+regschest = 0x401c2675
+if X("self") != 1976 and Y("self") != 195:
+	Pathfind(1976, 195, 0)
+	while X("self") != 1976 and Y("self") != 195:
+		Pause(100)
+UseObject(rockschest)
+Pause(600)
+UseObject(gemschest)
+Pause(600)
+UseObject(regschest)
+Pause(600)
+Organizer("Home-Rocks")
+Pause(100)
+while Organizing():
+	Pause(1000)
+Organizer("Home-Gems")
+Pause(100)
+while Organizing():
+	Pause(1000)
+Organizer("Home-Regs")
+Pause(100)
+while Organizing():
+	Pause(1000)

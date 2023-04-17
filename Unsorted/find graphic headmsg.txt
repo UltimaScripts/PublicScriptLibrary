@@ -1,0 +1,4 @@
+SetQuietMode(True)
+if FindType(0x9b34,18):
+	HeadMsg("here", "found")
+Pause(1000)

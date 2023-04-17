@@ -1,0 +1,5 @@
+SetQuietMode(True)
+if Poisoned('self'):
+	Cast("Cure", 'self')
+if Hits('self') < MaxHits('self'):
+	Cast("Greater Heal", 'self')

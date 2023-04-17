@@ -1,0 +1,12 @@
+while FindType(0xcf,10):
+	SetAlias("Sheepie", "found")
+	Pathfind('Sheepie')
+	while Pathfinding():
+		if Distance("Sheepie") <= 2 :
+			Pathfind(-1)
+		Pause(100)
+	UseObject(0x404be9ab)
+	WaitForTarget(5000)
+	Target('Sheepie')
+	Pause(600)
+	IgnoreObject("Sheepie")

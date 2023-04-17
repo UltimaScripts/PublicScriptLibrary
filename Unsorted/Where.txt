@@ -1,0 +1,4 @@
+mex = X('self')
+mey = Y('self')
+mez = Z('self')
+print(mex, mey, mez)

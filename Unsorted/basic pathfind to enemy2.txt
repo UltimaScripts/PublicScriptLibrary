@@ -1,0 +1,22 @@
+SetQuietMode(True)
+ClearIgnoreList()
+cx = Z('self')
+cx3 = cx + 4
+cx03 = cx - 4
+while FindType(0xd7,12):
+	SetAlias("enemy1", "found")
+	Pause(100)
+	if Z('enemy1') < cx3 and Z('enemy1') > cx03:
+		Attack("enemy1")
+		while FindObject("enemy1"):
+			Pause(100)
+			if FindObject("enemy1") and Distance("enemy1") > 1:
+				Pathfind("enemy1")
+				while Pathfinding():
+					if FindObject("enemy1") and Distance("enemy1") < 2:
+						Pathfind(-1)
+					Pause(10)
+		Pause(600)
+	else:
+		print("above or below")
+		IgnoreObject("enemy1")

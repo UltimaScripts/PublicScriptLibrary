@@ -1,0 +1,76 @@
+import clr
+import System
+clr.AddReference("System.Core")
+clr.ImportExtensions(System.Linq)
+from Assistant import Engine
+
+SetQuietMode(True)
+skillClilocs = [1060451, 1060452, 1060453, 1060454, 1060455]
+engravedClilocs = [1072305]
+skilllist = [
+	"Alchemy","Animal Taming","Blacksmithing","Bowcraft And Fletching","Carpentry",
+	"Cartography","Cooking","Fishing","Imbuing","Inscription","Lockpicking",
+	"Lumberjacking","Mining","Remove Trap","Stealing","Tailoring","Tinkering"
+	]
+itemglist = [0x108a,0x1f09,0x1086,0x1f06,0x1087,0x1085,0x4212,0x4213]
+corpsetypes = [0x2006,0xeca,0xecb,0xecc,0xecd,0xece,0xecf,0xed0,0xed1,0xed2]
+holdingbag = 0x401b6186
+dropbag1 = 0x4013e15f
+storagedict = {}
+
+def GetSkillValues(serial):
+	results = []
+
+	item = Engine.Items.GetItem(serial)
+
+	skillProps = item.Properties.Where(lambda i: skillClilocs.Contains(i.Cliloc))
+
+	for skillProp in skillProps:
+		#res = dict()
+		#res['skillName'] = skillProp.Arguments[0]
+		#res['value'] = skillProp.Arguments[1]
+		valuecheck = int(skillProp.Arguments[1])
+		if valuecheck >= 15:
+			#print res.values()
+			#print res['skillName']
+			#print res['value']
+			if skillProp.Arguments[0] in skilllist:
+				daprop = skillProp.Arguments[0]
+				return daprop
+		#results.append(res)
+
+	return False
+
+UseObject(holdingbag)
+Pause(600)
+UseObject(dropbag1)
+Pause(600)
+
+container = Engine.Items.GetItem(dropbag1).Container
+if container == None:
+	print "No Container"
+	Stop()
+for item in container.GetItems():
+	item = Engine.Items.GetItem(item.Serial)
+	engravedProps = item.Properties.Where(lambda i: engravedClilocs.Contains(i.Cliloc))
+	for engravedProp in engravedProps:
+		valuecheck = str(engravedProp.Arguments[0])
+		if valuecheck in skilllist:
+			storagedict[valuecheck] = item.Serial
+
+#search container
+container = Engine.Items.GetItem(holdingbag).Container
+if container == None:
+	Stop()
+for item in container.GetItems():
+	itemg = Graphic(item)
+	if itemg in itemglist:
+		checkitem = item.Serial
+		theitem = GetSkillValues(checkitem)
+		for key, value in storagedict.items():
+			if key == theitem:
+				droploc = value
+		SysMessage("Found Item, Moving...")
+  		MoveItem(item.Serial, droploc)
+  		Pause(700)
+  		Replay()

@@ -1,0 +1,68 @@
+nw = False
+ne = False
+se = False
+sw = True
+
+px = X("self")
+py = Y("self")
+
+if nw == True:
+	px1 = px - 8
+	py1 = py
+	px2 = px1
+	py2 = py - 8
+	px3 = px
+	py3 = py2
+if ne == True:
+	px1 = px + 8
+	py1 = py
+	px2 = px1
+	py2 = py - 8
+	px3 = px
+	py3 = py2
+if se == True:
+	px1 = px
+	py1 = py + 8
+	px2 = px + 8
+	py2 = py1
+	px3 = px2
+	py3 = py
+if sw == True:
+	px1 = px
+	py1 = py + 8
+	px2 = px - 8
+	py2 = py1
+	px3 = px2
+	py3 = py
+
+while not Dead("self"):
+	s = Skill("Magery")
+	ss = s + 0.8
+	while s < ss:		
+		if Skill("Magery") <= 80:
+			Cast("Invisibility", "self")
+			Pause(600)
+			if Mana("self") < 20:
+				UseSkill("Meditation")
+				Pause(12000)
+		elif Skill("Magery") <= 100:
+			SysMessage("100do")
+			Stop()
+		s = Skill("Magery")
+	x = X("self")
+	y = Y("self")
+	InterruptSpell()
+	CancelTarget()
+	SysMessage("what thefuck")
+	Pause(3000)
+	if x == px and y == py:
+		Pathfind(px1, py1, 0)
+	elif x == px1 and y1 == py:
+		Pathfind(px2, py2, 0)
+	elif x == px2 and y2 == py:
+		Pathfind(px3, py3, 0)
+	elif x == px3 and y3 == py:
+		Pathfind(px, py, 0)
+	else:
+		HeadMsg("Problem", "self")
+		Stop()

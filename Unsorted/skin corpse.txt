@@ -1,0 +1,30 @@
+#import clr
+#import System
+#clr.AddReference("System.Core")
+#clr.ImportExtensions(System.Linq)
+from Assistant import Engine
+
+SetQuietMode(True)
+sourcebag = 'backpack'
+skinbag = 0x401b6186
+skinnerknife = 0x40013e41
+corpsetypes = [0x2006,0xeca,0xecb,0xecc,0xecd,0xece,0xecf,0xed0,0xed1,0xed2]
+ignoreleathercorpses = []
+ClearIgnoreList()
+for corpse in corpsetypes:
+	if FindType(corpse,2):
+		theignore = GetAlias('found')
+		if theignore not in ignoreleathercorpses:
+			ignoreleathercorpses.append(theignore)
+			UseObject(skinnerknife)
+			WaitForTarget(5000)
+			Target("found")
+			HeadMsg("cut", "found")
+			Pause(200)
+			container = Engine.Items.GetItem(GetAlias(sourcebag)).Container
+			for item in container.GetItems():
+				itemg = Graphic(item)
+				if itemg == 0x1081:
+					MoveItem(item.Serial, skinbag)
+					Pause(600)
+			break

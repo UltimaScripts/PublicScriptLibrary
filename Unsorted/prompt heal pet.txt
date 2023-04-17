@@ -1,0 +1,21 @@
+PromptAlias("PetToHeal1")
+if GetAlias("PetToHeal1") == 0:
+    Stop()
+pet1 = 0x7b6a
+while not Dead('self'):
+    Pause(100)
+    if not FindObject("PetToHeal1"):
+        Stop()
+    if DiffHitsPercent("PetToHeal1") > 15 and Distance("PetToHeal1") < 12:
+        if Poisoned("PetToHeal1") and Distance("PetToHeal1") < 12:
+            Cast("Cure")
+            WaitForTarget(1000)
+            Target("PetToHeal1")
+        else:
+            SetAlias("healing", 1)
+            while DiffHitsPercent("PetToHeal1") > 4:
+                Cast("Heal")
+                WaitForTarget(1000)
+                Target("PetToHeal1")
+                Pause(100)
+            SetAlias("healing", 0)

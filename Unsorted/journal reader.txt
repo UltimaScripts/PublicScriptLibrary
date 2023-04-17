@@ -1,0 +1,8 @@
+if Poisoned("self"):
+	HeadMsg("Poisoned", "self",2209)
+if InJournal("You enter a meditative trance.", "system"):
+	HeadMsg("Meditating", "self",4)
+if InJournal("You are at peace.", "system"):
+	HeadMsg("Full Mana", "self",4)
+Pause(100)
+ClearJournal()

@@ -1,0 +1,17 @@
+import clr
+import System
+clr.AddReference("System.Core")
+clr.ImportExtensions(System.Linq)
+from Assistant import Engine
+
+while not Dead("self"):
+	Pause(100)
+	def FindByName(name, distance):
+		return Engine.Mobiles.Where(lambda e: e.Name.Trim().Equals(name) and e.Distance < distance)
+
+	for x in FindByName('a corpser', 11):
+		Cast("Energy Bolt", x)
+		Pause(1000)
+		if Mana("self") < 20:
+			UseSkill("Meditation")
+			Pause(12000)

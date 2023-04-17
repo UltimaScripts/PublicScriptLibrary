@@ -1,0 +1,6 @@
+Pause(100)
+while not Hidden("self"):
+    Cast("Invisibility")
+    WaitForTarget(5000)
+    Target(0x6a99)
+    Pause(1000)

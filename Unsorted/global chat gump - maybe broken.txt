@@ -1,0 +1,77 @@
+from ClassicAssist.UO.Objects.Gumps import Gump, GumpButtonType
+from Assistant import Engine
+from System.Threading import AutoResetEvent
+
+class MyGump(Gump):
+    def __new__(self, message, options):
+        gump = Gump.__new__(self, 250, 250)
+        width = 400
+        height = 150 + (len(options)*20)
+        self.options = options
+        gump.Closable = True
+        gump.Movable = True
+        gump.AddPage(0)
+        gump.AddBackground( 0, 0, width, height, 9200 )
+        gump.AddHtml(10,10,width-20, 120, message, True, True)
+        #y = 100
+        #for x in range(0, len(options)):
+            #gump.AddButton(10, y, 0x25e6, 0x25e7, x+1, GumpButtonType.Reply, 0)
+            #gump.AddLabel(30, y, 0, options[x])
+            #y+=20
+        return gump
+        
+    def OnResponse(self, buttonId, switches, textEntries):
+        if buttonId > 0:
+            self.option = self.options[buttonId-1]
+            self.optionId = buttonId - 1;
+        are.Set()
+
+
+
+are = AutoResetEvent(False)
+
+gump = MyGump("", [])
+gump.SendGump()
+Pause(300)
+TestText = "Wojo's Global Chat\nVersion 1.0"
+gump = MyGump(TestText, [])
+gump.CloseGump()
+gump.SendGump()
+
+while True:
+    Pause(1000)
+    for xxx in Engine.Journal.GetBuffer():
+        Pause(100)
+        if 'global' in xxx.Text:
+            #print(xxx.Text + ' ' + 'yes')
+            TestText = (xxx.Text + '\n' + TestText)
+            gump = MyGump(TestText, [])
+            gump.CloseGump()
+            gump.SendGump()
+    ClearJournal()
+
+
+gump.CloseGump()
+gump.SendGump()
+Pause(1000)
+Stop()
+ClearJournal()
+while True:
+    Pause(50)
+    if InJournal("not an"):
+        Stop()
+gump = MyGump("Wojo's Global Chat\nVersion 1.0", [])
+gump.SendGump()
+Pause(1000)
+gump.CloseGump()
+Pause(1000)
+gump = MyGump("Woo's Gbal Cht\nVerson 10", [])
+gump.SendGump()
+
+are.WaitOne()
+
+if not hasattr(gump, 'option'):
+    print 'Gump was closed'
+else:
+    print gump.option
+    print gump.optionId

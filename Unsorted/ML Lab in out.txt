@@ -1,0 +1,21 @@
+def pather(var1,var2,var3):
+    Pathfind(var1,var2,var3)
+    while Pathfinding():
+        Pause(100)
+
+Out = 0
+
+if Out == 1:
+    pather(348, 1928, 0)
+    pather(343, 1938, 0)
+    pather(343, 1947, 5)
+    pather(343, 1960, 0)
+    pather(331, 1973, 0)
+    pather(328, 1973, 5)
+else:
+    pather(331, 1973, 0)
+    pather(343, 1960, 0)
+    pather(343, 1947, 5)
+    pather(343, 1938, 0)
+    pather(348, 1928, 0)
+    pather(340, 1929, 4)

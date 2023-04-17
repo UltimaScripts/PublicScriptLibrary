@@ -1,0 +1,8 @@
+def Impassable(x, y, map = int(Engine.Player.Map)):
+    staticTiles = Statics.GetStatics( map, x, y )
+    if staticTiles == None:
+      return True
+    for x in staticTiles:
+      if x.Flags.HasFlag(TileFlags.Impassable):
+        return True
+    return False

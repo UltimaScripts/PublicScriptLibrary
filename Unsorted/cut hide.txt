@@ -1,0 +1,39 @@
+SetQuietMode(True)
+if not ListExists("cuthidelist"):
+    CreateList("cuthidelist")
+if not FindType(0xf52,0,'backpack'):
+    Stop()
+else:
+    SetAlias("knife", 'found')
+if not FindType(0xf9f,0,'backpack'):
+    Stop()
+else:
+    SetAlias("scissor", 'found')
+PromptAlias("tobecut")
+if GetAlias('tobecut') == 0:
+    Stop()
+if InList("cuthidelist", GetAlias("tobecut")):
+    HeadMsg("nope", "self")
+    Stop()
+if Distance("tobecut") > 2:
+    Stop()
+UseObject("tobecut")
+Pause(701)
+UseObject("knife")
+WaitForTarget(1000)
+Target("tobecut")
+Pause(500)
+if not FindType(0x1079,2,'tobecut'):
+    Stop()
+else:
+    SetAlias("hide", 'found')
+    UseObject("scissor")
+    WaitForTarget(1000)
+    Target("hide")
+    Pause(500)
+if not FindType(0x1081,2,'tobecut'):
+    Stop()
+else:
+    SetAlias("cuthide", 'found')
+    MoveItem("cuthide", "backpack")
+PushList("cuthidelist", GetAlias("tobecut"))

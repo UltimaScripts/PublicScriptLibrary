@@ -1,0 +1,31 @@
+from Assistant import Engine
+
+lootList1 = [0xeed,0xef3]
+GemList = [
+	3855, 3856, 3857, 3858, 3859, 3860, 3861, 3862, 3863, 
+	3864, 3865, 3866, 3867, 3868, 3869, 3870, 3871, 3872, 
+	3873, 3874, 3875, 3876, 3877, 3878, 3879, 3880, 3881, 
+	3882, 3883, 3884, 3885, 3886, 3887, 3888, 25568, 25569, 
+	25570, 25571, 25572, 25573, 25574, 25575, 25576, 25577, 
+	25578, 25579, 25580, 25581, 25582, 25583, 25584, 25585, 
+	25586, 25587, 25588, 25589, 25590, 25591, 25592, 25593, 
+	25594, 25595, 25596, 25597, 25598, 25599, 25600, 25601, 
+	25602
+	]
+ChestList = [0xe40,0xe42,0x9ab,0xe41,0xe7c]
+
+
+for chestnum in ChestList:
+	if FindType(chestnum, 1):
+		SetAlias("thechest", "found")
+		UseObject("thechest")
+		Pause(600)
+		container = Engine.Items.GetItem(GetAlias('thechest')).Container
+		for item in container.GetItems():
+			itemg = Graphic(item)
+			if itemg in lootList1:
+				MoveItem(item.Serial, 'backpack')
+				Pause(700)
+			if itemg in GemList:
+				MoveItem(item.Serial, 'backpack')
+				Pause(700)

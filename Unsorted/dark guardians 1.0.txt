@@ -1,0 +1,120 @@
+SetQuietMode(True)
+
+CornerStrat = False
+Maximumweight = 440
+#SetAlias("Blue", 0x160a2)
+
+#print("CornerStrat = ", CornerStrat)
+while FindType(0x2006):
+	IgnoreObject("found")
+	
+def Buffs():
+	if not BuffExists("Poison Immunity"):
+		if BuffExists("Vampiric Embrace"):
+			Pause(10)
+			return
+			HeadMsg("Vampire Form Activated", "self")
+		else:
+			myhue = Hue(GetAlias("self"))
+			while Hue(GetAlias("self")) == myhue:
+				Cast("Vampiric Embrace")
+				Pause(3000)
+			HeadMsg("Vampire Form Activated", "self")
+	if Hits('self') < MaxHits('self'):
+		Cast("greater heal", "self")
+	if not BuffExists("Gift of Life"):
+		Cast("Gift of Life","self")
+		Pause(2500)
+	Cast("Arcane Empowerment")
+	Pause(2400)
+
+while not Dead('self'):
+	if Weight() >= 440:
+		PlaySound("Bike Horn.wav")
+		Stop()
+	Buffs()
+	if CornerStrat == True:
+		Pathfind(363, 15, -1)
+	elif CornerStrat == False:
+		Pathfind(363, 15, -1)
+	while Pathfinding():
+		Pause(100)
+	while not FindType(0x4e):
+		Pause(1000)
+		if not FindType(0x4e):
+			Walk("east")
+			Pause(500)
+			Walk("east")
+			Pause(500)
+		if not FindType(0x4e):
+			Pause(500)
+			Walk("north")
+			Pause(500)
+			Walk("north")
+		if not FindType(0x4e):
+			Pause(500)
+			Walk("south")
+			Pause(500)
+			Walk("south")
+	Pause(500)
+	while FindType(0x4e):
+		if Distance("found") <= 3:
+			Cast("Wither")
+		elif Distance("found") > 3 and Distance("found") <= 6:
+			Cast("Thunderstorm")
+		else:
+			while Distance("found") > 10:
+				Run(DirectionTo("found"))
+				Pause(10)
+			Cast("Poison Strike", 'found')
+		Pause(800)
+	while FindType(0x2006):
+		Pathfind("found")
+		IgnoreObject("found")
+		while Pathfinding():
+			Pause(100)
+		UseObject("found")
+		Pause(1000)
+		while Autolooting():
+			Pause(100)
+	if CornerStrat == True:
+		UseObject(0x160a2)
+		Pathfind(356, 6, 1)
+	elif CornerStrat == False:
+		UseObject(0x160a2)
+		Pathfind(361, 15, -2)
+	while Pathfinding():
+		Pause(100)
+	while not FindObject(0x160a2):
+		UseObject(0x190f7)
+		Pause(800)
+	if Weight() >= Maximumweight:
+		PlaySound("Bike Horn.wav")
+		Stop()
+	if not TimerExists("Bitches"):
+		if Timer("Bitches") > 10000:
+		if
+	while Timer("Bitches") < 45000:
+		HeadMsg(TimerMsg("Bitches"), "self")
+		Pause(5000)
+	
+	
+	HeadMsg("45s", "self")
+	Pause(5000)
+	HeadMsg("40s", "self")
+	Pause(5000)
+	HeadMsg("35s", "self")
+	Pause(5000)
+	HeadMsg("30s", "self")
+	Pause(5000)
+	HeadMsg("25s", "self")
+	Pause(5000)
+	HeadMsg("20s", "self")
+	Pause(5000)
+	HeadMsg("15s", "self")
+	Pause(5000)
+	HeadMsg("10s", "self")
+	Pause(5000)
+	HeadMsg("5s", "self")
+	Pause(2000)
+	

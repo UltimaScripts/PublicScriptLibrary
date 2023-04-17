@@ -1,0 +1,8 @@
+if BuffExists("Vampiric Embrace"):
+	Pause(10)
+else:
+	myhue = Hue(GetAlias("self"))
+	while Hue(GetAlias("self")) == myhue:
+		Cast("Vampiric Embrace")
+		Pause(3000)
+HeadMsg("Vampire Form Activated", "self")

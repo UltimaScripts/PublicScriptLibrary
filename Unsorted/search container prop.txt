@@ -1,0 +1,20 @@
+SetQuietMode(True)
+ClearIgnoreList()
+#count = CountType(0xff, "backpack")
+thing = False
+#for x in count
+while FindType(-1,2,0x4010cfc1):
+    if Property("found", "Spell Damage Increase") and Property("found", "Faster Cast Recovery") and Property("found", "Faster Casting"):
+        va1 = PropertyValue[int]("found", "Spell Damage Increase")
+        va2 = PropertyValue[int]("found", "Faster Cast Recovery")
+        va3 = PropertyValue[int]("found", "Faster Casting")
+        if va1 > 14 and va2 >= 3 and va3 >= 1:
+            thing = True
+    else:
+        thing = False
+    if thing == True:
+        MoveItem("found", 'backpack')
+        Pause(1000)
+        IgnoreObject("found")
+    else:
+        IgnoreObject("found")

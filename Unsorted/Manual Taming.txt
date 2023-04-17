@@ -1,0 +1,44 @@
+SetQuietMode(True)
+ClearJournal()
+PromptAlias("tobetamed")
+if GetAlias('tobetamed') == 0:
+	Stop()
+if not ListExists("IgnoreList"):
+	CreateList("IgnoreList")
+if InList("IgnoreList", GetAlias("tobetamed")):
+	HeadMsg("Already Tamed", "self")
+	Stop()
+	
+def Taming():
+	UseSkill("Animal taming")
+	WaitForTarget(5000)
+	Target("tobetamed")
+	SetTimer("Taming", 0)
+
+SetTimer("Taming", 13000)
+while FindObject("tobetamed"):
+	while Distance("tobetamed") > 2:
+		Pathfind("tobetamed")
+		while Pathfinding():
+			if Distance("tobetamed") <= 1:
+				Pathfind(-1)
+	if InJournal("It seems to accept you as master.") or InJournal("That animal looks tame already."):
+		WaitForContext("tobetamed", 9, 5000)
+		WaitForGump(0x909cc741, 5000)
+		ReplyGump(0x909cc741, 2)
+		HeadMsg("Next", "self")
+		PushList("IgnoreList", GetAlias("tobetamed"))
+		Stop()
+	if InJournal("You have no chance of taming this creature."):
+		HeadMsg("Nope", "self")
+		Stop()	
+	#if InJournal("You fail to tame the creature.") or Timer("Taming") >= 12000:
+	if Timer("Taming") >= 13000 and Distance("tobetamed") < 3:
+		ClearJournal()
+		Taming()
+	if InJournal("That creature cannot be tamed."):
+		HeadMsg("Nope", "self")
+		Stop()
+	if InJournal("The world is saving, please wait."):
+		Pause(3000)
+	Pause(100)

@@ -1,0 +1,18 @@
+from Assistant import Engine
+
+HeadMsg("Please Target Source Container", "self")
+PromptAlias("Bag1")
+if GetAlias("Bag1") == 0:
+    Stop()
+HeadMsg("Please Target Destination Container", "self")
+PromptAlias("Bag2")
+if GetAlias("Bag2") == 0:
+    Stop()
+
+sourcebag = GetAlias("Bag1")
+destinationbag = GetAlias("Bag2")
+
+container = Engine.Items.GetItem(sourcebag).Container
+for item in container.GetItems():
+    MoveItem(item.Serial, destinationbag)
+    Pause(700)

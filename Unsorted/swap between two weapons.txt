@@ -1,0 +1,11 @@
+crossbow = 0x401ffff8
+bow = 0x400b511a
+if FindLayer('OneHanded'):
+	UseObject('found')
+	MoveItem('found', "backpack")
+if GetAlias('found') == bow:
+	EquipItem(crossbow,"OneHanded")
+elif GetAlias('found') == crossbow:
+	EquipItem(bow,"OneHanded")
+else:
+	SysMessage("Problem")

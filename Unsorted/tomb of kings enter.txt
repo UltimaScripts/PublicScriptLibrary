@@ -1,0 +1,10 @@
+Pathfind(29, 212, -5)
+while Pathfinding():
+    Pause(100)
+Msg("ord")
+Pathfind(41, 212, -5)
+while Pathfinding():
+    Pause(100)
+Msg("anord")
+Pathfind(35, 200, 0)
+Stop()

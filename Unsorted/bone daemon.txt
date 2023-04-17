@@ -1,0 +1,54 @@
+
+def pathto(var1,var2,var3):
+    Pathfind(var1,var2,var3)
+    while Pathfinding():
+        Pause(100)
+        if Distance(var1,var2) < 2 and Distance(var1,var2) > -1:
+            Pathfind(-1)
+
+UseObject(0x40390aab)
+WaitForGump(0x1f2, 5000)
+ReplyGump(0x1f2, 102)
+WaitForGump(0x1f2, 5000)
+ReplyGump(0x1f2, 4)
+
+while not X('self') == 398 and not Y('self') == 217:
+    Pause(200)
+    
+pathto(408, 222, -20)
+pathto(418, 215, -5)
+pathto(419, 203, -1)
+Pathfind(0x6b9)
+while Pathfinding():
+    Pause(100)
+    if Distance(0x6b9) < 2 and Distance(0x6b9) > -1:
+        Pathfind(-1)
+        
+#while not FindObject(0x160a2):
+#    UseObject(0x190f7)
+#    Pause(1000)
+#   
+WaitForContext(0x6b9, 3, 5000)
+WaitForGump(0x92af4e20, 5000)
+ReplyGump(0x92af4e20, 1, Array[int]([1]))
+WaitForGump(0xa01862ea, 5000)
+ReplyGump(0xa01862ea, 1)
+WaitForGump(0x50b3b37b, 5000)
+#timing out
+Pause(1000)
+MoveType(0xf80, "backpack", 0x6b9)
+WaitForGump(0xa01862ea, 5000)
+ReplyGump(0xa01862ea, 1)
+WaitForGump(0x50b3b37b, 5000)
+#
+#Cast("Gift of Renewal")
+#WaitForTarget(5000)
+#Target(0x160a2)
+
+#a bone demon
+#0x134
+#a bone demon corpse
+
+
+
+

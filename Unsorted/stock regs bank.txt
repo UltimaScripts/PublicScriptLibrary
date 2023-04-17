@@ -1,0 +1,22 @@
+from Assistant import Engine
+#0x4001c556 = chest
+OrganizeList = [0xf8d,0xf8c,0xf88,0xf84,0xf7b,0xf85,0xf86,0xf7a]
+sourcebag = 0x4001c556
+destinationbag = 0x40018904
+
+container = Engine.Items.GetItem(destinationbag).Container
+for item in container.GetItems():
+    itemg = Graphic(item)
+    if itemg in OrganizeList:
+          MoveItem(item.Serial, sourcebag)
+          Pause(700)
+
+container = Engine.Items.GetItem(sourcebag).Container
+for item in container.GetItems():
+    itemg = Graphic(item)
+    if itemg in OrganizeList:
+          MoveItem(item.Serial, destinationbag, 75)
+          Pause(700)
+
+HeadMsg("Done", "self")
+

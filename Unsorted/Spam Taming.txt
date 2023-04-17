@@ -1,0 +1,12 @@
+SetQuietMode(True)
+PromptAlias("ztame")
+ClearJournal()
+while not InJournal("You start to tame the creature."):
+    Pause(10)
+    if not FindObject("ztame"):
+        Stop()
+    if Distance("ztame") < 4:
+        UseSkill("animal taming")
+        WaitForTarget(1000)
+        Target("ztame")
+        Pause(200)

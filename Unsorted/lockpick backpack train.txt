@@ -1,0 +1,51 @@
+SetQuietMode(True)
+while not Dead():
+	if FindType(0x9aa,0,'backpack'):
+		UseObject('found')
+		Pause(500)
+		HeadMsg("x", "found")
+		SetAlias("thechest", GetAlias('found'))
+		startskill = Skill("Lockpicking")
+		skillperchest = startskill + 0.9
+		while FindType(0x14fc, 0, "backpack"):
+			if Skill("Lockpicking") >= skillperchest:
+				SysMessage("Max Skill On This Chest")
+				Stop()
+			SetAlias("lockpicks", GetAlias('found'))
+			ClearJournal()
+			UseObject("lockpicks")
+			WaitForTarget(5000)
+			Target("thechest")
+			Pause(500)
+			while True:
+				Pause(50)
+				if InJournal("You are unable to pick the lock."):
+					Pause(100)
+					break
+				if InJournal("The lock quickly yields to your skill."):
+					UseObject("thechest")
+					Pause(500)
+					if FindType(0x100e,0,"thechest",0):
+						UseObject("found")
+						WaitForTarget(5000)
+						Target("thechest")
+						Pause(100)
+						break
+					else:
+						SysMessage("No Key Found, Stopping")
+						Stop()
+				if InJournal("This does not appear to be locked.", "system"):
+					UseObject("thechest")
+					Pause(500)
+					if FindType(0x100e,0,"thechest",0):
+						UseObject("found")
+						WaitForTarget(5000)
+						Target("thechest")
+						Pause(100)
+						break
+					else:
+						SysMessage("No Key Found, Stopping")
+						Stop()
+		else:
+			HeadMsg("No Lockpicks", "self")
+			Stop()

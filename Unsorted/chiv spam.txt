@@ -1,0 +1,32 @@
+import System
+from ClassicAssist.Data import AssistantOptions, Options
+SetQuietMode(True)
+
+if not TimerExists("casting"):
+    CreateTimer("casting")
+    SetTimer("casting", 0)
+#main
+while not Dead('self'):
+    GetEnemy(['Murderer','Enemy','Criminal','Gray'], 'Any', 'Closest')
+    WarMode('on')
+    Attack('enemy')
+    if FindObject("Enemy"):
+        if not BuffExists("consecrate weapon") or BuffTime('consecrate weapon') < 1000:
+            if Mana("self") >= 8:
+                if Timer("casting") >= 1000:
+                    Cast("consecrate weapon")
+                    SetTimer("casting", 0)
+        if BuffExists("consecrate weapon"):
+            if InRange('enemy', 1):
+                if not BuffExists("counter attack"):
+                    if Mana("self") >= 4:
+                        if Timer("casting") >= 500:
+                            Cast("counter attack")
+                            SetTimer("casting", 0)
+                else:
+                    if not ActiveAbility():
+                        if Timer("casting") >= 1000:
+                            SetAbility('primary', 'on')
+                            SetTimer("casting", 0)
+
+    Pause(100)

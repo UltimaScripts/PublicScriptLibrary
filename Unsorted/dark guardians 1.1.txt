@@ -1,0 +1,126 @@
+SetQuietMode(True)
+
+CornerStrat = False
+Maximumweight = 440
+#SetAlias("Blue", 0x160a2)
+
+#print("CornerStrat = ", CornerStrat)
+while FindType(0x2006):
+    IgnoreObject("found")
+    
+def Buffs():
+    if not BuffExists("Poison Immunity"):
+        if BuffExists("Vampiric Embrace"):
+            Pause(10)
+            #return
+            HeadMsg("Vampire Form Activated", "self")
+        else:
+            myhue = Hue(GetAlias("self"))
+            while Hue(GetAlias("self")) == myhue:
+                Cast("Vampiric Embrace")
+                Pause(3000)
+            HeadMsg("Vampire Form Activated", "self")
+    if Hits('self') < MaxHits('self'):
+        Cast("greater heal", "self")
+    while not BuffExists("Gift of Life"):
+        Cast("Gift of Life","self")
+        Pause(2800)
+    while not BuffExists("Gift of Renewal"):
+        Cast("Gift of Renewal", "self")
+        Pause(2800)
+    while not BuffExists("Arcane Empowerment"):
+        Cast("Arcane Empowerment")
+        Pause(2800)
+    while not BuffExists("Gift of Life"):
+        Cast("Gift of Life", "self")
+        Pause(2800)
+    return
+
+def _Combat():
+    while FindType(0x4e):
+        if Distance("found") <= 3:
+            Cast("Wither")
+        elif Distance("found") > 3 and Distance("found") <= 6:
+            Cast("Thunderstorm")
+        else:
+            while Distance("found") > 10:
+                Run(DirectionTo("found"))
+                Pause(10)
+            Cast("Poison Strike", 'found')
+        Pause(800)
+
+def _loot():
+    while FindType(0x2006):
+        Pathfind("found")
+        IgnoreObject("found")
+        while Pathfinding():
+            Pause(100)
+        UseObject("found")
+        Pause(1000)
+        while Autolooting():
+            Pause(100)
+
+while not Dead('self'):
+    if Weight() >= 440:
+        while FindObject(0x160a2) and Distance(0x160a2) < 3:
+            UseObject(0x160a2)
+            Pause(800)
+        PlaySound("Bike Horn.wav")
+        Stop()
+    Buffs()
+    #if CornerStrat == True:
+        #Pathfind(363, 15, -1)
+    #elif CornerStrat == False:
+        #Pathfind(363, 16, -1)
+    while Distance(363, 14) > 1:
+        Pathfind(363, 14, -1)
+        while Pathfinding():
+            Pause(100)
+    while not FindType(0x4e):
+        Pause(1000)
+        if not FindType(0x4e):
+            Walk("east")
+            Pause(500)
+            Walk("east")
+            Pause(500)
+        if not FindType(0x4e):
+            Pause(500)
+            Walk("north")
+            Pause(500)
+            Walk("north")
+        if not FindType(0x4e):
+            Pause(500)
+            Walk("south")
+            Pause(500)
+            Walk("south")
+    Pause(500)
+    _Combat()
+    Pause(1000)
+    while Autolooting():
+        Pause(100)
+    while Distance(0x160a2) > 2:
+        Pause(100)
+    while Poisoned(0x160a2):
+        Pause(100)
+    UseObject(0x160a2)
+    _loot()
+    if CornerStrat == True:
+        Pathfind(356, 6, 1)
+    elif CornerStrat == False:
+        Pathfind(361, 15, -2)
+    while Pathfinding():
+        Pause(100)
+    while not FindObject(0x160a2):
+        UseObject(0x190f7)
+        Pause(800)
+    _Combat()
+    if Weight() >= Maximumweight:
+        PlaySound("Bike Horn.wav")
+        Stop()
+    SetTimer("Bitches", 0)
+    while Timer("Bitches") < 45000:
+        TimerMsg("Bitches")
+        _Combat()
+        _loot()
+        Pause(5000)
+    SetTimer("TimerMsg", 0)

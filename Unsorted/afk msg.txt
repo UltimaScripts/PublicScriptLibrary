@@ -1,0 +1,8 @@
+SetTimer("afk", 0)
+
+while not Dead('self'):
+    Pause(20000)
+    time = str(Timer("afk"))
+    time = str(time[:-3])
+    thing = "AFK for " + time + " Seconds"
+    Msg(thing)

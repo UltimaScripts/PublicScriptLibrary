@@ -1,0 +1,20 @@
+SetTimer("moo2", 12000)
+while not Dead('self'):
+	Pause(100)
+	while Mana('self') < 20:
+		Pause(1000)
+	if Skill("Magery") < 45:
+		Cast("Bless", "self")
+		Pause(1500)
+	if Skill("Magery") >= 45 and Skill("Magery") < 60:
+		Cast("Arch Cure", "self")
+		Pause(2000)
+	if Skill("Magery") >= 60 and Skill("Magery") < 90:
+		Cast("Reveal", "self")
+		Pause(2000)
+	if Timer("moo2") >= 12000:	
+		UseType(0xe9c, 0, 'backpack')
+		UseSkill("Peacemaking")
+		WaitForTarget(5000)
+		Target(0x12a508d)
+		SetTimer("moo2", 0)

@@ -1,0 +1,5 @@
+SetQuietMode(True)
+while FindType(0x1f14,-1,'backpack',0):
+	MoveItem('found', 'backpack', -1, 142, 130)
+	IgnoreObject("found")
+	Pause(600)

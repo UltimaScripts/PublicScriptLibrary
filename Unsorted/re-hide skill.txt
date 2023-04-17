@@ -1,0 +1,4 @@
+while not Hidden("self"):
+	UseSkill("Hiding")
+	Pause(12000)
+Pause(1000)

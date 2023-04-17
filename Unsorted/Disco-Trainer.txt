@@ -1,0 +1,47 @@
+def singer(inst):
+    UseType(0xeb3)
+    Pause(100)
+    UseSkill("Discordance")
+    WaitForTarget(5000)
+    Target(inst)
+    SetTimer("disco", 0)
+
+def hider():
+    while not Hidden("self"):
+        Cast("Invisibility")
+        WaitForTarget(5000)
+        Target(0x42bd)
+        Pause(1000)
+    Pause(19000)
+
+if not TimerExists("disco"):
+    SetTimer("disco", 0)
+
+while not InJournal("You play jarring music, suppressing your target's strength.", "system"):
+    Pause(50)
+    if Timer("disco") > 8000:
+        singer(0x7892)
+    if InJournal("That creature is already in discord.", "system"):
+        break
+SysMessage("Two")
+ClearJournal()
+Pause(50)
+while not InJournal("You play jarring music, suppressing your target's strength.", "system"):
+    Pause(50)
+    if Timer("disco") > 8000:
+        singer(0x6c61)
+    if InJournal("That creature is already in discord.", "system"):
+        break
+SysMessage("Three")
+ClearJournal()
+Pause(50)
+while not InJournal("That creature is already in discord.", "system"):
+    Pause(50)
+    if Timer("disco") > 8000:
+        singer(0x7845)
+    if InJournal("That creature is already in discord.", "system"):
+        break
+ClearJournal()
+Pause(50)
+hider()
+SysMessage("One")

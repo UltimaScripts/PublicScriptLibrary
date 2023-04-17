@@ -1,0 +1,4 @@
+while FindType(0x2006):
+    Rehue("found", 1001)
+    Pause(100)
+    IgnoreObject("found")

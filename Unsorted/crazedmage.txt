@@ -1,0 +1,27 @@
+#PromptAlias("PetToHeal1")
+#if GetAlias("PetToHeal1") == 0:
+#    Stop()
+SetAlias("PetToHeal1", 0x6f14)
+#SetTimer("pmage", 10000)
+while not Dead('self'):
+    Pause(50)
+    if not FindObject("PetToHeal1"):
+        Stop()
+    if DiffHitsPercent("PetToHeal1") > 1 and Distance("PetToHeal1") < 12:
+        if Poisoned("PetToHeal1") and Distance("PetToHeal1") < 12:
+            Cast("Cure")
+            WaitForTarget(1000)
+            Target("PetToHeal1")
+        else:
+            SetAlias("healing", 1)
+            while DiffHitsPercent("PetToHeal1") > 4:
+                Cast("Heal")
+                WaitForTarget(1000)
+                Target("PetToHeal1")
+                Pause(100)
+            SetAlias("healing", 0)
+    #if Timer("pmage") > 10000:
+        #Cast("Poison Field")
+        #WaitForTarget(5000)
+        #Target(0x6083)
+        #SetTimer("pmage", 0)

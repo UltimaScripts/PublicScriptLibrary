@@ -1,0 +1,84 @@
+import clr
+import System
+clr.AddReference("System.Core")
+clr.ImportExtensions(System.Linq)
+from Assistant import Engine
+
+SetQuietMode(True)
+skillClilocs = [1060451, 1060452, 1060453, 1060454, 1060455]
+skilllist = [
+	"Alchemy","Animal Taming","Blacksmithing","Bowcraft And Fletching","Carpentry",
+	"Cartography","Cooking","Fishing","Imbuing","Inscription","Lockpicking",
+	"Lumberjacking","Mining","Remove Trap","Stealing","Tailoring","Tinkering"
+	]
+itemglist = [0x108a,0x1f09,0x1086,0x1f06,0x1087,0x1085,0x4212,0x4213]
+corpsetypes = [0x2006,0xeca,0xecb,0xecc,0xecd,0xece,0xecf,0xed0,0xed1,0xed2]
+
+def GetSkillValues(serial):
+	results = []
+
+	item = Engine.Items.GetItem(serial)
+
+	skillProps = item.Properties.Where(lambda i: skillClilocs.Contains(i.Cliloc))
+
+	for skillProp in skillProps:
+		#res = dict()
+		#res['skillName'] = skillProp.Arguments[0]
+		#res['value'] = skillProp.Arguments[1]
+		valuecheck = int(skillProp.Arguments[1])
+		if valuecheck >= 15:
+			#print res.values()
+			#print res['skillName']
+			#print res['value']
+			if skillProp.Arguments[0] in skilllist:
+				return True
+		#results.append(res)
+
+	return False
+	
+#if timer exists check if larger than 60s
+if TimerExists("relootdelay"):
+	if Timer("relootdelay") > 120000:
+		ClearIgnoreList()
+		SetTimer("relootdelay", 0)
+else:
+	SetTimer("relootdelay", 0)
+
+#find corpse
+gotit = False
+for corpse in corpsetypes:
+	if FindType(corpse,2):
+		dacorpse = "found"
+		UseObject("found")
+		IgnoreObject("found")
+		gotit = True
+		Pause(600)
+		break
+
+#search container
+if gotit == True:
+	container = Engine.Items.GetItem(GetAlias("found")).Container
+	if container == None:
+		Stop()
+	for item in container.GetItems():
+		itemg = Graphic(item)
+		if itemg == 18705:
+			MoveItem(item.Serial, 'backpack', -1, 140, 102)
+	  		Pause(700)
+		#if find item in itemglist
+		if itemg in itemglist:
+			checkitem = item.Serial
+			#send found to getskillvalues
+			theitem = GetSkillValues(checkitem)
+			if theitem == True:
+				#if true move to backpack
+				SysMessage("Found Item, Moving...")
+	  			MoveItem(item.Serial, 'backpack', -1, 140, 0)
+	  			Pause(700)
+	  		#else:
+	  			#print "No match"
+else:
+	print "no corpse"
+	Stop()
+if dacorpse != None:
+	HeadMsg("done", dacorpse)

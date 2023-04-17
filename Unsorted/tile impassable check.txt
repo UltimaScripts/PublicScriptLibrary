@@ -1,0 +1,14 @@
+from ClassicAssist.UO.Data import Statics, TileFlags
+from Assistant import Engine
+
+def Impassable(x, y, map = int(Engine.Player.Map)):
+    staticTiles = Statics.GetStatics( map, x, y )
+    
+    for x in staticTiles:
+        if x.Flags.HasFlag(TileFlags.Impassable):
+            return True
+
+    return False
+
+print Impassable(1707, 2200, 0) # True
+print Impassable(1708, 2200, 0) # False

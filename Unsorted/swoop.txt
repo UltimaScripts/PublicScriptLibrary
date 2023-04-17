@@ -1,0 +1,27 @@
+HeadMsg("waiting", "self")
+ClearIgnoreList()
+SetTimer("swoooop", 0)
+while not Dead('self'):
+    Pause(100)
+    if FindType(0x5, 16):
+        mobi = GetAlias('found')
+        if Hue(mobi) == 224:
+            TimerMsg("swoooop")
+        #if Name(mobi) == "Swoop":
+            HeadMsg("here", mobi)
+            PlaySound("tone1.wav")
+            while Distance(mobi) < 2:
+                Pause(100)
+            Cast("Gift of Renewal")
+            WaitForTarget(5000)
+            Target(0x160a2)
+            petx = X(0x160a2)
+            pety = Y(0x160a2)
+            while X(0x160a2) == petx and Y(0x160a2) == pety:
+                WaitForContext(0x160a2, 1, 5000)
+                WaitForTarget(5000)
+                Target('found')
+                Pause(2000)
+            Stop()
+        else:
+            IgnoreObject(mobi)

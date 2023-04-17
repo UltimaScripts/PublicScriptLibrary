@@ -1,0 +1,4 @@
+#if GetEnemy(['Gray','Criminal','Murderer'], 'Any', 'Closest'):
+Cast('Poison Strike')
+WaitForTargetOrFizzle(5000)
+Target('last')

@@ -1,0 +1,22 @@
+x = X("self")
+y = Y("self")
+xx = x + 9
+yy = y + 9
+while not Dead("self"):
+	h = Skill("Stealth")
+	hs = h + 0.8
+	while h < hs:
+		while not Hidden("self"):
+			UseSkill("Hiding")
+			Pause(12000)
+		UseSkill("Stealth")
+		Pause(12000)
+		h = Skill("Stealth")
+	x1 = X("self")
+	y1 = Y("self")
+	if x1 == x and y1 == y:
+		Pathfind(x, yy, 0)
+		Pause(4000)
+	if x1 == x and y1 == yy:
+		Pathfind(x, y, 0)
+		Pause(4000)

@@ -1,0 +1,38 @@
+from ClassicAssist.UO.Commands import MobileQuery
+from Assistant import Engine
+
+Release_ignorelist = [GetAlias('self'), 0x42bd]
+
+def ReleasePets():
+    mobiles = Engine.Mobiles.GetMobiles()
+    for x in range(len(mobiles)):
+        mobile = mobiles[x]
+        if (mobile != None and mobile.Distance < 2) and Innocent(mobile) and not mobile.Serial in Release_ignorelist:
+            WaitForContext(mobile.Serial, 9, 5000)
+            WaitForGump(0x909cc741, 5000)
+            ReplyGump(0x909cc741, 2)
+            Release_ignorelist.append(mobile.Serial)
+            pause(500)
+
+if FindType(0xf6c,1)
+    Pathfind('found')
+    while Pathfinding():
+        Pause(100)
+    UseObject("found")
+    Pause(2000)
+
+Pathfind(810, 934, 7)
+while Pathfinding():
+    Pause(100)
+Pause(2000)
+
+ReleasePets()
+Pause(1000)
+
+WaitForContext(0x6a99, 10, 5000)
+
+if FindType(0xf6c,1)
+    Pathfind('found')
+    while Pathfinding():
+        Pause(100)
+    UseObject("found")

@@ -1,0 +1,8 @@
+from Assistant import Engine
+
+ClearJournal()
+Pause(5000)
+for x in Engine.Journal.GetBuffer():
+    if 'spell' in x.Text:
+        print(x.Text + ' ' + 'yes')
+    Pause(900)

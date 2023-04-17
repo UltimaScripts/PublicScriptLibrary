@@ -1,0 +1,9 @@
+PromptAlias("bag_to_seach0")
+if GetAlias("bag_to_seach0") == 0:
+    Stop()
+while FindType(-1,2,"bag_to_seach0"):
+    if Property("found", "mana regeneration"):
+        Rehue("found", 1176)
+        Pause(100)
+        IgnoreObject("found")
+SysMessage("done.")

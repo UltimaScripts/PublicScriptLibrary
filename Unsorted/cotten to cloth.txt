@@ -1,0 +1,30 @@
+SetQuietMode(True)
+ClearJournal()
+
+
+while FindType(0xdf8, 0, 'backpack'):
+	SetAlias("Cotten", 'found')
+	if InJournal("You put the balls of yarn in your backpack.", "system"):
+		Pause(1000)
+		UseObject(GetAlias("Cotten"))
+		WaitForTarget(5000)
+		if FindType(0x1015) or FindType(0x1019):
+			Target('found')
+		else:
+			HeadMsg("No Spinning Wheel, Halting!", "self")
+			Stop()
+		ClearJournal()
+	Pause(100)
+while FindType(0xe1d, 0, 'backpack'):
+	SetAlias("Yarn", 'found')
+	if FindType(0x1062) or FindType(0x105f):
+		UseObject(GetAlias("Yarn"))
+		WaitForTarget(5000)
+		Target('found')
+		Pause(600)
+	else:
+		HeadMsg("No Loom Detected, Halting!", "self")
+		Stop()
+	ClearJournal()
+	Pause(100)
+HeadMsg("Done!", "self")

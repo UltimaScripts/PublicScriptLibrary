@@ -1,0 +1,10 @@
+while not Dead('self'):
+    if Skill("Healing") >= 85:
+        SetSkill("Healing", "locked")
+        StopAll()
+    MoveItem(0x4018b9a9, "backpack")
+    Pause(600)
+    EquipItem(0x4018b9a9, "Arms")
+    Pause(600)
+    while Hits("self") < MaxHits("self"):
+        Pause(50)

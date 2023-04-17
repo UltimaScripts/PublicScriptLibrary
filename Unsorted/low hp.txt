@@ -1,0 +1,5 @@
+while not Dead("self"):
+    Pause(100)
+    if Hits("self") <= 50:
+        PlaySound("Bike Horn.wav")
+        Pause(2000)

@@ -1,0 +1,147 @@
+SetQuietMode(True)
+
+def pather(x1,y1,z1):
+	Pathfind(x1,y1,z1)
+	SetTimer("pathing", 0)
+	while Pathfinding():
+		Pause(500)
+		if Timer("pathing") > 5000:
+			PlaySound("Bike Horn.wav")
+			Stop()
+
+def getratquest():
+	WaitForContext(0x35, 1, 5000)
+	WaitForGump(0x8db94b0, 5000)
+	ReplyGump(0x8db94b0, 60000)
+	WaitForGump(0x23c255e7, 5000)
+	ReplyGump(0x23c255e7, 60007)
+	
+def turninratquest():
+	WaitForContext(0x35, 1, 5000)
+	WaitForGump(0x8db94b0, 5000)
+	ReplyGump(0x8db94b0, 60000)
+	WaitForGump(0x23c255e7, 5000)
+	ReplyGump(0x23c255e7, 60007)
+	WaitForGump(0x23c255e7, 5000)
+	ReplyGump(0x23c255e7, 60007)
+
+def gotorates():
+	pather(6054,324,22)
+	if FindObject(0x40020cd7):
+		doorg = Graphic("found")
+		if doorg == 0x1ff5:
+			UseObject("found")
+			Pause(200)
+	pather(6066, 324, 22)
+	pather(6066, 322, 22)
+	pather(6060, 322, 39)
+	pather(6060, 319, 46)
+	if FindObject(0x46cea630):
+		doorg = Graphic("found")
+		if doorg == 0x6a9:
+			UseObject("found")
+			Pause(200)
+	pather(6060, 316, 51)
+	
+def killdarat():
+	cx = Z('self')
+	cx3 = cx + 4
+	cx03 = cx - 4
+	if Z('darat') < cx3 and Z('darat') > cx03:
+		Attack("darat")
+		while FindObject("darat"):
+			Pause(100)
+			if FindObject("darat") and Distance("darat") > 1:
+				Pathfind("darat")
+				while Pathfinding():
+					if FindObject("darat") and Distance("darat") < 2:
+						Pathfind(-1)
+					Pause(10)
+		Pause(600)
+	else:
+		print("above or below")
+		IgnoreObject("enemy1")
+	Pause(3000)
+	ratzkilled = GetAlias("rat_count")
+	ratzkilled += 1
+	print(ratzkilled)
+	SetAlias("rat_count", ratzkilled)
+	
+def gettorat(ratz):
+	if Z('self') == 51:
+		if ratz == 51:
+			killdarat()
+		elif ratz == 71:
+			pather(6059, 314, 71)
+			killdarat()
+		elif ratz == 27:
+			pather(6069, 312, 51)
+			if FindObject(0x46d4cbb3):
+				doorg = Graphic("found")
+				if doorg == 0x6ad:
+					UseObject("found")
+					Pause(200)
+			pather(6075, 312, 27)
+			killdarat()
+	else:
+		print('nope')
+		Stop()
+
+def findtherat():
+	ClearIgnoreList()
+	if FindType(0xd7,16):
+		SetAlias("darat", "found")
+		if Z('darat') == 51:
+			gettorat(51)
+		elif Z('darat') == 71:
+			gettorat(71)
+		elif Z('darat') == 27:
+			gettorat(27)
+		else:
+			print("derp ",Z('darat'))
+			Pause(1000)
+			#Stop()
+
+def resetloc():
+	if Z('self') == 71:
+		pather(6063,312,51)
+	elif Z('self') == 27:
+		pather(6072,312,41)
+		if FindObject(0x46d4cbb3):
+			doorg = Graphic("found")
+			if doorg == 0x6ad:
+				UseObject("found")
+				Pause(200)
+		pather(6069, 312, 51)
+		
+def gotojoe():
+	pather(6060, 316, 51)
+	if FindObject(0x46cea630):
+		doorg = Graphic("found")
+		if doorg == 0x6a9:
+			UseObject("found")
+			Pause(200)
+	pather(6060, 319, 46)
+	pather(6060, 322, 39)
+	pather(6066, 322, 22)
+	pather(6066, 324, 22)
+	pather(6057, 324, 22)
+	if FindObject(0x40020cd7):
+		doorg = Graphic("found")
+		if doorg == 0x1ff5:
+			UseObject("found")
+			Pause(200)
+	pather(6054, 324, 22)
+	pather(6044, 322, 22)
+
+while not Dead('self'):
+	SetAlias("rat_count", 0)
+	getratquest()
+	gotorates()
+	while GetAlias("rat_count") <= 11:
+		findtherat()
+		resetloc()
+	gotojoe()
+	turninratquest()
+
+#The Apprentice, Objective Complete

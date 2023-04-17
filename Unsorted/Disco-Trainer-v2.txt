@@ -1,0 +1,49 @@
+def singer(inst):
+    if not FindObject(inst):
+        PlaySound("Bike Horn.wav")
+        Stop()
+    UseType(0xeb3)
+    Pause(100)
+    UseSkill("Discordance")
+    WaitForTarget(5000)
+    Target(inst)
+    SetTimer("disco", 0)
+
+def hider():
+    while not Hidden("self"):
+        Cast("Invisibility")
+        WaitForTarget(5000)
+        Target(0x42bd)
+        Pause(1000)
+    Pause(17100)
+
+if not TimerExists("disco"):
+    SetTimer("disco", 0)
+
+numm = 1
+
+while not Dead("self"):
+    Pause(50)
+    if Timer("disco") > 8000:
+        if numm == 1:
+            singer(0x718e)
+        elif numm == 2:
+            singer(0x6c61)
+        elif numm == 3:
+            singer(0x7845)
+        elif numm == 4:
+            singer(0x6c6f)
+        elif numm == 5:
+            singer(0x6ad7)
+    if numm == 6:
+        numm = 1
+        hider()
+    if InJournal("You play jarring music, suppressing your target's strength.", "system"):
+        numm += 1
+        ClearJournal()
+    if InJournal("That creature is already in discord.", "system"):
+        numm += 1
+        ClearJournal()
+    if Skill("Discordance") >= 90:
+        PlaySound("Bike Horn.wav")
+        Stop()

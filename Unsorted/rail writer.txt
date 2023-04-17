@@ -1,0 +1,26 @@
+from Assistant import Engine
+#open the virtue menu to stop this script
+
+SetAlias("End_Script", 0)
+with open("rail.txt", "a") as my_text_file:
+    px = Engine.Player.X
+    py = Engine.Player.Y
+    pz = Engine.Player.Z
+    result = (str(px) + ", " + str(py) + ", " + str(pz))
+    my_text_file.write(result + "\n")
+    SysMessage("Active")
+    while not Dead("self"):
+        Pause(50)
+        if Distance(px, py) > 11:
+            SysMessage("Spot")
+            px = Engine.Player.X
+            py = Engine.Player.Y
+            pz = Engine.Player.Z
+            result = (str(px) + ", " + str(py) + ", " + str(pz))
+            my_text_file.write(result + "\n")
+        #if GetAlias("End_Script") == 1:
+        if GumpExists(0x861db6b1):
+            SysMessage("Closed")
+            Pause(100)
+            my_text_file.close()
+            Stop()

@@ -1,0 +1,8 @@
+bow1 = 0x400b511a
+if FindLayer('OneHanded'):
+	if GetAlias('found') == bow1:
+		Stop()
+	MoveItem('found', "backpack")
+	EquipItem(bow1,"OneHanded")
+else:
+	EquipItem(bow1,"OneHanded")

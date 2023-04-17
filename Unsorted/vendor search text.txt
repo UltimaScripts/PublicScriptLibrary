@@ -1,0 +1,6 @@
+from System.Collections.Generic import Dictionary
+dict = Dictionary[int, str]()
+
+dict[1] = 'leather'
+
+ReplyGump(0xf3ec8, 1, None, dict)
