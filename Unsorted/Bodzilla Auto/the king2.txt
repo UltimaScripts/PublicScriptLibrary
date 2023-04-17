@@ -1,0 +1,52 @@
+SetAlias("restocker", 0)
+SetAlias("smashedbods", 0)
+SetAlias("sortedbods", 0)
+SetAlias("filledthebods", 0)
+SetAlias("dumpedbods", 0)
+
+SetQuietMode(True)
+
+SetTimer("justincase", 0)
+PlayMacro("restock bodzilla")
+while GetAlias("restocker") == 0:
+	Pause(5000)
+	if Timer("justincase") > 300000:
+		SysMessage("Something went wrong")
+		StopAll()
+print "1.0"
+
+SetTimer("justincase", 0)
+PlayMacro("smash bod books")
+while GetAlias("smashedbods") == 0:
+	Pause(5000)
+	if Timer("justincase") > 300000:
+		SysMessage("Something went wrong")
+		StopAll()
+print "1.1"
+
+SetTimer("justincase", 0)
+PlayMacro("Sort out bad bods")
+while GetAlias("sortedbods") == 0:
+	Pause(5000)
+	if Timer("justincase") > 300000:
+		SysMessage("Something went wrong")
+		StopAll()
+print "1.2"
+
+SetTimer("justincase", 0)
+PlayMacro("Bod v0.3")
+while GetAlias("filledthebods") == 0:
+	Pause(5000)
+	if Timer("justincase") > 1200000:
+		SysMessage("Something went wrong")
+		StopAll()
+print "1.3"
+
+SetTimer("justincase", 0)
+PlayMacro("dump filled bods")
+while GetAlias("dumpedbods") == 0:
+	Pause(5000)
+	if Timer("justincase") > 300000:
+		SysMessage("Something went wrong")
+		StopAll()
+print "1.4"

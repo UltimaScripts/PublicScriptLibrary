@@ -1,0 +1,234 @@
+using System;
+using System.Diagnostics;
+using System.IO;
+using System.Text;
+using System.Windows.Forms;
+using GumpStudio.Elements;
+using GumpStudio.Forms;
+using GumpStudio.Plugins;
+
+namespace CAExport
+{
+    public class CAExport : BasePlugin
+    {
+        private const string TEMPLATE = @"
+from ClassicAssist.UO.Objects.Gumps import Gump, GumpButtonType
+from Assistant import Engine
+from System.Threading import AutoResetEvent
+
+class MyGump(Gump):
+    def __new__(self):
+        gump = Gump.__new__(self, 250, 250)
+{gump_commands}
+        return gump
+        
+    def OnResponse(self, buttonId, switches, textEntries):
+        are.Set()
+
+are = AutoResetEvent(False)
+
+gump = MyGump()
+gump.SendGump()
+
+are.WaitOne()
+";
+
+        private StringBuilder _elementText;
+
+        private DesignerForm _designer;
+
+        public override string Name => GetPluginInfo().PluginName;
+
+        public override PluginInfo GetPluginInfo()
+        {
+            return new PluginInfo
+            {
+                AuthorEmail = "reeeetus@gmail.com",
+                AuthorName = "Reetus",
+                Description = "Export to ClassicAssist Python",
+                PluginName = "ClassicAssist Exporter",
+                Version = "1.0"
+            };
+        }
+
+        public override void Load( DesignerForm frmDesigner )
+        {
+            _designer = frmDesigner;
+
+            var menuItem = new MenuItem( "ClassicAssist Export", ExportClick );
+
+            _designer.mnuFileExport.Enabled = true;
+            _designer.mnuFileExport.MenuItems.Add( menuItem );
+        }
+
+        private void ExportClick( object sender, EventArgs e )
+        {
+            _elementText = new StringBuilder();
+
+            AddLine( "gump.Closable = True" );
+            AddLine( "gump.Movable = True" );
+
+            var page = 0;
+
+            foreach ( GroupElement stack in _designer.Stacks )
+            {
+                AddLine( $"gump.AddPage({page++})" );
+
+                foreach( BaseElement element in stack.GetElementsRecursive() )
+                {
+                    switch ( element.Type )
+                    {
+                        case "Alpha Area":
+                            AddLine(
+                                $"gump.AddAlphaRegion({element.X}, {element.Y}, {element.Width}, {element.Height})" );
+                            break;
+                        case "Background":
+                            AddLine(
+                                $"gump.AddBackground({element.X}, {element.Y}, {element.Width}, {element.Height}, {( (BackgroundElement) element ).GumpID})" );
+                            break;
+                        case "Button":
+                            if ( element is ButtonElement buttonElement )
+                            {
+                                var buttonType = buttonElement.ButtonType == ButtonTypeEnum.Page
+                                    ? "GumpButtonType.Page"
+                                    : "GumpButtonType.Reply";
+                                AddLine(
+                                    $"gump.AddButton({buttonElement.X}, {buttonElement.Y}, {buttonElement.NormalID}, {buttonElement.PressedID}, 0, {buttonType}, {buttonElement.Param})" );
+                            }
+
+                            break;
+                        case "Checkbox":
+                            if ( element is CheckboxElement checkboxElement )
+                            {
+                                AddLine(
+                                    $"gump.AddCheck({checkboxElement.X}, {checkboxElement.Y}, {checkboxElement.UnCheckedID}, {checkboxElement.CheckedID}, {( checkboxElement.Checked ? "True" : "False" )}, 0)" );
+                            }
+
+                            break;
+                        case "Radio Button":
+                            if ( element is RadioElement radioElement )
+                            {
+                                AddLine(
+                                    $"gump.AddCheck({radioElement.X}, {radioElement.Y}, {radioElement.UnCheckedID}, {radioElement.CheckedID}, {( radioElement.Checked ? "True" : "False" )}, 0)" );
+                            }
+
+                            break;
+                        case "HTML":
+                            if ( element is HTMLElement htmlElement )
+                            {
+                                var text = htmlElement.TextType == HTMLElementType.Localized
+                                    ? $"gump.AddHtmlLocalized({htmlElement.X}, {htmlElement.Y}, {htmlElement.Width}, {htmlElement.Height}, {htmlElement.CliLocID}, {( htmlElement.ShowScrollbar ? "True" : "False" )}, {( htmlElement.ShowBackground ? "True" : "False" )})"
+                                    : $"gump.AddHtml({htmlElement.X}, {htmlElement.Y}, {htmlElement.Width}, {htmlElement.Height}, \"{htmlElement.HTML.Replace( "\"", "\\\"" )}\", {( htmlElement.ShowScrollbar ? "True" : "False" )}, {( htmlElement.ShowBackground ? "True" : "False" )})";
+
+                                AddLine( text );
+                            }
+
+                            break;
+                        case "Image":
+                            AddLine( $"gump.AddImage({element.X}, {element.Y}, {( (ImageElement) element ).GumpID})" );
+                            break;
+                        case "Item":
+                            AddLine( $"gump.AddImage({element.X}, {element.Y}, {( (ItemElement) element ).ItemID})" );
+                            break;
+                        case "Label":
+                            if ( element is LabelElement labelElement )
+                            {
+                                AddLine(
+                                    $"gump.AddLabel({labelElement.X}, {labelElement.Y}, {labelElement.Hue.Index}, \"{labelElement.Text}\")" );
+                            }
+
+                            break;
+                        case "Text Entry":
+                            if ( element is TextEntryElement textEntryElement )
+                            {
+                                AddLine(
+                                    $"gump.AddTextEntry({textEntryElement.X}, {textEntryElement.Y}, {textEntryElement.Width}, {textEntryElement.Height}, {textEntryElement.Hue.Index}, {textEntryElement.ID}, \"{textEntryElement.Name.Replace( " ", "" )}\")" );
+                            }
+
+                            break;
+                        case "Tiled Image":
+                            AddLine(
+                                $"gump.AddImageTiled({element.X}, {element.Y}, {element.Width}, {element.Height}, {( (TiledElement) element ).GumpID})" );
+                            break;
+                    }
+                }
+            }
+
+            var fullPath = Path.GetTempFileName() + ".txt";
+
+            var output =
+                TabToSpaceConvertor.Process( TEMPLATE.Replace( "{gump_commands}", _elementText.ToString() ), 4 );
+
+            File.WriteAllText( fullPath, output );
+
+            var p = new Process { StartInfo = new ProcessStartInfo( fullPath ) { UseShellExecute = true } };
+            p.Start();
+        }
+
+        private void AddLine( string line )
+        {
+            _elementText.AppendLine( $"\t\t{line}" );
+        }
+
+        private class TabToSpaceConvertor
+        {
+            private static int GetNearestTabStop( int currentPosition, int tabLength )
+            {
+                // If already at the tab stop, jump to the next tab stop.
+                if ( currentPosition % tabLength == 1 )
+                {
+                    currentPosition += tabLength;
+                }
+                else
+                {
+                    // If in the middle of two tab stops, move forward to the nearest.
+                    for ( var i = 0; i < tabLength; i++, currentPosition++ )
+                    {
+                        if ( currentPosition % tabLength == 1 )
+                        {
+                            break;
+                        }
+                    }
+                }
+
+                return currentPosition;
+            }
+
+            public static string Process( string input, int tabLength )
+            {
+                if ( string.IsNullOrEmpty( input ) )
+                {
+                    return input;
+                }
+
+                var output = new StringBuilder();
+
+                var positionInOutput = 1;
+
+                foreach ( var c in input )
+                {
+                    switch ( c )
+                    {
+                        case '\t':
+                            var spacesToAdd = GetNearestTabStop( positionInOutput, tabLength ) - positionInOutput;
+                            output.Append( new string( ' ', spacesToAdd ) );
+                            positionInOutput += spacesToAdd;
+                            break;
+
+                        case '\n':
+                            output.Append( c );
+                            positionInOutput = 1;
+                            break;
+
+                        default:
+                            output.Append( c );
+                            positionInOutput++;
+                            break;
+                    }
+                }
+
+                return output.ToString();
+            }
+        }
+    }
+}

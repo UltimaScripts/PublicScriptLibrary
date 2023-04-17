@@ -1,0 +1,7 @@
+SetQuietMode(True)
+ClearIgnoreList()
+while FindType(0x2259, -1, 'backpack', 251):
+	UseObject("found")
+	Pause(600)
+SetAlias("smashedbods", 1)
+SysMessage("Done Smashing")

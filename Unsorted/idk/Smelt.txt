@@ -1,0 +1,6 @@
+while FindType(0x19b9, 0 ,0x4115667f):
+	UseObject(GetAlias("found"))
+	WaitForTarget(5000)
+	#TargetType(0x1985, -1, 2)
+	TargetXYZ(1997, 1362, -80, 6533)
+	Pause(600)

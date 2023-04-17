@@ -1,0 +1,4 @@
+while FindType(0x2258, 0, 'backpack'):
+	MoveItem(GetAlias('found'), 0x5bc4)
+	IgnoreObject(GetAlias('found'))
+	Pause(800)

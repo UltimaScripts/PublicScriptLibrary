@@ -1,0 +1,22 @@
+while FindType(0x30f,30):
+    if Name("found") == "an ambitious solen queen":
+        SetAlias("TheQueenBug", "found")
+        if Distance("TheQueenBug") > 1:
+            Pathfind("TheQueenBug")
+            while Pathfinding():
+                Pause(100)
+                if Distance("TheQueenBug") <= 1:
+                    Pathfind(0)
+        WaitForContext("TheQueenBug", 0, 5000)
+        WaitForGump(0xa01862ea, 5000)
+        ReplyGump(0xa01862ea, 1)
+        WaitForGump(0x50b3b37b, 5000)
+        if FindType(0x26b7,-1,'backpack'):
+            MoveItem("found", "TheQueenBug",50)
+            WaitForGump(0xa01862ea, 5000)
+            ReplyGump(0xa01862ea, 1)
+        else:
+            PlaySound("Bike Horn.wav")
+            SysMessage("No Fungi, Stopping")
+            Stop()
+        Stop()

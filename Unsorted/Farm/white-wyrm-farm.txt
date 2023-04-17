@@ -1,0 +1,71 @@
+pet1 = 0x7b6a
+SetQuietMode(True)
+while not Dead('self'):
+    Pathfind(5752, 139, 8)
+    while Pathfinding():
+        Pause(100)
+    while not FindType(0x2006,16):
+        if Weight() > 355:
+            #if Distance(pet1) < 2:
+                #UseObject(pet1)
+                #Pause(1000)
+            #recall
+            UseObject(0x40042bb2)
+            WaitForGump(0x1f2, 5000)
+            ReplyGump(0x1f2, 101)
+            WaitForGump(0x1f2, 5000)
+            ReplyGump(0x1f2, 4)
+            Pause(2000)
+            #wait
+            if FindObject(0x7cd5):
+                if Distance(0x7cd5) > 12:
+                    Pathfind(1422, 1686, 0)
+                    while Pathfinding():
+                        Pause(100)
+                WaitForContext(0x7cd5, 1, 5000)
+                WaitForGump(0x45f9cfef, 5000)
+                if FindType(0xeed,0,'backpack'):
+                    MoveItem('found', 0x400a30f3)
+                    Pause(1000)
+            else:
+                PlaySound("Bike Horn.wav")
+                Stop()
+            #recall back
+            Pause(1000)
+            UseObject(0x40042bb2)
+            WaitForGump(0x1f2, 5000)
+            ReplyGump(0x1f2, 110)
+            WaitForGump(0x1f2, 5000)
+            ReplyGump(0x1f2, 4)
+            Pause(1000)
+            #hide!
+            Cast("invisibility")
+            WaitForTarget(5000)
+            Target("self")
+            Pause(1000)
+        if DiffHitsPercent(pet1) > 80:
+            PlaySound("tone1.wav")
+            Pause(2000)
+        if not Hidden("self"):
+            MoveItem(0x4009486a, 0x400a1d0b)
+            Pause(100)
+            Cast("invisibility")
+            WaitForTarget(5000)
+            Target("self")
+            EquipItem(0x4009486a, "OneHanded")
+            Pause(1000)
+        Pause(100)
+    if Name("found") == "a white wyrm corpse":
+        Pathfind('found')
+        while Pathfinding():
+            Pause(100)
+        UseObject("found")
+        Pause(1000)
+        ##Rehue the corpse
+        #Rehue("found", 1001)
+        while Autolooting():
+            Pause(100)
+        Pause(2000)
+        ##hide the corpse
+        HideEntity('found')
+        IgnoreObject("found")

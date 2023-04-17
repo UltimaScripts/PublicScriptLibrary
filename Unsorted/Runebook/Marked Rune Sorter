@@ -1,0 +1,55 @@
+import clr
+import System
+clr.AddReference("System.Core")
+clr.ImportExtensions(System.Linq)
+from Assistant import Engine
+#44, 64, 0
+#55, 64, 0
+#44, 77, 0
+#142, 64, 0
+#8 per row
+#+11, 64 till 8
+#44,+14 next start pos
+
+#1060805
+#a recall rune for 
+SetQuietMode(True)
+runeClilocs = [1060805]
+markedRuneBag = 0x402909c7
+sortedbag = 0x401b6186
+runeG = 0x1f14
+count = 1
+markdict = {}
+posx1 = 44
+posy1 = 64
+
+ClearIgnoreList()
+
+markedrunecount = CountType(runeG, markedRuneBag)
+#print markedrunecount
+#Stop()
+while FindType(runeG,-1,markedRuneBag):
+	runeSerial = GetAlias("found")
+	IgnoreObject("found")
+	item = Engine.Items.GetItem(runeSerial)
+	runeProps = item.Properties.Where(lambda i: runeClilocs.Contains(i.Cliloc))
+	for runeProp in runeProps:
+		#print runeProp.Arguments[0]
+		runestring = runeProp.Arguments[0]
+		runestringcut = runestring.split("for ",1)[1]
+		#print runestringcut	
+		markdict[runestringcut] = runeSerial
+		#print sorted(markdict)
+for key, value in sorted(markdict.items()):
+	if count == 9 or count == 17 or count == 25 or count == 33 or count == 41 or count == 49:
+		posy1 += 10
+		posx1 = 44		
+	MoveItem(value, sortedbag,-1,posx1,posy1)
+	Pause(600)
+	count += 1
+	posx1 += 11
+	Pause(10)
+
+Stop()
+
+

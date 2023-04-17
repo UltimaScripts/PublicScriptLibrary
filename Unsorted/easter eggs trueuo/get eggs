@@ -1,0 +1,21 @@
+ClearIgnoreList()
+mytrash = {}
+while FindType(-1,24):
+    Pause(10)
+    name = Name("found")
+    if "Doom Rabbit Egg" in name:
+        dist = Distance(GetAlias("found"))
+        seri = GetAlias("found")
+        mytrash[seri]=dist
+    IgnoreObject("found")
+sorted_trash = sorted(mytrash.items(), key=lambda x: x[1])
+for key,value in sorted_trash:
+    if FindObject(key):
+        Pathfind(key)
+        HeadMsg("\/ Here \/", key)
+        while Pathfinding():
+            Pause(200)
+        MoveItem(key, "backpack")
+        Pause(100)
+        break
+        #HeadMsg(str(value), key)

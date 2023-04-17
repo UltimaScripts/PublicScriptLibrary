@@ -1,0 +1,7 @@
+import re
+
+m = re.search('(?<=abc)(d(e))f', 'abcdef')
+
+print(m.group(0))
+print(m.group(1))
+print(m.group(2))

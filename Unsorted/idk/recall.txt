@@ -1,0 +1,42 @@
+minebook1 = 0x4065be5a
+
+UseObject(minebook1)
+WaitForGump(0x554b87f3, 5000)
+
+if mc == 1:
+	ReplyGump(0x554b87f3, 5)
+elif mc == 2:
+	ReplyGump(0x554b87f3, 11)
+elif mc == 3:
+	ReplyGump(0x554b87f3, 17)
+elif mc == 4:
+	ReplyGump(0x554b87f3, 23)
+elif mc == 5:
+	ReplyGump(0x554b87f3, 29)
+elif mc == 6:
+	ReplyGump(0x554b87f3, 35)
+elif mc == 7:
+	ReplyGump(0x554b87f3, 41)
+elif mc == 8:
+	ReplyGump(0x554b87f3, 47)
+elif mc == 9:
+	ReplyGump(0x554b87f3, 53)
+elif mc == 10:
+	ReplyGump(0x554b87f3, 59)
+elif mc == 11:
+	ReplyGump(0x554b87f3, 64)
+elif mc == 12:
+	ReplyGump(0x554b87f3, 70)
+elif mc == 13:
+	ReplyGump(0x554b87f3, 76)
+elif mc == 14:
+	ReplyGump(0x554b87f3, 82)
+elif mc == 15:
+	ReplyGump(0x554b87f3, 88)
+elif mc == 16:
+	ReplyGump(0x554b87f3, 94)
+	
+px = X("self")
+py = X("self")
+while px == X("self") or py == X("self"):
+	Pause(100)

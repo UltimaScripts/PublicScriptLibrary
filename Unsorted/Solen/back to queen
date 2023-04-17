@@ -1,0 +1,34 @@
+
+def goto(xx, yy, zz):
+    Pathfind(xx, yy, zz)
+    while Pathfinding():
+        Pause(100)
+
+#from nest 1
+goto(5734, 1939, 2)
+goto(5746, 1942, 4)
+goto(5758, 1938, 1)
+goto(5751, 1926, 2)
+goto(5739, 1914, 1)
+goto(5727, 1913, 4)
+goto(5715, 1916, 2)
+goto(5703, 1928, 0)
+#to c4
+UseObject(0x4000789c)
+Pause(1500)
+goto(5787, 1928, 0)
+goto(5799, 1919, 3)
+goto(5808, 1908, 1)
+#to d3
+UseObject(0x400078f5)
+Pause(1500)
+goto(5879, 1894, 0)
+goto(5868, 1906, 2)
+goto(5859, 1918, 2)
+goto(5847, 1930, 1)
+goto(5835, 1931, 3)
+goto(5823, 1942, 2)
+goto(5811, 1951, 4)
+goto(5799, 1963, 2)
+goto(5795, 1975, 3)
+goto(5789, 1987, 1)

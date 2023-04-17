@@ -1,0 +1,57 @@
+#tailor
+while X('self') != 978 and Y('self') != 526:
+	Pathfind(978, 526, -30)
+	Pause(500)
+#get Tailoring Bods
+for x in range(0,4):
+	WaitForContext(0x13c74, 1, 5000)
+	WaitForGump(0x9bade6ea, 2000)
+	ReplyGump(0x9bade6ea, 1)
+	Pause(100)
+#smith
+while X('self') != 977 and Y('self') != 513:
+	Pathfind(978, 513, -30)
+	Pause(500)
+#get smith Bods
+for x in range(0,4):
+	WaitForContext(0x8a470, 1, 5000)
+	WaitForGump(0x9bade6ea, 2000)
+	ReplyGump(0x9bade6ea, 1)
+	Pause(100)
+#line up with door
+while X('self') != 987 and Y('self') != 518:
+	Pathfind(987, 518, -30)
+	Pause(500)
+#pitstop
+#while X('self') != 998 and Y('self') != 518:
+#	Pathfind(998, 518, -30)
+#	Pause(500)
+#carp/tink/bow
+while X('self') != 1005 and Y('self') != 517:
+	Pathfind(1005, 517, -30)
+	Pause(500)
+#get carpenter bods
+for x in range(0,4):
+	WaitForContext(0x13e8a, 1, 5000)
+	WaitForGump(0x9bade6ea, 5000)
+	ReplyGump(0x9bade6ea, 1)
+	Pause(100)
+Pause(1000)
+#get fletching bods
+for x in range(0,4):
+	WaitForContext(0x13e8e, 1, 5000)
+	WaitForGump(0x9bade6ea, 5000)
+	ReplyGump(0x9bade6ea, 1)
+	Pause(100)
+Pause(1000)
+#get tinker bods
+for x in range(0,4):
+	WaitForContext(0x13e8b, 1, 5000)
+	WaitForGump(0x9bade6ea, 5000)
+	ReplyGump(0x9bade6ea, 1)
+	Pause(100)
+Pause(1000)
+#logout spot
+while X('self') != 990 and Y('self') != 521:
+	Pathfind(990, 521, -30)
+	Pause(500)

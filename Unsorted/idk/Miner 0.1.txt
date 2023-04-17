@@ -1,0 +1,127 @@
+from ClassicAssist.UO.Data import MapInfo
+from Assistant import Engine
+
+minebook1 = 0x4065be5a
+MiningTiles = [220, 221, 222, 223, 224, 225, 226, 227, 228, 229, 230, 231, 236, 237, 238, 239, 240, 241, 242, 243, 
+				244, 245, 246, 247, 252, 253, 254, 255, 256, 257, 258, 259, 260, 261, 262, 263, 268, 269, 270, 271, 
+				272, 273, 274, 275, 276, 277, 278, 279, 286, 287, 288, 289, 290, 291, 292, 293, 294, 296, 296, 297, 
+				321, 322, 323, 324, 467, 468, 469, 470, 471, 472, 473, 474, 476, 477, 478, 479, 480, 481, 482, 483, 
+				484, 485, 486, 487, 492, 493, 494, 495, 543, 544, 545, 546, 547, 548, 549, 550, 551, 552, 553, 554, 
+				555, 556, 557, 558, 559, 560, 561, 562, 563, 564, 565, 566, 567, 568, 569, 570, 571, 572, 573, 574, 
+				575, 576, 577, 578, 579, 581, 582, 583, 584, 585, 586, 587, 588, 589, 590, 591, 592, 593, 594, 595, 
+				596, 597, 598, 599, 600, 601, 610, 611, 612, 613, 1010, 1741, 1742, 1743, 1744, 1745, 1746, 1747, 
+				1748, 1749, 1750, 1751, 1752, 1753, 1754, 1755, 1756, 1757, 1771, 1772, 1773, 1774, 1775, 1776, 
+				1777, 1778, 1779, 1780, 1781, 1782, 1783, 1784, 1785, 1786, 1787, 1788, 1789, 1790, 1801, 1802, 
+				1803, 1804, 1805, 1806, 1807, 1808, 1809, 1811, 1812, 1813, 1814, 1815, 1816, 1817, 1818, 1819, 
+				1820, 1821, 1822, 1823, 1824, 1831, 1832, 1833, 1834, 1835, 1836, 1837, 1838, 1839, 1840, 1841, 
+				1842, 1843, 1844, 1845, 1846, 1847, 1848, 1849, 1850, 1851, 1852, 1853, 1854, 1861, 1862, 1863, 
+				1864, 1865, 1866, 1867, 1868, 1869, 1870, 1871, 1872, 1873, 1874, 1875, 1876, 1877, 1878, 1879, 
+				1880, 1881, 1882, 1883, 1884, 1981, 1982, 1983, 1984, 1985, 1986, 1987, 1988, 1989, 1990, 1991, 
+				1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2028, 2029, 2030, 
+				1346, 1347, 1348, 1349, 1350, 1351, 1352, 1353, 1354, 1355, 1356, 1357, 1358, 1359, 
+				2031, 2032, 2033, 2100, 2101, 2102, 2103, 2104, 2105, 1339, 1340, 1341, 1342, 1343, 1344, 1345 ]
+
+def runebook():
+	try:
+		mcount
+	except NameError:
+		mcount = 1
+	if mcount > 0 and mcount < 17:
+		UseObject(minebook1)
+		WaitForGump(0x554b87f3, 5000)
+		if mcount == 1:
+			ReplyGump(0x554b87f3, 5)
+		elif mcount == 2:
+			ReplyGump(0x554b87f3, 11)
+		elif mcount == 3:
+			ReplyGump(0x554b87f3, 17)
+		elif mcount == 4:
+			ReplyGump(0x554b87f3, 23)
+		elif mcount == 5:
+			ReplyGump(0x554b87f3, 29)
+		elif mcount == 6:
+			ReplyGump(0x554b87f3, 35)
+		elif mcount == 7:
+			ReplyGump(0x554b87f3, 41)
+		elif mcount == 8:
+			ReplyGump(0x554b87f3, 47)
+		elif mcount == 9:
+			ReplyGump(0x554b87f3, 53)
+		elif mcount == 10:
+			ReplyGump(0x554b87f3, 59)
+		elif mcount == 11:
+			ReplyGump(0x554b87f3, 64)
+		elif mcount == 12:
+			ReplyGump(0x554b87f3, 70)
+		elif mcount == 13:
+			ReplyGump(0x554b87f3, 76)
+		elif mcount == 14:
+			ReplyGump(0x554b87f3, 82)
+		elif mcount == 15:
+			ReplyGump(0x554b87f3, 88)
+		elif mcount == 16:
+			ReplyGump(0x554b87f3, 94)
+	else:
+		Stop()
+	mcount = mcount + 1
+	px = X("self")
+	py = X("self")
+	while px == X("self") or py == X("self"):
+		Pause(100)
+	return
+
+def isMiningTile(x, y):
+	maptile = MapInfo.GetLandTile(int(Engine.Player.Map), x, y).ID
+	if maptile != None:
+		if MiningTiles.Contains(maptile):
+			return True
+
+	return False
+
+def Main():
+	for x in range(Engine.Player.X-2, Engine.Player.X+2):
+		for y in range(Engine.Player.Y-2, Engine.Player.Y+2): 
+			if isMiningTile(x, y) == True:
+				Spotx = x
+				Spoty = y
+				return Spotx,Spoty
+	print "Something Went Wrong 1"
+	Stop()
+	
+def Mine(Spotx,Spoty):
+	while not Dead("self"):
+		if FindType(0x19b9,0,"backpack") and Weight() > 500:
+			theore = GetAlias("found")
+			MoveItem(theore, 0x4115667f)
+			Pause(600)
+		if not FindType(0xe86,0,"backpack"):
+			print "no pickaxe"
+			Stop()
+		ClearJournal()
+		UseType(0xe86,0,"backpack")
+		WaitForTarget(5000)
+		TargetXYZ(Spotx, Spoty, 0)
+		while not Dead("self"):
+			Pause(50)
+			if InJournal("loosen some rocks") or InJournal("You put some"):
+				Pause(100)
+				break
+			if InJournal("no metal here"):
+				print "done"
+				return
+			if InJournal("can't mine"):
+				print "bad spot"
+				Stop()
+			if InJournal("world is saving"):
+				ClearJournal()
+				Pause(2000)
+				break
+	return
+
+while True:
+	runebook()
+	Spotx,Spoty = Main()
+	Mine(Spotx,Spoty)
+	if Dead("self"):
+		SysMessage("You are dead.")
+		Stop()

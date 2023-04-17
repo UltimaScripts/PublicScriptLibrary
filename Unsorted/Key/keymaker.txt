@@ -1,0 +1,16 @@
+while CountType(0x1010, "backpack") < 80:
+	UseType(0x1eb8,-1,'backpack')
+	Pause(500)
+	ReplyGump(0x38920abd, 29)
+	WaitForGump(0x38920abd, 4000)
+	ReplyGump(0x38920abd, 23)
+	WaitForGump(0x38920abd, 4000)
+	Pause(100)
+while CountType(0x1011, "backpack") < 4:
+	UseType(0x1eb8,-1,'backpack')
+	Pause(500)
+	ReplyGump(0x38920abd, 29)
+	WaitForGump(0x38920abd, 5000)
+	ReplyGump(0x38920abd, 2)
+	WaitForGump(0x38920abd, 5000)
+	Pause(100)

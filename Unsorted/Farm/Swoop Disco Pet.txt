@@ -1,0 +1,63 @@
+ClearIgnoreList()
+while FindType(0x2006, 12):
+	mobcorpse = GetAlias('found')
+	IgnoreObject(mobcorpse)
+	
+SetTimer("Discoparty", 12000)
+ClearJournal()
+ClearTargetQueue()
+check = 0
+
+
+if not Dead('self'):
+	if FindType(0x5, 11):
+		mobi = GetAlias('found')
+		if Name(mobi) == "Swoop":
+			while Distance(mobi) > 3:
+				Run(DirectionTo(mobi))
+				#Pathfind(mobi)
+				Pause(500)
+			Msg("all kill")
+			WaitForTarget(2000)
+			Target(mobi)
+			Msg("all kill")
+			WaitForTarget(2000)
+			Target(mobi)
+			while not Dead('self'):
+				if Timer("Discoparty") >= 12000 and check == 0:
+					ClearJournal()
+					UseSkill("Discordance")
+					WaitForTarget(5000)
+					Target(mobi)
+					SetTimer("Discoparty", 0)
+				if InJournal("Jarring music,", "system") or InJournal("creature is already", "system"):
+					check = 1
+				if Mana('self') > 40:
+					Cast("Energy Bolt")
+					WaitForTarget(5000)
+					Target(mobi)
+					Pause(500)
+				if Distance(mobi) < 2:
+					if X('self') <= 2216:
+						Pathfind(2216, 1222, -10)
+						Pause(1000)
+					elif X('self') > 2216:
+						Pathfind(2227, 1217, 12)
+						Pause(1000)
+				if FindType(0x2006, 12):
+					mobcorpse = GetAlias('found')
+					HeadMsg("x", mobcorpse)
+					while Distance(mobcorpse) > 0:
+						Pathfind(mobcorpse)
+						Pause(1000)
+					IgnoreObject(mobcorpse)
+					check = 0
+					ClearJournal()
+					break
+				Pause(1000)
+			#Pathfind(2225, 1222, 9)
+		else:
+			IgnoreObject(mobi)
+		#HeadMsg("stop", "self")
+		##Stop()
+	Pause(1200)

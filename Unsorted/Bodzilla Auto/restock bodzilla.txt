@@ -1,0 +1,84 @@
+SetQuietMode(True)
+cloth = 0x1766
+sewingkit = 0xf9d
+bodbooks = 0x2259
+sewingkitsupply = 0x40171dac
+bodbooksupply = 0x40171dab
+myholdingbag = 0x401b6186
+bodbookhue = 251
+
+ClearIgnoreList()
+
+UseObject(myholdingbag)
+Pause(700)
+UseObject(sewingkitsupply)
+Pause(700)
+UseObject(bodbooksupply)
+Pause(700)
+
+#cloth
+clothnum = CountType(cloth, "backpack")
+supplyclothnum = CountType(cloth, sewingkitsupply)
+clothtotal = (supplyclothnum + clothnum)
+Pause(100)
+if clothtotal < 15000:
+	SysMessage("Get More Cloth")
+	Stop()
+while clothnum < 15000:
+	Pause(100)
+	if FindType(cloth,2,sewingkitsupply,0):
+		MoveItem('found', myholdingbag, 2000)
+		Pause(700)
+		clothnum = CountType(cloth, "backpack")
+	else:
+		SysMessage("error cant find cloth")
+		Stop()
+
+#sewing kits
+sewnum = CountType(sewingkit, "backpack")
+supplysewnum = CountType(sewingkit, sewingkitsupply)
+sewtotal = (supplysewnum + sewnum)
+Pause(100)
+if sewtotal < 24:
+	SysMessage("Get More Sewing Kits")
+	Stop()
+while sewnum < 24:
+	Pause(100)
+	Organizer("sewingkitrestock")
+	Pause(1000)
+	while Organizing():
+		Pause(5000)
+	sewnum = CountType(sewingkit, "backpack")
+	#if FindType(sewingkit,2,sewingkitsupply,0):
+	#	MoveItem('found', 'backpack')
+	#	Pause(700)
+	#	sewnum = CountType(sewingkit, "backpack")
+	#else:
+	#	SysMessage("error cant find sewing kit")
+	#	Stop()
+
+#bodbooks
+booknum = CountType(bodbooks, "backpack")
+supplybooknum = CountType(bodbooks, bodbooksupply)
+booktotal = (supplybooknum + booknum)
+Pause(100)
+if sewtotal < 10:
+	SysMessage("Get More Bod Books")
+	Stop()
+while booknum < 10:
+	Pause(100)
+	Organizer("bodbookrestock")
+	Pause(1000)
+	while Organizing():
+		Pause(5000)
+	booknum = CountType(bodbooks, "backpack")
+	#if FindType(bodbooks,2,bodbooksupply,bodbookhue):
+	#	MoveItem('found', 'backpack')
+	#	Pause(700)
+	#	booknum = CountType(bodbooks, "backpack")
+	#else:
+	#	SysMessage("error cant find Bod Books")
+	#	Stop()
+
+SetAlias("restocker", 1)
+SysMessage("Done Restocking")

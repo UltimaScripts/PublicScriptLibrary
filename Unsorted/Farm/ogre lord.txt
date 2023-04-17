@@ -1,0 +1,29 @@
+SetQuietMode(True)
+
+def checkhealing():
+    while GetAlias("healing") == 1:
+        Pause(500)
+
+def weightc():
+    if Weight() > 360:
+        PlaySound("Bike Horn.wav")
+
+while not Dead('self'):
+    checkhealing()
+    weightc()
+    Pathfind(5951, 340, 0)
+    while Pathfinding():
+        Pause(100)
+    while not FindType(0x2006,16):
+        Pause(100)
+    weightc()
+    checkhealing()
+    Pathfind('found')
+    while Pathfinding():
+        Pause(100)
+    #Rehue("found", 1001)
+    UseObject("found")
+    Pause(3000)
+    HideEntity('found')
+    IgnoreObject("found")
+    

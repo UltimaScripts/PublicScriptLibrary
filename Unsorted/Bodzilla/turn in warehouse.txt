@@ -1,0 +1,30 @@
+npc = 0x2c3
+#0x134 aria
+#0x2c3 sol
+container = "backpack"
+#black holding 0x4007ef0a
+#"backpack"
+SetQuietMode(True)
+ClearIgnoreList()
+while FindType(0x2258, -1, container, 2418):
+	MoveItem('found', npc)
+	Pause(600)
+	#print Weight()
+	if Weight() >= MaxWeight():
+		SysMessage("You Weigh Too Much Fool")
+		Stop()
+while FindType(0x2258, -1, container, 2101):
+	MoveItem('found', npc)
+	Pause(600)
+	#print Weight()
+	if Weight() >= MaxWeight():
+		SysMessage("You Weigh Too Much Fool")
+		Stop()
+while FindType(0x2258, -1, container, 2213):
+	MoveItem('found', npc)
+	Pause(600)
+	#print Weight()
+	if Weight() >= MaxWeight():
+		SysMessage("You Weigh Too Much Fool")
+		Stop()
+SysMessage("all done turning in")

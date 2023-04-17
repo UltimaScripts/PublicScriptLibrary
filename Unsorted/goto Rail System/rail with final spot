@@ -1,0 +1,38 @@
+from Assistant import Engine
+#open the virtue gump to stop this script
+#open the quests gump to make a line seperator
+
+SetAlias("End_Script", 0)
+with open("Back_To_Queen.txt", "a") as my_text_file:
+    px = Engine.Player.X
+    py = Engine.Player.Y
+    pz = Engine.Player.Z
+    result = ("goto(" + str(px) + ", " + str(py) + ", " + str(pz) + ")")
+    my_text_file.write(result + "\n")
+    SysMessage("Active")
+    while not Dead("self"):
+        Pause(50)
+        if Distance(px, py) > 11:
+            SysMessage("Spot")
+            px = Engine.Player.X
+            py = Engine.Player.Y
+            pz = Engine.Player.Z
+            result = ("goto(" + str(px) + ", " + str(py) + ", " + str(pz) + ")")
+            my_text_file.write(result + "\n")
+        #if GetAlias("End_Script") == 1:
+        if GumpExists(0x861db6b1):
+            SysMessage("Spot")
+            px = Engine.Player.X
+            py = Engine.Player.Y
+            pz = Engine.Player.Z
+            result = ("goto(" + str(px) + ", " + str(py) + ", " + str(pz) + ")")
+            my_text_file.write(result + "\n")
+            SysMessage("Closed")
+            Pause(100)
+            my_text_file.close()
+            Stop()
+        if GumpExists(0x4c4c6db0):
+            SysMessage("Close The Help Gump To Proceed")
+            my_text_file.write("-----\n")
+            while GumpExists(0x4c4c6db0):
+                Pause(100)

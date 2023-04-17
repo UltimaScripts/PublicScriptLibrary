@@ -1,0 +1,26 @@
+from ClassicAssist.UO.Data import Statics, TileFlags, MapInfo
+from Assistant import Engine
+
+treeTypes = [0xdd,0x22c]
+
+def Impassable(x, y, map = int(Engine.Player.Map)):
+	statictilescheck = Statics.GetStatics( map, x, y )
+	if statictilescheck == None:
+		print "done1"
+	if statictilescheck != None:
+		for impx in statictilescheck:
+			if impx.Flags.HasFlag(TileFlags.Impassable):
+				return True
+	return False
+
+mineareax1 = X("self") - 1
+mineareay1 = X("self") - 1
+mineareax2 = X("self") + 1
+mineareay2 = X("self") + 1
+
+for spotx in range(mineareax1, mineareax2):
+	for spoty in range(mineareay1, mineareay2):
+		tester = Impassable(spotx, spoty)
+		if tester == True:
+			print (spotx, spoty)
+print "done2"

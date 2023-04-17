@@ -1,0 +1,51 @@
+SetQuietMode(True)
+SetAlias("mount", 0x404f12b6)
+if Mounted("self"):
+	UseObject("self")
+	Pause(100)
+orelist = [0x19b9, 0x19b8]
+if Weight() > 500:
+	for x in orelist:
+		while FindType(x,0,"backpack"):
+			theore = GetAlias("found")
+			MoveItem(theore, 0x4115667f)
+			Pause(600)
+if not FindType(0xe86,0,"backpack"):
+	print "no pickaxe"
+	Stop()
+ClearJournal()
+UseType(0xe86)
+WaitForTarget(5000)
+if Direction('self') == 'North':
+	TargetTileOffsetResource(0, -1, 0)
+if Direction('self') == 'Northeast':
+	TargetTileOffsetResource(1, -1, 0)
+if Direction('self') == 'East':
+	TargetTileOffsetResource(1, 0, 0)
+if Direction('self') == 'Southeast':
+	TargetTileOffsetResource(1, 1, 0)
+if Direction('self') == 'South':
+	TargetTileOffsetResource(0, 1, 0)
+if Direction('self') == 'Southwest':
+	TargetTileOffsetResource(-1, 1, 0)
+if Direction('self') == 'West':
+	TargetTileOffsetResource(-1, 0, 0)
+if Direction('self') == 'Northwest':
+	TargetTileOffsetResource(-1, -1, 0)
+
+while not Dead("self"):
+	Pause(50)
+	if InJournal("loosen some rocks"):
+		Pause(100)
+		Replay()
+	if InJournal("You put some"):
+		Pause(100)
+		Replay()
+	if InJournal("no metal here"):
+		print "done"
+		UseObject("mount")
+		Stop()
+	if InJournal("can't mine"):
+		print "bad spot"
+		UseObject("mount")
+		Stop()

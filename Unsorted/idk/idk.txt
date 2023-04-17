@@ -1,0 +1,54 @@
+from Assistant import Engine
+
+recallbuttons = [50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65]
+
+def GetRunebookEntries(serial):
+    entries = []
+    SysMessage(str(serial))
+    UseObject(serial)
+    if WaitForGump(0x59, 5000):
+        res,gump = Engine.Gumps.GetGump(0x59)
+        
+        y = 60
+        
+        while y <= 165:
+            element = gump.Pages[1].GetElementByXY(145, y)
+            if element != None and element.Hue != 0:
+                entries.append(element.Text)
+
+            y = y + 5
+            
+        y = 60
+
+        while y <= 165:
+            element = gump.Pages[1].GetElementByXY(305, y)
+            if element != None and element.Hue != 0:
+                entries.append(element.Text)
+                
+            y = y + 5
+            
+    return entries
+        
+    
+PromptAlias('sourceBook')
+PromptAlias('destBook')
+entries = GetRunebookEntries(GetAlias('sourceBook'))
+
+for x in range(len(entries)):
+    SysMessage(entries[x])
+    UseObject('sourceBook')
+    WaitForGump(0x59, 5000)
+    ReplyGump(0x59, recallbuttons[x])
+    Pause(5000)
+    if FindType(0x1f14, -1, 'backpack'):
+        SysMessage(str(GetAlias('found')))
+        while Mana() < 17:
+            Pause(10)
+        Cast('Mark', 'found')
+        Pause(2000)
+        UseObject('found')
+        WaitForPrompt(5000)
+        PromptMsg(entries[x])        
+        Pause(1000)
+        MoveItem('found', 'destBook')
+        Pause(3000)

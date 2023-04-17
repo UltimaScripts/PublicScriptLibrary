@@ -1,0 +1,42 @@
+SetQuietMode(True)
+if FindType(0x19b9,0,"backpack") and Weight() > 500:
+	theore = GetAlias("found")
+	MoveItem(theore, 0x4115667f)
+	Pause(600)
+if not FindType(0xe86,0,"backpack"):
+	print "no pickaxe"
+	Stop()
+ClearJournal()
+UseType(0xe86,0,"backpack")
+WaitForTarget(5000)
+if Direction('self') == 'North':
+	TargetTileOffsetResource(0, -1, 0)
+if Direction('self') == 'Northeast':
+	TargetTileOffsetResource(1, -1, 0)
+if Direction('self') == 'East':
+	TargetTileOffsetResource(1, 0, 0)
+if Direction('self') == 'Southeast':
+	TargetTileOffsetResource(1, 1, 0)
+if Direction('self') == 'South':
+	TargetTileOffsetResource(0, 1, 0)
+if Direction('self') == 'Southwest':
+	TargetTileOffsetResource(-1, 1, 0)
+if Direction('self') == 'West':
+	TargetTileOffsetResource(-1, 0, 0)
+if Direction('self') == 'Northwest':
+	TargetTileOffsetResource(-1, -1, 0)
+
+while not Dead("self"):
+	Pause(50)
+	if InJournal("loosen some rocks"):
+		Pause(100)
+		Replay()
+	if InJournal("You put some"):
+		Pause(100)
+		Replay()
+	if InJournal("no metal here"):
+		print "done"
+		Stop()
+	if InJournal("can't mine"):
+		print "bad spot"
+		Stop()

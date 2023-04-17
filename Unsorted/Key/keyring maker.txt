@@ -1,0 +1,120 @@
+
+bag30 = 0x40297880
+bag40 = 0x402659de
+bag50 = 0x402659dd
+bag60 = 0x402659dc
+bag70 = 0x402659db
+bag80 = 0x402659df
+bag90 = 0x402659da
+bag100 = 0x402659d9
+keyring0G = 0x1011
+keyring1G = 0x1769
+keyring2G = 0x176A
+keyring3G = 0x176B
+ironkeyG = 0x1010
+copperkeyG = 0x100e
+
+ClearIgnoreList()
+
+def KeyRingSetup():
+	if FindType(keyring0G,-1,'backpack',0):
+		thekeyring = GetAlias("found")
+		return thekeyring
+	elif FindType(keyring1G,-1,'backpack',0):
+		thekeyring = GetAlias("found")
+		return thekeyring
+	elif FindType(keyring2G,-1,'backpack',0):
+		thekeyring = GetAlias("found")
+		return thekeyring
+	elif FindType(keyring3G,-1,'backpack',0):
+		thekeyring = GetAlias("found")
+		return thekeyring
+	else:
+		SysMessage("No Keyring found")
+		Stop()
+
+#Check for key bags
+if (not InRange(bag30, 1) or not InRange(bag40, 1) or not InRange(bag50, 1) 
+	or not InRange(bag60, 1) or not InRange(bag70, 1) or not InRange(bag80, 1) 
+	or not InRange(bag90, 1) or not InRange(bag100, 1)):  
+	SysMessage("You must be near the key bags")
+	Stop()
+
+#Check for 70 Iron Keys
+if CountType(ironkeyG, "backpack") < 80:
+	SysMessage("Not Enough Iron Keys")
+	Stop()
+
+#Check for 4 Key Rings
+if CountType(keyring0G, "backpack") < 4:
+	SysMessage("Not Enough Key Rings")
+	Stop()
+
+for i in range(0,80):
+	#Empty Key Ring
+	if i == 0:
+		Pause(50)
+		thekeyring = KeyRingSetup()
+		Pause(50)
+	if i == 20 or i == 40 or i == 60:
+		if i == 20:
+			MoveItem(thekeyring, "backpack",-1,44,64)
+			Pause(600)
+		if i == 40:
+			MoveItem(thekeyring, "backpack",-1,61,64)
+			Pause(600)
+		if i == 60:
+			MoveItem(thekeyring, "backpack",-1,78,64)
+			Pause(600)
+		IgnoreObject(thekeyring)
+		Pause(100)
+		thekeyring = KeyRingSetup()
+		Pause(50)
+	if i < 10 and i >= 0:
+		currentbag = bag30
+	elif i < 20 and i >= 10:
+		currentbag = bag40
+	elif i < 30 and i >= 20:
+		currentbag = bag50
+	elif i < 40 and i >= 30:
+		currentbag = bag60
+	elif i < 50 and i >= 40:
+		currentbag = bag70
+	elif i < 60 and i >= 50:
+		currentbag = bag80
+	elif i < 70 and i >= 60:
+		currentbag = bag90
+	elif i < 80 and i >= 70:
+		currentbag = bag100
+	else:
+		SysMessage("Something Went Wrong for i")
+		Stop()
+	UseObject(currentbag)
+	Pause(500)
+	
+	#Copper Key
+	if FindType(copperkeyG,-1,currentbag,0):
+		Pause(50)
+		thecopperkey = GetAlias("found")
+		IgnoreObject(thecopperkey)
+		Pause(50)
+	else:
+		SysMessage("No Copper Key Found")
+		Stop()
+	#Iron Key	
+	if FindType(ironkeyG,-1,'backpack',0):
+		Pause(50)
+		theironkey = GetAlias("found")
+		IgnoreObject(theironkey)
+		UseObject(theironkey)
+		WaitForTarget(5000)
+		Target(thecopperkey)
+		Pause(700)
+		MoveItem(theironkey, thekeyring)
+		Pause(700)
+	else:
+		SysMessage("No Iron Key Found")
+		Stop()
+	Pause(500)
+MoveItem(thekeyring, "backpack",-1,95,64)
+Stop()

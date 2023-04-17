@@ -1,0 +1,145 @@
+from ClassicAssist.UO.Data import Statics, TileFlags
+from ClassicAssist.UO import UOMath
+from Assistant import Engine
+from System import Convert
+from Assistant import Engine
+from ClassicAssist.UO import UOMath
+from ClassicAssist.UO.Data import Direction
+import System
+import clr
+clr.AddReference('System.Core')
+clr.ImportExtensions(System.Linq)
+
+#Ore respawns every 10 to 20 minutes per vein
+#wood respawns every 20 to 30 minutes per vein
+
+#\/__OPTIONS__\/
+maxcarryweight = 450
+#set boardsbag to 0 if you don't want to place boards in a container
+boardsbag = 0x400c4549
+#set avgserversavetime to the ms it takes your shard to save
+avgserversavetime = 2000
+#/\__OPTIONS__/\
+axes = [0xf45,0xf4b]
+treeTypes = [0xcd8,0xcd3,0xce6,0xce3,0xcd0,0xccd,0xcda,0xcdd,0xce0]
+logs = [0x1bdd,0x07da,0x04a7,0x04a8,0x04a9,0x04aa,0x047f]
+boards = [0x1bd7]
+treeignorelist = []
+
+def check_hand():
+	SetQuietMode(True)
+	if not FindLayer("TwoHanded"):
+		for axetype in axes:
+			if FindType(axetype, -1, 'backpack'):
+				EquipItem('found', "TwoHanded") 
+				Pause(750)
+			else:
+				SysMessage("No Axes, Halting")
+				Stop()
+	SetQuietMode(False)
+
+def GetNearestTree():
+	trees = []
+
+	for x in range(Engine.Player.X-16, Engine.Player.X+16):
+		for y in range(Engine.Player.Y-16, Engine.Player.Y+16):
+			statics = Statics.GetStatics(Convert.ChangeType(Engine.Player.Map, int), x, y)
+			if statics != None:
+				for s in statics:
+					if treeTypes.Contains(s.ID):
+						ctlx = str(s.X)
+						ctly = str(s.Y)
+						ctl = (ctlx + "," + ctly)
+						if ctl not in treeignorelist:
+							trees.append({'X': s.X, 'Y': s.Y, 'Z': s.Z, 'ID': s.ID, 'Distance': UOMath.Distance(Engine.Player.X, Engine.Player.Y, s.X, s.Y)})
+	return trees.OrderBy(lambda i: i['Distance']).FirstOrDefault()
+
+def Impassable(x, y, map = int(Engine.Player.Map)):
+	statictilescheck = Statics.GetStatics( map, x, y )
+	if statictilescheck != None:
+		for impx in statictilescheck:
+			if impx.Flags.HasFlag(TileFlags.Impassable):
+				return True
+	return False
+
+def move_tree():
+	validloc = []
+	if tree == None:
+		SysMessage("No More Trees, Halting. (or an error)")
+		Stop()
+	for mtx in range(tree['X']-2, tree['X']+2):
+		for mty in range(tree['Y']-2, tree['Y']+2):
+			if not Impassable(mtx, mty, 0):
+				validloc.append({'X': mtx, 'Y': mty, 'Distance': UOMath.Distance(Engine.Player.X, Engine.Player.Y, mtx, mty)})
+	validtile = validloc.OrderBy(lambda i: i['Distance']).FirstOrDefault()
+	mapnum = int(Engine.Player.Map)
+	Pathfind(validtile['X'], validtile['Y'], mapnum)
+	Pause(1000)
+
+	while Engine.Player.X != validtile['X'] and Engine.Player.Y != validtile['Y']:
+		Pathfind(validtile['X'], validtile['Y'], mapnum)
+		Pause(1000)
+
+def chop_tree():
+	while not Dead("self"):
+		CancelTarget()
+		Pause(100)
+		UseLayer("TwoHanded")
+		WaitForTarget(5000)
+		TargetXYZ(tree['X'], tree['Y'], tree['Z'], tree['ID'])
+		SetTimer("backuptimer", 0)
+		ClearJournal()
+		while not Dead("self"):
+			#sometimes it fails to read if skill info is sent too fast
+			Pause(400)
+			if Timer("backuptimer") > 4000:
+				ClearJournal()
+				Pause(600)
+				break
+			if InJournal("You chop some") or InJournal("fail to produce"):
+				ClearJournal()
+				Pause(600)
+				break
+			if InJournal("not enough wood") or InJournal("Target cannot be") or InJournal("is too far") or InJournal("use an axe on"):
+				#This breaks here
+				ix = str(tree['X'])
+				iy = str(tree['Y']) 
+				it = ix + "," + iy
+				treeignorelist.append(it)
+				Pause(600)
+				return
+			if InJournal("world is saving"):
+				ClearJournal()
+				Pause(2000)
+				break
+			
+def chop_logs():
+	for alllogs in logs:
+		while FindType(alllogs, -1, 'backpack'):
+			Pause(500)
+			UseLayer("TwoHanded")
+			WaitForTarget(5000)
+			Target('found')
+			Pause(1000)
+	if boardsbag != 0:
+		container = Engine.Items.GetItem(GetAlias('backpack')).Container
+		for item in container.GetItems():
+			itemg = Graphic(item)
+			if itemg in boards:
+	  			MoveItem(item.Serial, boardsbag)
+	  			Pause(700)
+	if Weight() > maxcarryweight:
+		SysMessage("Max Weight Reached, halting")
+		Stop()
+		
+
+
+while True:
+	check_hand()
+	tree = GetNearestTree()
+	move_tree()
+	chop_tree()
+	chop_logs()
+	if Dead("self"):
+		SysMessage("You are dead.")
+		Stop()

@@ -1,0 +1,36 @@
+cloth = 0x1766
+sewingkit = 0xf9d
+bodbooks = 0x2259
+SetAlias("smashedbods", 0)
+SetAlias("sortedbods", 0)
+
+SetQuietMode(True)
+
+PlayMacro("restock bodzilla")
+cn = CountType(cloth, "backpack")
+sm = CountType(sewingkit, "backpack")
+bm = CountType(bodbooks, "backpack")
+SetTimer("justincase", 0)
+while cn < 10000 and sm < 21 and bm < 10:
+	Pause(5000)
+	if Timer("justincase") > 300000:
+		SysMessage("Something went wrong")
+		StopAll()
+
+SetTimer("justincase", 0)
+PlayMacro("smash bod books")
+while FindType(0x2259, -1, 'backpack', 251):
+	Pause(5000)
+	if Timer("justincase") > 300000:
+		SysMessage("Something went wrong")
+		StopAll()
+
+SetTimer("justincase", 0)
+PlayMacro("Sort out bad bods")
+sortbodwait = GetAlias("sortedbods")
+while sortbodwait == 0:
+	Pause(5000)
+	sortbodwait = GetAlias("sortedbods")
+	if Timer("justincase") > 300000:
+		SysMessage("Something went wrong")
+		StopAll()

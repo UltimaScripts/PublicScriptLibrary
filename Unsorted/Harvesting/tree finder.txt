@@ -1,0 +1,40 @@
+from ClassicAssist.UO.Data import Statics
+from ClassicAssist.UO import UOMath
+from Assistant import Engine
+from System import Convert
+from Assistant import Engine
+from ClassicAssist.UO import UOMath
+from ClassicAssist.UO.Data import Direction
+import System
+import clr
+clr.AddReference('System.Core')
+clr.ImportExtensions(System.Linq)
+
+def GetNearestTree():
+	treeTypes = [0xcd8,0xcd3,0xce6,0xce3,0xcd0,0xccd,0xcda]
+	trees = []
+    
+	for x in range(Engine.Player.X-10, Engine.Player.X+10):
+		for y in range(Engine.Player.Y-10, Engine.Player.Y+10):
+			statics = Statics.GetStatics(Convert.ChangeType(Engine.Player.Map, int), x, y)
+			for s in statics:
+				if treeTypes.Contains(s.ID):
+					trees.append({'X': s.X, 'Y': s.Y, 'Z': s.Z, 'ID': s.ID, 'Distance': UOMath.Distance(Engine.Player.X, Engine.Player.Y, s.X, s.Y)})
+
+	#Pathfind(s.X, s.Y, 0)
+	#while Engine.Player.X != s.X and Engine.Player.Y != s.Y:
+	#    Pause(1000)
+
+	return trees.OrderBy(lambda i: i['Distance']).FirstOrDefault()
+
+tree = GetNearestTree()
+#print tree
+tx = tree['X'] - 1
+ty = tree['Y'] - 1
+if tree:
+	while Engine.Player.X != tx and Engine.Player.Y != ty:	
+		Pathfind(tx, ty, 0)
+		Pause(1000)
+	UseObject(0x401836b1)
+	WaitForTarget(5000)
+	TargetXYZ(tree['X'], tree['Y'], tree['Z'], tree['ID'])

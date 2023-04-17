@@ -1,0 +1,44 @@
+import clr
+import System
+clr.AddReference("System.Core")
+clr.ImportExtensions(System.Linq)
+from Assistant import Engine
+
+ClearIgnoreList()
+
+bodClilocs = [1070722]
+bodgid = 0x2258
+thetrash = 0x40025b7d
+badleathers = ["Sandals","ThighBoots","Shoes","Boots","Gargish Leather Talons",
+	"Leather Container Engraving Tool","Elven Shirt (dark colored one)","Elven Boots"
+	]
+
+def GetBodValues(serial):
+    results = []
+    
+    item = Engine.Items.GetItem(serial)
+    
+    BodProps = item.Properties.Where(lambda i: bodClilocs.Contains(i.Cliloc))
+    
+    for bodprop in BodProps:
+        res = str(bodprop.Arguments[0])
+    
+    return res
+
+container = Engine.Items.GetItem(GetAlias('backpack')).Container
+for item in container.GetItems():
+	itemg = Graphic(item)
+	itemh = Hue(item)
+	if itemg == bodgid:
+		if itemh == 251 and itemh != 2209:
+	  		thebod = (item.Serial)
+			firstresult = GetBodValues(thebod)
+			Pause(100)
+			for badleather in badleathers:
+				verifycheck = ("20 " + badleather + " is ")
+				if verifycheck in firstresult:
+					MoveItem(thebod, thetrash)
+					Pause(600)
+SetAlias("sortedbods", 1)
+SysMessage("Done")
+Stop()

@@ -1,0 +1,19 @@
+from Assistant import Engine
+import re
+
+#0x000f3ee3 = MY pet training progress gump
+res,gump = Engine.Gumps.GetGump(0x000f3ee3)
+if res != None:
+    thing = gump.GetElementByXY(162,78)
+    print thing.Text
+    
+    #this doesn't work below here
+    #Now we will use regular expression
+    #result = re.search(r"<div.*>(.*)/(.*)</div>", thing.Text)
+    #InfoWeWant = result.groups(0)
+    #print InfoWeWant
+    
+    #this works
+    Test = str(thing.Text)
+    if "100.0%" in Test:
+        print("done")

@@ -1,0 +1,24 @@
+ClearIgnoreList()
+#Container serial
+vendor_backpack = 0x40136af3
+#opens file with Append mode
+with open("text_file_example.txt", "a") as my_text_file:
+    #Search container for anything
+    while FindType(-1,-1,vendor_backpack):
+        #checks if the property Price: is in found
+        if Property("found", "Price:"):
+            #writes a line, \n is new line
+            my_text_file.write(Name("found") + "\n")
+            #checks if item is marked not for sale
+            if not Property("found", "Not for sale."):
+                #Gets price property string
+                val = PropertyValue[str]("found", "Price:")
+                #writes another line and new line
+                my_text_file.write(val + "\n")
+            else:
+                #writes not for sale if found in property
+                my_text_file.write("Not for sale.\n")
+        IgnoreObject("found")
+        Pause(100)
+    #closes the file, so it's not stuck open in classicuo.exe
+    my_text_file.close()

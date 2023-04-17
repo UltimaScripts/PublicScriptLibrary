@@ -1,0 +1,17 @@
+SetQuietMode(True)
+ClearIgnoreList()
+dumpbag = 0x4007ef0a
+while FindType(0x2258, -1, 'backpack', 2418):
+	MoveItem('found', dumpbag)
+	Pause(600)
+	IgnoreObject('found')
+while FindType(0x2258, -1, 'backpack', 2101):
+	MoveItem('found', dumpbag)
+	Pause(600)
+	IgnoreObject('found')
+while FindType(0x2258, -1, 'backpack', 2213):
+	MoveItem('found', dumpbag)
+	Pause(600)
+	IgnoreObject('found')
+SetAlias("dumpedbods", 1)
+SysMessage("all done dumping")

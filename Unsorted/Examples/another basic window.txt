@@ -1,0 +1,16 @@
+import wpf
+import clr
+import System
+clr.AddReference('System.Core')
+clr.ImportExtensions(System.Linq)
+from System.Windows import Window, Thickness, SizeToContent
+from System.Windows.Controls import Button, StackPanel, ScrollViewer
+from System.Threading import Thread, ThreadStart, ApartmentState
+from Assistant import Engine
+
+class MyWindow(Window):
+    def __init__(self):
+        wpf.LoadComponent(self, 'MainWindow.xaml')
+
+    def MenuItem_Click(self, sender, e):   
+        print("Clicked")  

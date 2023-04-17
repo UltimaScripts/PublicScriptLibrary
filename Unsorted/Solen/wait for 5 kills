@@ -1,0 +1,10 @@
+valint = 0
+while valint == 0:
+    WaitForContext(0x6a99, 9, 5000)
+    WaitForGump(0xa58fdfc4, 5000)
+    if InGump(0xa58fdfc4, "You've completed your task of slaying solen queens."):
+        valint = 1
+        PlaySound("Bike Horn.wav")
+        Stop()
+    ReplyGump(0xa58fdfc4, 1)
+    Pause(10000)

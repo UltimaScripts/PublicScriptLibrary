@@ -1,0 +1,35 @@
+#tink 1109 0x409ab3df
+#carp 1512 0x409ab2ff
+#tail 1155 0x409ab37d
+#smit 1102 0x409ab87a
+#bowy 1425 0x409ab977
+
+#tink
+while FindType(0x2258, 0, 'backpack', 1109):
+	MoveItem(GetAlias('found'), 0x409ab3df)
+	IgnoreObject(GetAlias('found'))
+	Pause(800)
+
+#carp
+while FindType(0x2258, 0, 'backpack', 1512):
+	MoveItem(GetAlias('found'), 0x409ab2ff)
+	IgnoreObject(GetAlias('found'))
+	Pause(800)
+
+#tail
+while FindType(0x2258, 0, 'backpack', 1155):
+	MoveItem(GetAlias('found'), 0x409ab37d)
+	IgnoreObject(GetAlias('found'))
+	Pause(800)
+
+#smit
+while FindType(0x2258, 0, 'backpack', 1102):
+	MoveItem(GetAlias('found'), 0x409ab87a)
+	IgnoreObject(GetAlias('found'))
+	Pause(800)
+
+#bowy
+while FindType(0x2258, 0, 'backpack', 1425):
+	MoveItem(GetAlias('found'), 0x409ab977)
+	IgnoreObject(GetAlias('found'))
+	Pause(800)

@@ -1,0 +1,4 @@
+for x in range(0,4):
+	WaitForContext(0x13e8a, 1, 5000)
+	WaitForGump(0x9bade6ea, 5000)
+	ReplyGump(0x9bade6ea, 1)

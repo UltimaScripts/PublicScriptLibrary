@@ -1,0 +1,35 @@
+
+def goto(xx, yy, zz):
+    Pathfind(xx, yy, zz)
+    while Pathfinding():
+        Pause(100)
+
+#From Solen Queen Quest Giver
+goto(5789, 1987, 1)
+goto(5793, 1975, 4)
+goto(5799, 1963, 2)
+goto(5809, 1951, 4)
+goto(5821, 1939, 2)
+goto(5833, 1932, 0)
+goto(5845, 1932, 4)
+goto(5857, 1924, 3)
+goto(5863, 1912, 3)
+goto(5874, 1900, 4)
+goto(5876, 1895, 0)
+#to d4 hole
+UseObject(0x400078fa)
+Pause(1500)
+goto(5808, 1908, 0)
+goto(5800, 1920, 3)
+goto(5787, 1929, 0)
+#to c3 hole
+UseObject(0x40007897)
+Pause(1500)
+goto(5703, 1928, 0)
+goto(5715, 1917, 1)
+goto(5727, 1915, 0)
+goto(5739, 1914, 1)
+goto(5751, 1924, 0)
+goto(5759, 1936, 0)
+goto(5747, 1942, 3)
+goto(5735, 1939, 5)
