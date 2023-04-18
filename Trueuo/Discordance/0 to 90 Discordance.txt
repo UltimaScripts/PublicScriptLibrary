@@ -1,4 +1,4 @@
-#version 1.0
+#version 1.0.1
 #Shard: Trueuo
 #Requires a way to hide, magery or skill
 #Have Instruments in your main backpack
@@ -50,18 +50,13 @@ if not TimerExists("disco"):
 
 numm = 1
 
-def singer(inst):
-    if not FindObject(inst):
-        PlaySound("Bike Horn.wav")
+def singer(targ):
+    if not FindObject(targ):
+        SysMessage("Can't find target, stopping.")
         Stop()
-    if not FindType(0xeb3,-1,'backpack'):
-        PlaySound("Bike Horn.wav")
-        Stop()
-    UseType(0xeb3)
-    Pause(100)
     UseSkill("Discordance")
     WaitForTarget(5000)
-    Target(inst)
+    Target(targ)
     SetTimer("disco", 0)
 
 def hider(hideval):
@@ -80,6 +75,14 @@ def hider(hideval):
 while Skill("discordance") < stop_at_disco_skill:
     Pause(50)
     if Timer("disco") > 8000:
+		for instrument in instruments:
+            if FindType(instrument,0,'backpack'):
+                UseObject("found")
+                Pause(100)
+                break
+		else:
+            SysMessage("Can't Find Instrument, Stopping")
+            Stop()
         if numm == 1:
             singer(targ1)
         elif numm == 2 and Number_of_targets >= 2:
