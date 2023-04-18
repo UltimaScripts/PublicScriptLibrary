@@ -1,0 +1,101 @@
+#version 1.0
+#Shard: Trueuo
+#Requires a way to hide, magery or skill
+#Have Instruments in your main backpack
+#Gaman 50 to 79
+#highlands Boura 79 to 90
+
+#Set to 0 for hiding skill
+#set to 1 for magery invisibility
+form_of_hiding = 1
+#Set this to your desired stopping point
+stop_at_disco_skill = 90
+#this is a list of instrument graphics to find in your main backpack
+instruments = [0xeb3,0xeb2,0xe9c,0xe9d]
+#Set the number of mobiles you will be discording -
+#max number is 1 to 5
+Number_of_targets = 5
+
+if form_of_hiding == 1:
+    if Skill("magery") < 52:
+        SysMessage("Your Magery is too low, stopping.")
+        Stop()
+if Number_of_targets > 5:
+    SysMessage("Number of targets set too high, stopping.")
+    Stop()
+
+def setup(num):
+    SysMessage("Target Number " + str(num))
+    PromptAlias("DiscoTarget")
+    if GetAlias("DiscoTarget") == 0:
+        SysMessage("Invalid Target, Stopping.")
+        Stop()
+    else:
+        return GetAlias("DiscoTarget")
+
+#No check for duplicate mobile
+if Number_of_targets >= 1:
+    targ1 = setup(1)
+if Number_of_targets >= 2:
+    targ2 = setup(2)
+if Number_of_targets >= 3:
+    targ3 = setup(3)
+if Number_of_targets >= 4:
+    targ4 = setup(4)
+if Number_of_targets == 5:
+    targ5 = setup(5)
+
+if not TimerExists("disco"):
+    SetTimer("disco", 0)
+
+numm = 1
+
+def singer(inst):
+    if not FindObject(inst):
+        PlaySound("Bike Horn.wav")
+        Stop()
+    if not FindType(0xeb3,-1,'backpack'):
+        PlaySound("Bike Horn.wav")
+        Stop()
+    UseType(0xeb3)
+    Pause(100)
+    UseSkill("Discordance")
+    WaitForTarget(5000)
+    Target(inst)
+    SetTimer("disco", 0)
+
+def hider(hideval):
+    while not Hidden("self"):
+        if hideval == 1:
+            Cast("Invisibility")
+            WaitForTarget(5000)
+            Target(0x42bd)
+            Pause(1000)
+        elif hideval == 0:
+            UseSkill("Hiding")
+            if not Hidden("self"):
+                Pause(12000)
+    Pause(17100)
+
+while Skill("discordance") < stop_at_disco_skill:
+    Pause(50)
+    if Timer("disco") > 8000:
+        if numm == 1:
+            singer(targ1)
+        elif numm == 2 and Number_of_targets >= 2:
+            singer(targ2)
+        elif numm == 3 and Number_of_targets >= 3:
+            singer(targ3)
+        elif numm == 4 and Number_of_targets >= 4:
+            singer(targ4)
+        elif numm == 5 and Number_of_targets >= 5:
+            singer(targ5)
+    if numm == (Number_of_targets + 1):
+        numm = 1
+        hider(form_of_hiding)
+    if InJournal("You play jarring music, suppressing your target's strength.", "system"):
+        numm += 1
+        ClearJournal()
+    if InJournal("That creature is already in discord.", "system"):
+        numm += 1
+        ClearJournal()

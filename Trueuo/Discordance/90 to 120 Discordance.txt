@@ -1,0 +1,37 @@
+#version 1.0
+#Shard: Trueuo
+#Requires Discordance Mastery
+#https://www.uoguide.com/Wielding_the_Sonic_Blade
+#Have Instruments in your main backpack
+#Have a target which can be discorded, It will become hostile.
+
+#Set this to your desired stopping point
+stop_at_disco_skill = 100
+#this is a list of instrument graphics to find in your main backpack
+instruments = [0xeb3,0xeb2,0xe9c,0xe9d]
+
+SetQuietMode(True)
+
+PromptAlias("DiscoTarget")
+if GetAlias("DiscoTarget") == 0:
+    Stop()
+
+while Skill("discordance") < stop_at_disco_skill:
+    Pause(50)
+    if FindObject("DiscoTarget") and Distance("DiscoTarget") < 12 and Distance("DiscoTarget") > -1:
+        if Mana("self") > 19:
+            for instrument in instruments:
+                if FindType(instrument,0,'backpack'):
+                    UseObject("found")
+                    Pause(100)
+                    break
+            else:
+                SysMessage("Can't Find Instrument, Stopping")
+                Stop()
+            Cast("Tribulation")
+            WaitForTarget(4000)
+            Target(0x433d)
+            Pause(1000)
+    else:
+        SysMessage("Can't Find Target or Too Far Away, Stopping")
+        Stop()
