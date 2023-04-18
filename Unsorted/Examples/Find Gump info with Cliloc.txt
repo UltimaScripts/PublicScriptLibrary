@@ -1,0 +1,9 @@
+from Assistant import Engine
+#animal lore gump finding Hits cliloc
+res, gump = Engine.Gumps.GetGump(0xd937d1db)
+if res:
+    test = gump.Pages[1].GetElementByCliloc(1049578)
+    print test.Text
+    print test.X
+    print test.Y
+    Stop()
