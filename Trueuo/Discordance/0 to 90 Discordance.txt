@@ -72,15 +72,15 @@ def hider(hideval):
                 Pause(12000)
     Pause(17100)
 
-while Skill("discordance") < stop_at_disco_skill:
+while Skill("discordance") >= stop_at_disco_skill:
     Pause(50)
     if Timer("disco") > 8000:
-		for instrument in instruments:
+        for instrument in instruments:
             if FindType(instrument,0,'backpack'):
                 UseObject("found")
                 Pause(100)
                 break
-		else:
+        else:
             SysMessage("Can't Find Instrument, Stopping")
             Stop()
         if numm == 1:
