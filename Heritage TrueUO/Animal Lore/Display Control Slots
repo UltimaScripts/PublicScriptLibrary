@@ -1,0 +1,29 @@
+import re
+from Assistant import Engine
+
+#Animal Lore Gump ID
+gump_id_to_check = 0xd937d1db
+#Control Slots Page of Gump
+Slot_Page = 7
+
+PromptAlias("TheAnimal")
+if GetAlias("TheAnimal") == 0:
+    Stop()
+if GumpExists(0xd937d1db):
+    ReplyGump(0xd937d1db, 0)
+    Pause(1000)
+UseSkill("Animal Lore")
+WaitForTarget(1000)
+Target("TheAnimal")
+if not WaitForGump(0xd937d1db, 3000):
+    print('Invalid Target')
+    Stop()
+
+res, gump = Engine.Gumps.GetGump(gump_id_to_check)
+if res:
+    for e, element in enumerate(gump.Pages[Slot_Page].GumpElements):
+        if element.Text == "Pet Slots":
+            next_item = gump.Pages[Slot_Page].GumpElements[e + 1]
+            match = re.match('.*>(\d+) => (\d+)', next_item.Text)
+            nummath = ("Slots: " + str(match.group(1)) + " / " + str(match.group(2)))
+            HeadMsg(nummath, "TheAnimal")
