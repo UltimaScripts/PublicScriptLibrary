@@ -1,0 +1,11 @@
+ClearIgnoreList()
+mytrashlist = []
+while FindType(-1):
+    Pause(10)
+    name = Name("found")
+    if "backpack" in name:
+        seri = GetAlias("found")
+        mytrashlist.append(seri)
+    IgnoreObject("found")
+print mytrashlist
+Stop()
