@@ -1,0 +1,170 @@
+from __future__ import division
+import re
+from Assistant import Engine
+#title: Manual Tame Checker
+#Version: 1.0
+#Add the TAMED pet you want to check to TamesDic dictionary.
+#Run this script and target the TAMED pet
+#=====Options Start=====
+#
+#Set to True for Colored Text Output
+coloroutput = True
+#
+#Animal Lore Gump ID
+gump_id_to_check = 0xd937d1db
+#
+#Attribute Page of Gump
+Att_Page = 1
+#
+#Resist Page of Gump
+Res_Page = 3
+#
+#Control Slots Page of Gump
+Slot_Page = 7
+#
+#Formatting of the Key : ValueList is as follows
+#Graphic: [Hits, Stam, Mana, Str, Dex, Int, Phys, Fire, Cold, Poison, Energy, ControlSlots],
+#These are all max Tamed value excluding control slots which is lowest.
+#Can find max tamed stats on https://www.uo-cah.com/bestiary
+TamesDic = {
+    #Cusidhe
+    0x115: [600,85,290,612,85,290,65,45,85,50,85,3],
+    #White Wyrm
+    0x31: [456,130,425,760,130,425,70,25,90,50,50,3]
+}
+#======Options End======
+
+PromptAlias("TheAnimal")
+if GetAlias("TheAnimal") == 0:
+    Stop()
+if GumpExists(gump_id_to_check):
+    ReplyGump(gump_id_to_check, 0)
+    Pause(1000)
+UseSkill("Animal Lore")
+WaitForTarget(1000)
+Target("TheAnimal")
+if not WaitForGump(0xd937d1db, 3000):
+    print('Invalid Target')
+    Stop()
+
+#if graphic not in list don't proceed
+gval = Graphic("TheAnimal")
+if gval in TamesDic.keys():
+    templist = TamesDic[gval]
+else:
+    SysMessage("Graphic Key is Not in TamesDic Dictionary, stopping.")
+    Stop()
+
+res, gump = Engine.Gumps.GetGump(gump_id_to_check)
+if res:
+    for e, element in enumerate(gump.Pages[Att_Page].GumpElements):
+        if element.Text == "Hits":
+            next_item = gump.Pages[Att_Page].GumpElements[e + 1]
+            match = re.match('.*>(\d+)/(\d+)<.*', next_item.Text)
+            nummath = (int(match.group(2)) - int(templist[0]))
+            percmath = ("%0.2f" % ((int(match.group(2)) / int(templist[0])) * 100))
+            hitsval1 = str("Hits = " + str(nummath) + " | " + str(percmath) + "%")
+        if element.Text == "Stamina":
+            next_item = gump.Pages[Att_Page].GumpElements[e + 1]
+            match = re.match('.*>(\d+)/(\d+)<.*', next_item.Text)
+            nummath = (int(match.group(2)) - int(templist[1]))
+            percmath = ("%0.2f" % ((int(match.group(2)) / int(templist[1])) * 100))
+            stamval1 = str("Stamina = " + str(nummath) + " | " + str(percmath) + "%")
+        if element.Text == "Mana":
+            next_item = gump.Pages[Att_Page].GumpElements[e + 1]
+            match = re.match('.*>(\d+)/(\d+)<.*', next_item.Text)
+            nummath = (int(match.group(2)) - int(templist[2]))
+            percmath = ("%0.2f" % ((int(match.group(2)) / int(templist[2])) * 100))
+            manaval1 = str("Mana = " + str(nummath) + " | " + str(percmath) + "%")
+        if element.Text == "Strength":
+            next_item = gump.Pages[Att_Page].GumpElements[e + 1]
+            match = re.match('.*>(\d+)<.*', next_item.Text)
+            nummath = (int(match.group(1)) - int(templist[3]))
+            percmath = ("%0.2f" % ((int(match.group(1)) / int(templist[3])) * 100))
+            strval1 = str("Strength = " + str(nummath) + " | " + str(percmath) + "%")
+        if element.Text == "Dexterity":
+            next_item = gump.Pages[Att_Page].GumpElements[e + 1]
+            match = re.match('.*>(\d+)<.*', next_item.Text)
+            nummath = (int(match.group(1)) - int(templist[4]))
+            percmath = ("%0.2f" % ((int(match.group(1)) / int(templist[4])) * 100))
+            dexval1 = str("Dexterity = " + str(nummath) + " | " + str(percmath) + "%")
+        if element.Text == "Intelligence":
+            next_item = gump.Pages[Att_Page].GumpElements[e + 1]
+            match = re.match('.*>(\d+)<.*', next_item.Text)
+            nummath = (int(match.group(1)) - int(templist[5]))
+            percmath = ("%0.2f" % ((int(match.group(1)) / int(templist[5])) * 100))
+            intval1 = str("Intelligence = " + str(nummath) + " | " + str(percmath) + "%")
+        #resists
+    for e, element in enumerate(gump.Pages[Res_Page].GumpElements):
+        if element.Text == "Resistances":
+            #physical
+            next_item = gump.Pages[Res_Page].GumpElements[e + 2]
+            match = re.match('.*>(\d+)%<.*', next_item.Text)
+            nummath = (int(match.group(1)) - int(templist[6]))
+            percmath = ("%0.2f" % ((int(match.group(1)) / int(templist[6])) * 100))
+            physval1 = str("Physical = " + str(nummath) + " | " + str(percmath) + "%")
+            #fire
+            next_item = gump.Pages[Res_Page].GumpElements[e + 4]
+            match = re.match('.*>(\d+)%<.*', next_item.Text)
+            nummath = (int(match.group(1)) - int(templist[7]))
+            percmath = ("%0.2f" % ((int(match.group(1)) / int(templist[7])) * 100))
+            fireval1 = str("Fire = " + str(nummath) + " | " + str(percmath) + "%")
+            #cold
+            next_item = gump.Pages[Res_Page].GumpElements[e + 6]
+            match = re.match('.*>(\d+)%<.*', next_item.Text)
+            nummath = (int(match.group(1)) - int(templist[8]))
+            percmath = ("%0.2f" % ((int(match.group(1)) / int(templist[8])) * 100))
+            coldval1 = str("Cold = " + str(nummath) + " | " + str(percmath) + "%")
+            #poison
+            next_item = gump.Pages[Res_Page].GumpElements[e + 8]
+            match = re.match('.*>(\d+)%<.*', next_item.Text)
+            nummath = (int(match.group(1)) - int(templist[9]))
+            percmath = ("%0.2f" % ((int(match.group(1)) / int(templist[9])) * 100))
+            poisval1 = str("Poison = " + str(nummath) + " | " + str(percmath) + "%")
+            #energy
+            next_item = gump.Pages[Res_Page].GumpElements[e + 10]
+            match = re.match('.*>(\d+)%<.*', next_item.Text)
+            nummath = (int(match.group(1)) - int(templist[10]))
+            percmath = ("%0.2f" % ((int(match.group(1)) / int(templist[10])) * 100))
+            enerval1 = str("Energy = " + str(nummath) + " | " + str(percmath) + "%")
+    for e, element in enumerate(gump.Pages[Slot_Page].GumpElements):
+        if element.Text == "Pet Slots":
+            next_item = gump.Pages[Slot_Page].GumpElements[e + 1]
+            match = re.match('.*>(\d+) => (\d+)', next_item.Text)
+            conval1 = str("Control Slots: " + str(match.group(1)) + " / " + str(match.group(2)))
+
+if coloroutput == True:
+    SysMessage("===Attributes===", 1153)
+    SysMessage(hitsval1, 33)
+    SysMessage(stamval1, 63)
+    SysMessage(manaval1, 98)
+    SysMessage(" ")
+    SysMessage(strval1, 43)
+    SysMessage(dexval1, 53)
+    SysMessage(intval1, 88)
+    SysMessage("===Resists===", 1153)
+    SysMessage(physval1, 543)
+    SysMessage(fireval1, 533)
+    SysMessage(coldval1, 593)
+    SysMessage(poisval1, 568)
+    SysMessage(enerval1, 618)
+    SysMessage(" ")
+    SysMessage(conval1, 1153)
+else:
+    SysMessage("===Attributes===")
+    SysMessage(hitsval1)
+    SysMessage(stamval1)
+    SysMessage(manaval1)
+    SysMessage(" ")
+    SysMessage(strval1)
+    SysMessage(dexval1)
+    SysMessage(intval1)
+    SysMessage("===Resists===")
+    SysMessage(physval1)
+    SysMessage(fireval1)
+    SysMessage(coldval1)
+    SysMessage(poisval1)
+    SysMessage(enerval1)
+    SysMessage(" ")
+    SysMessage(conval1)
+Stop()
