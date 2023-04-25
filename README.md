@@ -1,11 +1,11 @@
 # PublicScriptLibrary
-This Repo is a garbage heap of scripts for ClassisAssist I've found, editted or wrote.
+This Repo is for scripts using ClassisAssist which are found, editted or wrote.
 
-It's purpose is for Script Examples.
+It's main purpose is for Script Examples.
 
-None of it is polished, this is a dump. Many scripts may be personalized for my own use.
+Many scripts may be personalized for my own use.
 
-If you have trouble understanding these scripts, look up python tutorials.
+If you have trouble understanding these scripts, look up python tutorials or ask for help!
 
 ## Credits & Thanks ##
 Thanks to Reetus for ClassisAssist, Ultima Online ClassicUO assistant program.
