@@ -1,0 +1,49 @@
+def goto(xx, yy, zz):
+    Pathfind(xx, yy, zz)
+    while Pathfinding():
+        Pause(100)
+
+def cutter():
+    knife = 0x400a8c1e
+    while FindType(0x2006, 16):
+        goto(X("found"),Y("found"),Z("found"))
+        SetAlias("cutcorpse", "found")
+        if FindLayer("OneHanded"):
+            if not GetAlias("found") == knife:
+                EquipItem(knife, "OneHanded")
+                Pause(1000)
+        else:
+            EquipItem(knife, "OneHanded")
+            Pause(1000)
+        UseObject(knife)
+        WaitForTarget(5000)
+        Target("cutcorpse")
+        Pause(1000)
+        HeadMsg("x", "cutcorpse")
+        IgnoreObject("cutcorpse")
+
+def lizards():
+    lizzy = []
+    while (FindType(0x24,16) or FindType(0x23,16)) and not GetAlias("found") in lizzy:
+        Attack("found")
+        Pause(600)
+        lizzy.append(GetAlias("found"))
+    lizzy *= 0
+    print('cleared')
+    while FindType(0x24,16) or FindType(0x23,16):
+        print('waiting')
+        Pause(1000)
+    cutter()
+
+while not Dead("self"):
+    goto(5973, 317, -22)
+    lizards()
+    goto(5961, 312, 0)
+    goto(5953, 300, 22)
+    lizards()
+    goto(5945, 312, 0)
+    goto(5933, 317, 22)
+    lizards()
+    goto(5945, 312, 0)
+    goto(5957, 312, 0)
+    goto(5969, 316, -22)
