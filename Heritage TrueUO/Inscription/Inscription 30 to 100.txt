@@ -1,0 +1,86 @@
+#Wear lots of Mana Regen items, low mana = slow gains.
+#Buy Skill from a vendor or start with skill.
+#-----
+#31.0 - 50.0
+#buy two normal books from a scribe
+#write anything in one of them
+#Copy that book to the other book.
+book1 = 0x400219bc
+book2 = 0x400219bd
+#-----
+#50.0 - 65.0
+#Black Peral 0xf7a, Blood Moss 0xf7b, Mandrake Root 0xf86
+#recall scrolls
+#-----
+#65.0 - 85.0
+#Black Peral 0xf7a, Blood Moss 0xf7b, Mandrake Root 0xf86
+#mark scrolls
+#-----
+#85.0 - 95.0 or 100.0
+#Black Peral 0xf7a, Mandrake Root 0xf86, Sulfurous Ash 0xf8c
+#Gate Travel scrolls
+
+while Skill("Inscription") < 100:
+    while Skill("Inscription") < 50:
+        UseSkill("Inscription")
+        WaitForTarget(2000)
+        Target(book1)
+        WaitForTarget(2000)
+        Target(book2)
+        Pause(1000)
+    while Skill("Inscription") < 65:
+        Pause(50)
+        if Mana("self") >= 11:
+            if FindType(0xfbf,0,'backpack') and FindType(0xef3,0,'backpack'):
+                if FindType(0xf86,0,'backpack') and FindType(0xf7a,0,'backpack') and FindType(0xf7b,0,'backpack'):
+                    UseType(0xfbf,0,'backpack')
+                    WaitForGump(0x38920abd, 5000)
+                    ReplyGump(0x38920abd, 8)
+                    WaitForGump(0x38920abd, 5000)
+                    ReplyGump(0x38920abd, 107)
+                    WaitForGump(0x38920abd, 5000)
+                    Pause(1000)
+                else:
+                    SysMessage("Need More Reagents, Stopping",33)
+                    Stop()
+            else:
+                SysMessage("Need More Pens or Scrolls, Stopping",33)
+                Stop()
+    while Skill("Inscription") < 85:
+        Pause(50)
+        if Mana("self") >= 20:
+            if FindType(0xfbf,0,'backpack') and FindType(0xef3,0,'backpack'):
+                if FindType(0xf86,0,'backpack') and FindType(0xf7a,0,'backpack') and FindType(0xf7b,0,'backpack'):
+                    UseType(0xfbf,0,'backpack')
+                    WaitForGump(0x38920abd, 5000)
+                    ReplyGump(0x38920abd, 15)
+                    WaitForGump(0x38920abd, 5000)
+                    ReplyGump(0x38920abd, 86)
+                    WaitForGump(0x38920abd, 5000)
+                    Pause(1000)
+                else:
+                    SysMessage("Need More Reagents, Stopping",33)
+                    Stop()
+            else:
+                SysMessage("Need More Pens or Scrolls, Stopping",33)
+                Stop()
+    while Skill("Inscription") < 100:
+        Pause(50)
+        if Mana("self") >= 40:
+            if FindType(0xfbf,0,'backpack') and FindType(0xef3,0,'backpack'):
+                if FindType(0xf86,0,'backpack') and FindType(0xf7a,0,'backpack') and FindType(0xf8c,0,'backpack'):
+                    UseType(0xfbf,0,'backpack')
+                    WaitForGump(0x38920abd, 5000)
+                    ReplyGump(0x38920abd, 22)
+                    WaitForGump(0x38920abd, 5000)
+                    ReplyGump(0x38920abd, 23)
+                    WaitForGump(0x38920abd, 5000)
+                    Pause(1000)
+                else:
+                    SysMessage("Need More Reagents, Stopping",33)
+                    Stop()
+            else:
+                SysMessage("Need More Pens or Scrolls, Stopping",33)
+                Stop()
+    if Skill("Inscription") >= 100:
+        Stop()
