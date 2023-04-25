@@ -1,0 +1,74 @@
+Band_Wait_Time = 3500
+
+PromptAlias("vetpet1")
+if GetAlias("vetpet1") == 0:
+    Stop()
+PromptAlias("vetpet2")
+if GetAlias("vetpet2") == 0:
+    Stop()
+
+def beginfight():
+    WaitForContext("vetpet1", 1, 5000)
+    WaitForTarget(5000)
+    Target("vetpet2")
+    Pause(1000)
+    WaitForContext("vetpet2", 1, 5000)
+    WaitForTarget(5000)
+    Target("vetpet1")
+
+def haltcombat():
+    Msg("all stop")
+    Pause(500)
+    Msg("all follow me")
+
+def bancount():
+    if not FindType(0xe21,0,'backpack'):
+        haltcombat()
+        SysMessage("Can't Find Bandages, Stopping")
+        PlaySound("Bike Horn.wav")
+        Stop()
+
+def band1():
+    bancount()
+    UseType(0xe21)
+    WaitForTarget(2000)
+    Target("vetpet1")
+    SetTimer("vettimer", 0)
+
+def band2():
+    bancount()
+    UseType(0xe21)
+    WaitForTarget(2000)
+    Target("vetpet2")
+    SetTimer("vettimer", 0)
+    
+def timewait():
+    while Timer("vettimer") < Band_Wait_Time:
+        Pause(50)
+
+if not TimerExists("vettimer"):
+    SetTimer("vettimer", Band_Wait_Time)
+beginfight()
+while not Dead('self'):
+    Pause(50)
+    if not FindObject("vetpet1") or not FindObject("vetpet2"):
+        haltcombat()
+        SysMessage("Can't Find a Pet, Stopping")
+        Stop()
+    if Timer("vettimer") >= Band_Wait_Time and DiffHitsPercent("vetpet1") > 10 and not DiffHitsPercent("vetpet2") > 50:
+        band1()
+    if Timer("vettimer") >= Band_Wait_Time and DiffHitsPercent("vetpet2") > 10 and not DiffHitsPercent("vetpet1") > 50:
+        band2()
+    while Timer("vettimer") < Band_Wait_Time:
+        Pause(50)
+        if DiffHitsPercent("vetpet1") > 50 or DiffHitsPercent("vetpet2") > 50:
+            haltcombat()
+            while DiffHitsPercent("vetpet1") > 10:
+                timewait()
+                band1()
+                timewait()
+            while DiffHitsPercent("vetpet2") > 10:
+                timewait()
+                band2()
+                timewait()
+            beginfight()
