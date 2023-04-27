@@ -3,9 +3,11 @@ from Assistant import Engine
 #open the virtue gump to stop this script
 #open the quests gump to make a line seperator
 
+The_File_Name = "Test Text File.txt"
+distance_between_spots = 12
 Save_Closing_Spot = True
 
-with open("teste.txt", "a") as my_text_file:
+with open(The_File_Name, "a") as my_text_file:
     px = Engine.Player.X
     py = Engine.Player.Y
     pz = Engine.Player.Z
@@ -14,7 +16,7 @@ with open("teste.txt", "a") as my_text_file:
     SysMessage("Active")
     while not Dead("self"):
         Pause(50)
-        if Distance(px, py) > 11:
+        if Distance(px, py) >= distance_between_spots:
             SysMessage("Spot")
             px = Engine.Player.X
             py = Engine.Player.Y
