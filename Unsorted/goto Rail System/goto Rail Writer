@@ -1,9 +1,11 @@
 from Assistant import Engine
+#The Text File is Saved To Your Base ClassicUO Directory
 #open the virtue gump to stop this script
 #open the quests gump to make a line seperator
 
-SetAlias("End_Script", 0)
-with open("To_First_Nest.txt", "a") as my_text_file:
+Save_Closing_Spot = True
+
+with open("teste.txt", "a") as my_text_file:
     px = Engine.Player.X
     py = Engine.Player.Y
     pz = Engine.Player.Z
@@ -19,14 +21,21 @@ with open("To_First_Nest.txt", "a") as my_text_file:
             pz = Engine.Player.Z
             result = ("goto(" + str(px) + ", " + str(py) + ", " + str(pz) + ")")
             my_text_file.write(result + "\n")
-        #if GetAlias("End_Script") == 1:
         if GumpExists(0x861db6b1):
+            if Save_Closing_Spot == True:
+                SysMessage("Spot")
+                px = Engine.Player.X
+                py = Engine.Player.Y
+                pz = Engine.Player.Z
+                result = ("goto(" + str(px) + ", " + str(py) + ", " + str(pz) + ")")
+                my_text_file.write(result + "\n")
             SysMessage("Closed")
+            ReplyGump(0x861db6b1, 0)
             Pause(100)
             my_text_file.close()
+            Pause(100)
             Stop()
         if GumpExists(0x4c4c6db0):
-            SysMessage("Close The Help Gump To Proceed")
+            SysMessage("Line Seperator Added")
             my_text_file.write("-----\n")
-            while GumpExists(0x4c4c6db0):
-                Pause(100)
+            ReplyGump(0x4c4c6db0, 0)
