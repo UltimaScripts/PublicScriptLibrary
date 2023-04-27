@@ -3,34 +3,35 @@ from Assistant import Engine
 #open the virtue gump to stop this script
 #open the quests gump to make a line seperator
 
-The_File_Name = "Test Text File.txt"
-distance_between_spots = 12
+The_File_Name = "Brit Bod File.txt"
+distance_between_spots = 6
 Save_Closing_Spot = True
 
 with open(The_File_Name, "a") as my_text_file:
+    SysMessage("Active")
     px = Engine.Player.X
     py = Engine.Player.Y
     pz = Engine.Player.Z
     result = ("goto(" + str(px) + ", " + str(py) + ", " + str(pz) + ")")
     my_text_file.write(result + "\n")
-    SysMessage("Active")
+    SysMessage("Spot")
     while not Dead("self"):
         Pause(50)
         if Distance(px, py) >= distance_between_spots:
-            SysMessage("Spot")
             px = Engine.Player.X
             py = Engine.Player.Y
             pz = Engine.Player.Z
             result = ("goto(" + str(px) + ", " + str(py) + ", " + str(pz) + ")")
             my_text_file.write(result + "\n")
+            SysMessage("Spot")
         if GumpExists(0x861db6b1):
             if Save_Closing_Spot == True:
-                SysMessage("Spot")
                 px = Engine.Player.X
                 py = Engine.Player.Y
                 pz = Engine.Player.Z
                 result = ("goto(" + str(px) + ", " + str(py) + ", " + str(pz) + ")")
                 my_text_file.write(result + "\n")
+                SysMessage("Spot")
             SysMessage("Closed")
             ReplyGump(0x861db6b1, 0)
             Pause(100)
@@ -38,6 +39,6 @@ with open(The_File_Name, "a") as my_text_file:
             Pause(100)
             Stop()
         if GumpExists(0x4c4c6db0):
-            SysMessage("Line Seperator Added")
             my_text_file.write("-----\n")
+            SysMessage("Line Seperator Added")
             ReplyGump(0x4c4c6db0, 0)
