@@ -39,6 +39,6 @@ with open(The_File_Name, "a") as my_text_file:
             Pause(100)
             Stop()
         if GumpExists(0x4c4c6db0):
-            my_text_file.write("-----\n")
+            my_text_file.write("#-----\n")
             SysMessage("Line Seperator Added")
             ReplyGump(0x4c4c6db0, 0)
