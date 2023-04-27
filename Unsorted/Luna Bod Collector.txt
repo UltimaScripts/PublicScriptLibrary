@@ -1,0 +1,31 @@
+Scribe = 0xef35
+Alchemist = 0xef32
+#1002, 527, -50
+Tailor = 0xc739
+#977, 527, -50
+Blacksmith = 0x26c6
+#978, 512, -50
+Carpenter = 0x40
+Bowyer = 0x36
+Tinker = 0x3e
+#1002, 512, -50
+
+def themagic(mob,x,y,z):
+    if Distance(Scribe) > 11:
+        Pathfind(x,y,z)
+        while Pathfinding():
+            Pause(100)
+    for x in range(3):
+        WaitForContext(Scribe, 1, 2000)
+        WaitForGump(0x9bade6ea, 2000)
+        ReplyGump(0x9bade6ea, 1)
+        Pause(1000)
+
+themagic(Scribe,1002,527,-30)
+themagic(Alchemist,1002,527,-30)
+themagic(Tailor,977,527,-30)
+themagic(Blacksmith,978,512,-30)
+themagic(Carpenter,1002,517,-30)
+themagic(Bowyer,1002,517,-30)
+themagic(Tinker,1002,517,-30)
+Stop()
