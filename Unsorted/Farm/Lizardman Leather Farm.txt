@@ -4,19 +4,29 @@ def goto(xx, yy, zz):
         Pause(100)
 
 def cutter():
+    usebwc = True
+    BWC = 0x4008a50c
     knife = 0x400a8c1e
     while FindType(0x2006, 16):
         goto(X("found"),Y("found"),Z("found"))
         SetAlias("cutcorpse", "found")
-        if FindLayer("OneHanded"):
-            if not GetAlias("found") == knife:
+        if usebwc == True:
+            UseObject(BWC)
+            WaitForTarget(2000)
+            Target("found")
+            Pause(700)
+            IgnoreObject("found")
+            HeadMsg("x", "found")
+        else:
+            if FindLayer("OneHanded"):
+                if not GetAlias("found") == knife:
+                    EquipItem(knife, "OneHanded")
+                    Pause(1000)
+            else:
                 EquipItem(knife, "OneHanded")
                 Pause(1000)
-        else:
-            EquipItem(knife, "OneHanded")
-            Pause(1000)
-        UseObject(knife)
-        WaitForTarget(5000)
+            UseObject(knife)
+            WaitForTarget(5000)
         Target("cutcorpse")
         Pause(1000)
         HeadMsg("x", "cutcorpse")
@@ -36,14 +46,20 @@ def lizards():
     cutter()
 
 while not Dead("self"):
-    goto(5973, 317, -22)
+    goto(5969, 317, -22)
+    lizards()
+    Pause(10000)
     lizards()
     goto(5961, 312, 0)
     goto(5953, 300, 22)
     lizards()
+    Pause(10000)
+    lizards()
     goto(5945, 312, 0)
     goto(5933, 317, 22)
     lizards()
+    Pause(10000)
+    lizards()
     goto(5945, 312, 0)
     goto(5957, 312, 0)
-    goto(5969, 316, -22)
+    #goto(5969, 316, -22)
