@@ -1,0 +1,11 @@
+from Assistant import Engine
+
+item_serial = 0x4003ca88
+
+thing = Engine.Items.GetItem(item_serial)
+
+for x in thing.Properties:
+    print x.Text
+    Pause(400)
+
+Stop()
