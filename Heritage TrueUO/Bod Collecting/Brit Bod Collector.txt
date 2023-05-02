@@ -1,0 +1,169 @@
+SetQuietMode(True)
+Alchemist = 0x4063
+Scribe = 0x511d
+Tailor = 0x1f8c
+Tinker = 0xed92
+Cook = 0xbd78
+Carpenter = 0x26bc
+Blacksmith = 0xa6e2
+Bowyer = 0x2f4
+
+def goto(xx, yy, zz):
+    Pathfind(xx, yy, zz)
+    while Pathfinding():
+        Pause(100)
+
+def themagic(mob):
+    if Distance(mob) > 11:
+        Pathfind(mob)
+        while Pathfinding():
+            Pause(100)
+            if Distance(mob) < 10:
+                Pathfind(0)
+    for x in range(3):
+        WaitForContext(mob, 1, 2000)
+        WaitForGump(0x9bade6ea, 2000)
+        ReplyGump(0x9bade6ea, 1)
+        Pause(1000)
+
+#Inn
+#goto(1495, 1618, 20)
+goto(1495, 1624, 20)
+goto(1501, 1629, 10)
+goto(1507, 1630, 10)
+goto(1512, 1636, 20)
+goto(1512, 1642, 20)
+goto(1512, 1648, 20)
+goto(1512, 1654, 20)
+goto(1506, 1658, 27)
+#Alchemist 0x4063
+themagic(Alchemist)
+#-----
+goto(1510, 1664, 20)
+goto(1510, 1670, 20)
+goto(1510, 1676, 20)
+goto(1508, 1682, 20)
+goto(1498, 1687, 20)
+#Cook 0xbd78
+themagic(Cook)
+#-----
+goto(1504, 1688, 20)
+goto(1504, 1694, 20)
+goto(1503, 1700, 20)
+goto(1498, 1706, 17)
+goto(1492, 1710, 5)
+goto(1490, 1716, 0)
+#Scribe 0x511d
+themagic(Scribe)
+#-----
+goto(1487, 1710, 0)
+goto(1487, 1704, 0)
+goto(1487, 1698, 0)
+goto(1481, 1694, 0)
+goto(1475, 1696, 0)
+goto(1471, 1690, 0)
+#Tailor 0x1f8c
+themagic(Tailor)
+#-----
+goto(1471, 1696, 0)
+goto(1465, 1698, 0)
+goto(1459, 1698, 0)
+goto(1453, 1698, 0)
+goto(1448, 1692, 0)
+goto(1448, 1686, 0)
+goto(1444, 1680, 0)
+goto(1438, 1674, 9)
+goto(1434, 1668, 10)
+goto(1434, 1662, 10)
+goto(1428, 1658, 10)
+goto(1425, 1652, 10)
+#Tinker 0xed92
+themagic(Tinker)
+#-----
+goto(1427, 1658, 10)
+goto(1433, 1659, 10)
+goto(1439, 1657, 10)
+goto(1445, 1656, 10)
+goto(1451, 1656, 10)
+goto(1457, 1656, 10)
+goto(1463, 1655, 10)
+goto(1466, 1649, 10)
+goto(1466, 1643, 20)
+goto(1466, 1637, 20)
+goto(1466, 1631, 20)
+goto(1466, 1625, 20)
+goto(1466, 1619, 20)
+goto(1462, 1613, 20)
+goto(1461, 1606, 20)
+goto(1455, 1604, 20)
+goto(1449, 1604, 20)
+goto(1443, 1604, 20)
+goto(1437, 1602, 20)
+goto(1435, 1596, 20)
+#Carpenter 0x26bc
+themagic(Carpenter)
+#-----
+goto(1436, 1602, 20)
+goto(1442, 1599, 20)
+goto(1443, 1593, 20)
+goto(1438, 1587, 20)
+goto(1435, 1581, 23)
+goto(1435, 1575, 29)
+goto(1429, 1569, 30)
+goto(1429, 1563, 30)
+goto(1429, 1557, 30)
+goto(1424, 1551, 30)
+#Blacksmith 0xa6e2
+themagic(Blacksmith)
+#-----
+goto(1429, 1557, 30)
+goto(1430, 1563, 30)
+goto(1431, 1569, 30)
+goto(1437, 1572, 30)
+goto(1443, 1572, 30)
+goto(1449, 1572, 30)
+goto(1455, 1572, 30)
+goto(1461, 1572, 30)
+goto(1467, 1572, 30)
+goto(1473, 1574, 27)
+#Bowyer 0x2f4
+themagic(Bowyer)
+#-----
+goto(1479, 1574, 30)
+goto(1485, 1574, 30)
+goto(1491, 1579, 30)
+goto(1492, 1585, 23)
+goto(1492, 1591, 20)
+goto(1490, 1597, 10)
+goto(1488, 1603, 17)
+goto(1488, 1609, 20)
+goto(1488, 1615, 20)
+goto(1488, 1621, 20)
+goto(1488, 1627, 20)
+goto(1494, 1630, 10)
+goto(1495, 1624, 20)
+goto(1495, 1619, 20)
+#Inn
+#Logout()
+def fillbooks(bookname,deedhue):
+    ClearIgnoreList()
+    while FindType(0x2259,0,'backpack'):
+        IgnoreObject("found")
+        val = PropertyValue[str]("found", "Book Name")
+        if val == bookname:
+            SetAlias("thebodbooker","found")
+            while FindType(0x2258,0,'backpack',deedhue):
+                IgnoreObject("found")
+                MoveItem("found", GetAlias("thebodbooker"))
+                WaitForGump(0x54f555df, 5000)
+                Pause(800)
+
+fillbooks("Scribe",2598)
+fillbooks("Bowyer",1425)
+fillbooks("Tailor",1155)
+fillbooks("Carpenter",1512)
+fillbooks("Tinker",1109)
+fillbooks("Alchemist",2505)
+fillbooks("Blacksmith",1102)
+fillbooks("Cooking",1169)
+Stop()

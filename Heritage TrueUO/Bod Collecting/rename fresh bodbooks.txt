@@ -1,0 +1,62 @@
+stage = 1
+ClearIgnoreList()
+while FindType(0x2259,0,'backpack'):
+    Pause(100)
+    if stage == 9:
+        Stop()
+    if stage == 8:
+        WaitForContext("found", 0, 5000)
+        WaitForPrompt(5000)
+        PromptMsg("Cooking")
+        Pause(800)
+        IgnoreObject("found")
+        stage += 1
+    if stage == 7:
+        WaitForContext("found", 0, 5000)
+        WaitForPrompt(5000)
+        PromptMsg("Blacksmith")
+        Pause(800)
+        IgnoreObject("found")
+        stage += 1
+    if stage == 6:
+        WaitForContext("found", 0, 5000)
+        WaitForPrompt(5000)
+        PromptMsg("Alchemist")
+        Pause(800)
+        IgnoreObject("found")
+        stage += 1
+    if stage == 5:
+        WaitForContext("found", 0, 5000)
+        WaitForPrompt(5000)
+        PromptMsg("Tinker")
+        Pause(800)
+        IgnoreObject("found")
+        stage += 1
+    if stage == 4:
+        WaitForContext("found", 0, 5000)
+        WaitForPrompt(5000)
+        PromptMsg("Carpenter")
+        Pause(800)
+        IgnoreObject("found")
+        stage += 1
+    if stage == 3:
+        WaitForContext("found", 0, 5000)
+        WaitForPrompt(5000)
+        PromptMsg("Tailor")
+        Pause(800)
+        IgnoreObject("found")
+        stage += 1
+    if stage == 2:
+        WaitForContext("found", 0, 5000)
+        WaitForPrompt(5000)
+        PromptMsg("Bowyer")
+        Pause(800)
+        IgnoreObject("found")
+        stage += 1
+    if stage == 1:
+        WaitForContext("found", 0, 5000)
+        WaitForPrompt(5000)
+        PromptMsg("Scribe")
+        Pause(800)
+        IgnoreObject("found")
+        stage += 1

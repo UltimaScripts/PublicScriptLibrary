@@ -1,0 +1,21 @@
+def fillbooks(bookname,deedhue):
+    ClearIgnoreList()
+    while FindType(0x2259,0,'backpack'):
+        IgnoreObject("found")
+        val = PropertyValue[str]("found", "Book Name")
+        if val == bookname:
+            SetAlias("thebodbooker","found")
+            while FindType(0x2258,0,'backpack',deedhue):
+                IgnoreObject("found")
+                MoveItem("found", GetAlias("thebodbooker"))
+                WaitForGump(0x54f555df, 5000)
+                Pause(800)
+
+fillbooks("Scribe",2598)
+fillbooks("Bowyer",1425)
+fillbooks("Tailor",1155)
+fillbooks("Carpenter",1512)
+fillbooks("Tinker",1109)
+fillbooks("Alchemist",2505)
+fillbooks("Blacksmith",1102)
+fillbooks("Cooking",1169)
