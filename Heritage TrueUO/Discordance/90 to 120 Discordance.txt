@@ -30,7 +30,7 @@ while Skill("discordance") < stop_at_disco_skill:
                 Stop()
             Cast("Tribulation")
             WaitForTarget(4000)
-            Target(0x433d)
+            Target("DiscoTarget")
             Pause(1000)
     else:
         SysMessage("Can't Find Target or Too Far Away, Stopping")
