@@ -1,0 +1,48 @@
+#https://docs.python.org/3/library/configparser.html
+import ConfigParser
+
+#Target Something With a Serial
+PromptAlias("TeamTarget")
+if GetAlias("TeamTarget") == 0:
+    Stop()
+
+#Set the Directory and Filename .cfg or .ini
+thefile = "C:\\UO\\afiles\\Team1.ini"
+
+#The main configuration parser.
+config = ConfigParser.ConfigParser()
+#raw is legacy
+#config = ConfigParser.RawConfigParser()
+
+#Reads the file
+config.read(thefile)
+
+#Checks if read ini Has Sections
+if not config.has_section('Section1'):
+    #Creates the Section
+    config.add_section('Section1')
+#Changes the int to a string
+examplekey = str(GetAlias("TeamTarget"))
+#sets the section, option, value
+config.set('Section1', 'an_int', examplekey)
+
+#Prints Sections in file
+print config.sections()
+
+#for loop to itterate through sections in file
+for x in config.sections():
+    #prints options in the sections
+    print config.options(x)
+    
+#try to print else if exception or error, sysmsg stop.
+try:
+    #Prints Section Section1 Option an_int Key
+    print(config.get('Section1', 'an_int'))
+except:
+    SysMessage("Failure to get")
+    Stop()
+
+#opens file with write +
+with open(thefile, 'w+') as configfile:
+    #writes the file
+    config.write(configfile)
