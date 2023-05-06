@@ -1,0 +1,9 @@
+summonedfood = [0x9d0,0x9d1,0x97b,0x1608]
+ClearJournal()
+while not InJournal("stuffed", "system"):
+    Cast("Create Food")
+    Pause(700)
+    for f in summonedfood:
+        if FindType(f,0,'backpack'):
+            UseObject("found")
+            Pause(700)
