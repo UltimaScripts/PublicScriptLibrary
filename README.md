@@ -16,6 +16,10 @@ Thanks to Karasho and all contributors for ClassicUO.
 
 https://github.com/ClassicUO/ClassicUO
 
+Be sure to check out the ClassicUO Fork, TazUO! It has additional features!
+
+https://github.com/bittiez/ClassicUO
+
 ## Warning ##
 Always be careful running other users scripts. ClassicAssist uses ironpython and can access files or even keystrokes.
 
