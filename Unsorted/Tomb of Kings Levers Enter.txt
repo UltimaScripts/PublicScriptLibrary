@@ -1,0 +1,49 @@
+Levers = [0x108C,0x108D,0x108E]
+side = 'west'
+
+def goto(xx,yy,zz):
+    Pathfind(xx,yy,zz)
+    while Pathfinding():
+        Pause(100)
+
+def uselever():
+    Pause(500)
+    for lever in Levers:
+        if FindType(lever,1):
+            UseObject('found')
+            Pause(100)
+
+if side == 'west':
+    goto(26, 229, 1)
+    uselever()
+    goto(26, 227, 1)
+    uselever()
+    goto(26, 225, 1)
+    uselever()
+    goto(26, 221, 1)
+    uselever()
+    goto(26, 219, 1)
+    uselever()
+    goto(26, 217, 1)
+    uselever()
+elif side == 'east':
+    goto(44, 229, 1)
+    uselever()
+    goto(44, 227, 1)
+    uselever()
+    goto(44, 225, 1)
+    uselever()
+    goto(44, 221, 1)
+    uselever()
+    goto(44, 219, 1)
+    uselever()
+    goto(44, 217, 1)
+    uselever()
+
+goto(28, 212, -5)
+Msg("Ord")
+goto(42, 212, -5)
+Msg("Anord")
+Pause(200)
+goto(35, 201, 0)
+
