@@ -1,0 +1,20 @@
+import System
+from Assistant import Engine
+import clr
+clr.ImportExtensions(System.Linq)
+
+ClearIgnoreList()
+
+NewbieDict = {}
+mobiles = Engine.Mobiles.GetMobiles()
+for x in mobiles:
+    if (str(x.Notoriety) == 'Attackable' or str(x.Notoriety) == 'Murderer') \
+        and Distance(x) < 20 and not InIgnoreList(x.Serial):
+        NewbieDict[x.Serial] = Distance(x)
+    else:
+        IgnoreObject(x.Serial)
+sorted_NewbieDict = sorted(NewbieDict.items(), key=lambda x: x[1])
+for x in sorted_NewbieDict:
+    Pause(10)
+    Attack(x[0])
+    IgnoreObject(x[0])
