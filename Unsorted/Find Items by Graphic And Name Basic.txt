@@ -1,0 +1,14 @@
+graphiclist = [0xe75,0xe76,0xe79]
+namelist = ["backpack","bag","pouch"]
+
+ClearIgnoreList()
+
+while FindType(-1):
+    Pause(10)
+    for x in graphiclist:
+        if Graphic(GetAlias("found")) == x:
+            HeadMsg("hi 1", GetAlias("found"))
+    for x in namelist:
+        if x in Name(GetAlias("found")):
+            HeadMsg("hi 2", GetAlias("found"))
+    IgnoreObject(GetAlias("found"))

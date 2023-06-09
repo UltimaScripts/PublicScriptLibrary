@@ -1,0 +1,8 @@
+graphiclist = [0xe75,0xe76,0xe79]
+
+ClearIgnoreList()
+
+for x in graphiclist:
+    while FindType(x):
+        HeadMsg("hi 1", GetAlias("found"))
+        IgnoreObject(GetAlias("found"))
