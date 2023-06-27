@@ -1,0 +1,76 @@
+```py
+import clr
+import System
+import math
+from Assistant import Engine
+from ClassicAssist.UO.Data import PacketWriter, PacketReader
+from ClassicAssist.UO.Network.PacketFilter import PacketFilterInfo, PacketFilterCondition, PacketFilterConditions
+from System.Threading import AutoResetEvent
+
+class MapEdit:
+    def __init__(self, serial):
+        self.serial = serial
+        self.are = AutoResetEvent(False)
+        
+    def setMapArgs(self, packet, pfi):
+        Engine.RemoveReceiveFilter(pfi)
+        reader = PacketReader(packet, packet.Length, True)
+        reader.ReadInt32()
+        self.image = reader.ReadInt16()
+        self.x1 = reader.ReadUInt16()
+        self.y1 = reader.ReadUInt16()
+        self.x2 = reader.ReadUInt16()
+        self.y2 = reader.ReadUInt16()       
+        self.width = reader.ReadUInt16()
+        self.height = reader.ReadUInt16()               
+        print 'X1: {}, Y1: {}, X2: {}, Y2: {}, Width: {}, Height: {}'.format(self.x1, self.y1, self.x2, self.y2, self.width, self.height)
+        self.are.Set()
+        
+    def sendPacket(self, cmd):
+        pw = PacketWriter(11)
+        pw.Write(System.Byte(0x56))
+        pw.Write(self.serial)
+        pw.Write(System.Array[System.Byte](cmd), 0, len(cmd))
+        Engine.SendPacketToServer(pw)
+        
+    def getMapDetails(self):
+        pfi = PacketFilterInfo(0xF5, System.Array[PacketFilterCondition]([PacketFilterConditions.IntAtPositionCondition(self.serial, 1)]), self.setMapArgs)
+        Engine.RemoveReceiveFilter(pfi)
+        Engine.AddReceiveFilter(pfi)
+        UseObject(self.serial)
+        return self.are.WaitOne(5000)
+
+    def startEdit(self):
+        self.sendPacket([0x06, 0x00, 0xFF, 0xE8, 0xFF, 0xE1])
+        
+    def endEdit(self):
+        self.sendPacket([0x06, 0x01, 0xFF, 0xE8, 0xFF, 0xE1])
+
+    def clearMap(self):
+        self.sendPacket([0x05, 0x00, 0xFF, 0xE8, 0xFF, 0xE1])
+        
+    def setMapPin(self, x, y):
+        scaleX = x / float(self.x2)
+        scaleY = y / float(self.y2)
+        realX = math.floor(self.width * scaleX)
+        realY = math.floor(self.height * scaleY)
+        
+        pw = PacketWriter(11)
+        pw.Write(System.Byte(0x56))
+        pw.Write(self.serial)
+        pw.Write(System.Byte(0x01))
+        pw.Write(System.Byte(0x00))
+        pw.Write(System.Int16(realX))
+        pw.Write(System.Int16(realY))
+        Engine.SendPacketToServer(pw)
+
+m = MapEdit(0x40b76823)
+m.getMapDetails()
+m.startEdit()
+m.clearMap()
+m.setMapPin(1000, 1000)
+m.setMapPin(1000, 2000)
+m.setMapPin(3000, 3000)
+m.endEdit()
+    
+```
