@@ -1,0 +1,4 @@
+from ClassicAssist.UO.Data import TileFlags, MapInfo
+from Assistant import Engine
+#Prints False if Tile Player Is Standing On Doesn't contain Flag Impassable
+print (MapInfo.GetLandTile(int(Engine.Player.Map), Engine.Player.X, Engine.Player.Y).Flags.HasFlag(TileFlags.Impassable))
