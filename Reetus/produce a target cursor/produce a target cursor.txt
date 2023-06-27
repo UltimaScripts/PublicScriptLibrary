@@ -1,0 +1,9 @@
+from ClassicAssist.UO.Commands import GetTargetInfoAsync
+
+(_, _, serial, x, y, z, itemid) = GetTargetInfoAsync().Result
+
+
+print x
+print y
+print z
+print itemid
