@@ -1,0 +1,10 @@
+from ClassicAssist.UO.Data import Statics, MapInfo
+from Assistant import Engine
+
+#Statics Array
+statics = Statics.GetStatics(int(Engine.Player.Map), Engine.Player.X, Engine.Player.Y)
+print statics
+
+#Tile ID
+maptile = MapInfo.GetLandTile(int(Engine.Player.Map), Engine.Player.X, Engine.Player.Y).ID
+print maptile
