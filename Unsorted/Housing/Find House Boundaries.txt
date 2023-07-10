@@ -1,13 +1,19 @@
 # Name: Find House Boundaries
 # Description: Finds a House Multi and Prints the min x, min y, max x and max y of the house.
-# Author: github.com/ultimascripts
-# Version: 1.0.0
-# Credits: Reetus & Darah Bomba
+# Usage: Stand near a house and hit play, Center of the house needs to be on screen.
+# Author: github.com/UltimaScripts/PublicScriptLibrary
+# Version: 1.1.0
+# Credits: Reetus, Darah Bomba & TrueUO
 import clr
 import System
 clr.AddReference('System.Core')
 clr.ImportExtensions(System.Linq)
 from Assistant import Engine
+
+#Options
+#Set True if you want stairs to be added to,
+# the final Max Y coordinates
+Add_Stairs = True
 
 #note 0x76, 0x77, 0x78 & 0x79 don't factor the L shape of the multi
 #note 0x7A & 0x7B may or may not factor in the west & east Wings
@@ -81,7 +87,25 @@ HouseList = [[0x64,-3,-3,4,4,'Small Stone and Plaster House'],[0x65,-3,-3,4,4,'S
     [0x146E,-8,-8,8,8,'17x17 Custom House'],[0x146F,-8,-8,8,9,'17x18 Custom House'],
     [0x1476,-8,-6,9,6,'18x13 Custom House'],[0x1477,-8,-6,9,7,'18x14 Custom House'],
     [0x1478,-8,-7,9,7,'18x15 Custom House'],[0x1479,-8,-7,9,8,'18x16 Custom House'],
-    [0x147A,-8,-8,9,8,'18x17 Custom House'],[0x147B,-8,-8,9,9,'18x18 Custom House']
+    [0x147A,-8,-8,9,8,'18x17 Custom House'],[0x147B,-8,-8,9,9,'18x18 Custom House'],
+    [0x147C,-11,-11,12,12,'23x23 Custom House'],[0x147D,-15,-15,15,15,'32x32 Custom House'],
+    [0x147E,-11,-11,12,12,'Trinsic Keep'],[0x147F,-15,-15,15,15,'Gothic Rose Castle'],
+    [0x1480,-15,-15,15,15,'Elsa Castle'],[0x1481,-15,-15,15,15,'Spires'],
+    [0x1482,-15,-15,15,15,'Castle Of Oceania'],[0x1483,-15,-15,15,15,'Feudal Castle'],
+    [0x1484,-11,-11,12,12,'Robins Nest'],[0x1485,-11,-11,12,12,'Traditional Keep'],
+    [0x1486,-11,-11,12,12,'Villa Crowley'],[0x1487,-11,-11,12,12,'Darkthorn Keep'],
+    [0x1488,-11,-11,12,12,'Sandalwood Keep'],[0x1489,-11,-11,12,12,'Casa Moga'],
+    [0x148A,-15,-15,15,15,'Robins Roost'],[0x148B,-15,-15,15,15,'Camelot'],
+    [0x148C,-15,-15,15,15,'Lacrimae In Caelo'],[0x148D,-15,-15,15,15,'Okinawa Sweet Dream Castle'],
+    [0x148E,-15,-15,15,15,'The Sandstone Castle'],[0x148F,-15,-15,15,15,'Grimswind Sisters'],
+    [0x1490,-11,-11,12,12,'Fortress Of Lestat'],[0x1491,-11,-11,12,12,'Citadel Of The Far East'],
+    [0x1492,-11,-11,12,12,'Keep Incarcerated'],[0x1493,-11,-11,12,12,'Sally Trees Refurbished Keep'],
+    [0x1494,-11,-11,12,12,'Desert Rose'],[0x1495,-11,-11,12,12,'The Clovers Keep'],
+    [0x1496,-15,-15,15,15,'The Sorceres Castle'],[0x1497,-15,-15,15,15,'The Castle Cascade'],
+    [0x1498,-15,-15,15,15,'The House Built On The Ruins'],[0x1499,-15,-15,15,15,'The Sandstone Fortress Of Grand'],
+    [0x149A,-15,-15,15,15,'The Dragonstone Castle'],[0x149B,-15,-15,15,15,'The Terrace Gardens'],
+    [0x149C,-11,-11,12,12,'The Keep Calm And Carry On Keep'],[0x149D,-11,-11,12,12,'The Ravenloft Keep'],
+    [0x149E,-11,-11,12,12,'The Queens Retreat Keep']
     ]
 
 multis = Engine.Items.Where(lambda i: i.ArtDataID == 2)
@@ -95,5 +119,13 @@ for x in multis:
             minx = (X(x.Serial) + HouseList[num][1])
             miny = (Y(x.Serial) + HouseList[num][2])
             maxx = (X(x.Serial) + HouseList[num][3])
-            maxy = (Y(x.Serial) + HouseList[num][4])
+            if Add_Stairs == True:
+                maxy = ((Y(x.Serial) + HouseList[num][4]) + 1)
+            else:
+                maxy = (Y(x.Serial) + HouseList[num][4])
             print('The Boundaries of the house are: ' + str(minx) + ',' + str(miny) + ' by ' + str(maxx) + ',' + str(maxy))
+
+#Changelog
+#1.1.0
+#Added 23x23 & 32x32 Custom Houses
+#Added Stairs Boolean Option
