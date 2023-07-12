@@ -1,0 +1,21 @@
+from Assistant import Engine
+
+#Stand Near A Banker
+#This is When Your Bank Contents -
+#   Are Loaded Into The Cleint
+Msg("bank")
+Pause(1000)
+#Prints the bankbox information
+print Engine.Items.GetItem(GetAlias('bank'))
+print("--------------")
+Pause(1000)
+#Removes your Bankbox Entity
+Engine.Items.Remove(GetAlias('bank'))
+print Engine.Items.GetItem(GetAlias('bank'))
+print("--------------")
+Pause(1000)
+#Opens the Bankbox Again to Load Into client
+Msg("bank")
+Pause(1000)
+#Prints the bankbox information
+print Engine.Items.GetItem(GetAlias('bank'))
