@@ -1,0 +1,11 @@
+#credit BCrowly
+from Assistant import Engine
+from ClassicAssist.UO.Data import Cliloc
+
+item = Engine.Items.GetItem(0x400004d3)
+
+for x in item.Properties:
+    print x.Cliloc
+    print Cliloc.GetProperty(x.Cliloc)
+    print x.Arguments
+    print x.Text
