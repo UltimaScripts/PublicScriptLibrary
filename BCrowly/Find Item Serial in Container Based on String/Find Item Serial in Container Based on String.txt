@@ -1,0 +1,24 @@
+#credit BCrowly
+import clr
+import System
+clr.AddReference('System.Core')
+clr.ImportExtensions(System.Linq)
+from Assistant import Engine
+
+def GetBackpackItems(filter = None):
+    if Engine.Player == None:
+        return []
+    
+    if Engine.Player.Backpack.Container == None:
+        UseObject('backpack')
+        WaitForContents('backpack', 5000)
+        
+    items = Engine.Player.Backpack.Container.SelectEntities(lambda i: filter == None or i.Name.ToLower().Contains(filter))
+    
+    if (items == None):
+        return []
+        
+    return items.Select(lambda i: i.Serial)
+        
+for x in GetBackpackItems('rune'):
+    SysMessage(hex(x))
