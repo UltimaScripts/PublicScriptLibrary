@@ -1,0 +1,8 @@
+#credit to BCrowly
+from Assistant import Engine
+from datetime import datetime, timedelta
+
+la = Engine.LastActionPacket # Get Last tried action
+check_action = datetime(la.Year,la.Month,la.Day,la.Hour,la.Minute,la.Second,la.Millisecond) + timedelta(milliseconds=600) #Convert to datetime in py add actiondelay
+now = datetime.now()
+if now >= check_action:
