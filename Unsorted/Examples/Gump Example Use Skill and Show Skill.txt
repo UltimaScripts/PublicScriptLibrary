@@ -1,0 +1,51 @@
+# modified from a script Reetus Posted
+from ClassicAssist.UO.Objects.Gumps import Gump, GumpButtonType
+from Assistant import Engine
+from System.Threading import AutoResetEvent
+
+class MyGump(Gump):
+    def __new__(self, message, options):
+        gump = Gump.__new__(self, 250, 250)
+        width = 170
+        height = 10 + (len(options)*20)
+        self.options = options
+        gump.Closable = True
+        gump.Movable = True
+        gump.AddPage(0)
+        gump.AddBackground( 0, 0, width, height, 9200 )
+        y = 10
+        for x in range(0, len(options)):
+            gump.AddButton(10, y, 0x25e9, 0x25eA, x+1, GumpButtonType.Reply, 0)
+            gump.AddLabel(30, y, 0, options[x])
+            y+=20
+        return gump
+        
+    def OnResponse(self, buttonId, switches, textEntries):
+        if buttonId > 0:
+            self.option = self.options[buttonId-1]
+            self.optionId = buttonId - 1;
+        are.Set()
+
+while True:
+    are = AutoResetEvent(False)
+
+    gump = MyGump('message', [('Spirit Speak ' + str(Skill("Spirit Speak"))), ('Animal Lore ' + str(Skill("animal lore"))), ('Meditation ' + str(Skill("Meditation"))),('Hiding ' + str(Skill("hiding")))])
+    gump.SendGump()
+
+    are.WaitOne()
+    
+    if not hasattr(gump, 'option'):
+        print 'Gump was closed'
+        Stop()
+    else:
+        print gump.option
+        print gump.optionId
+        
+    if gump.optionId == 0:
+        UseSkill("Spirit Speak")
+    elif gump.optionId == 1:
+        UseSkill("animal lore")
+    elif gump.optionId == 2:
+        UseSkill("Meditation")
+    elif gump.optionId == 3:
+        UseSkill("hiding")
