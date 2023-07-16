@@ -15,7 +15,7 @@ class MyGump(Gump):
         gump.AddBackground( 0, 0, width, height, 9200 )
         y = 10
         for x in range(0, len(options)):
-            gump.AddButton(10, y, 0x25e9, 0x25eA, x+1, GumpButtonType.Reply, 0)
+            gump.AddButton(10, y, 0x25e6, 0x25e7, x+1, GumpButtonType.Reply, 0)
             gump.AddLabel(30, y, 0, options[x])
             y+=20
         return gump
