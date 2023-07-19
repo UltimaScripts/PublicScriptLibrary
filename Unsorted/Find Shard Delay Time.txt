@@ -26,6 +26,10 @@ Additional_Delay = 0
 
 SetTimer("DelayTest", 0)
 ClearJournal()
+RQ = 0
+if Options.CurrentOptions.UseObjectQueue == True:
+    RQ = 1
+    Options.CurrentOptions.UseObjectQueue = False
 
 while True:
     MoveItem(Item_Serial_To_Move, "backpack",-1, 83, 90)
@@ -52,5 +56,7 @@ while True:
             Options.CurrentOptions.ActionDelay = True
         print("Your Action Delay in the General Tab has been set to: " + str(Options.CurrentOptions.ActionDelayMS))
         print("========")
+        if RQ == 1:
+            Options.CurrentOptions.UseObjectQueue = True
         RemoveTimer("DelayTest")
         Stop()
