@@ -1,0 +1,56 @@
+# Title: Find Shard Delay Time
+# Description: Moves an Item in Backpack to Find millisecond Shard Delay
+# Author: github.com/UltimaScripts/PublicScriptLibrary
+# Usage: Set Options and Hit Play, STAND STILL & Do Nothing Else!
+# Version: 1.0.0
+from ClassicAssist.Data import Options
+
+# ===== Options Start =====
+#Change This Serial to an Item in your Backpack
+Item_Serial_To_Move = 0x4009eadf
+
+#This is the Start Delay Time, to test against.
+Delay = 600
+
+#Increase to extend the test, any latency spikes can affect Delay.
+#This is how long it will keep moving the item if no warning in journal.
+Test_Length_Upon_Success = 5000
+
+#Set True if you wish to automatically change your Action Delay Setting
+Auto_Set_Action_Delay = False
+
+#Set this higher if you want to add additional ms to the Shard Delay Time
+#Only applies if you set Auto_Set_Action_Delay to True
+Additional_Delay = 0
+# ===== Options End =====
+
+SetTimer("DelayTest", 0)
+ClearJournal()
+
+while True:
+    MoveItem(Item_Serial_To_Move, "backpack",-1, 83, 90)
+    Pause(Delay)
+    if InJournal("You must wait to perform another action."):
+        ClearJournal()
+        #This is the ms it adds to delay, which it attemps with next loop.
+        Delay += 10
+        print(Delay)
+        Pause(500)
+        SetTimer("DelayTest", 0)
+    MoveItem(Item_Serial_To_Move, "backpack",-1, 118, 85)
+    Pause(Delay)
+    if Timer("DelayTest") > Test_Length_Upon_Success:
+        print("========")
+        print("Your Shard's Delay Time is " + str(Delay) + "ms")
+        print("========")
+        print("Your Action Delay in the General Tab is set to: " + str(Options.CurrentOptions.ActionDelayMS))
+        print("========")
+        if Auto_Set_Action_Delay == True:
+            Options.CurrentOptions.ActionDelayMS = (Delay + Additional_Delay)
+            Options.CurrentOptions.ActionDelay = False
+            Pause(100)
+            Options.CurrentOptions.ActionDelay = True
+        print("Your Action Delay in the General Tab has been set to: " + str(Options.CurrentOptions.ActionDelayMS))
+        print("========")
+        RemoveTimer("DelayTest")
+        Stop()
