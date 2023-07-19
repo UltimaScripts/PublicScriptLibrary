@@ -46,7 +46,7 @@ while True:
             #if Distance(thing[0]) <= 1:
                 #Pathfind(0)
         UseObject(thing[0])
-        Pause(1500)
+        Pause(800)
         for flaxbundleListz, rawcottonListz in zip(flaxbundleList, rawcottonList):
             while FindType(flaxbundleListz,2) or FindType(rawcottonListz,2):
                 MoveItem("found", "backpack")
