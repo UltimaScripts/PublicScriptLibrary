@@ -1,0 +1,61 @@
+#use a low damage weapon
+#Go to New Haven and Hire Two Fighters
+#They're on the roof of the Chiv Trainer
+#Take them to felucca with bandages
+#Train your healing to 40 at a npc first
+Band_Wait_Time = 4500
+
+PromptAlias("opponent")
+if GetAlias("opponent") == 0:
+    Stop()
+
+def beginfight():
+    if not War("self"):
+        WarMode("on")
+    Attack("opponent")
+    Pause(100)
+    Msg("all stop")
+
+def haltcombat():
+    if War("self"):
+        WarMode("off")
+    Msg("all stop")
+
+def bancount():
+    if not FindType(0xe21,0,'backpack'):
+        haltcombat()
+        SysMessage("Can't Find Bandages, Stopping")
+        PlaySound("Bike Horn.wav")
+        Stop()
+
+def band1():
+    bancount()
+    UseType(0xe21)
+    WaitForTarget(2000)
+    Target("opponent")
+    SetTimer("bandtimer", 0)
+
+def timewait():
+    while Timer("bandtimer") < Band_Wait_Time:
+        Pause(50)
+
+if not TimerExists("bandtimer"):
+    SetTimer("bandtimer", Band_Wait_Time)
+beginfight()
+while not Dead('self'):
+    Pause(50)
+    if not FindObject("opponent"):
+        haltcombat()
+        SysMessage("Can't Find a Pet, Stopping")
+        Stop()
+    if Timer("bandtimer") >= Band_Wait_Time and DiffHitsPercent("opponent") > 10:
+        band1()
+    while Timer("bandtimer") < Band_Wait_Time:
+        Pause(50)
+        if DiffHitsPercent("opponent") > 50:
+            haltcombat()
+            while DiffHitsPercent("opponent") > 10:
+                timewait()
+                band1()
+                timewait()
+            beginfight()
