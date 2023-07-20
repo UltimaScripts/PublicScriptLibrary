@@ -2,7 +2,7 @@
 #They're on the roof of the Chiv Trainer
 #Take them to felucca with bandages
 #Train your healing to 40 at a npc first
-Band_Wait_Time = 4100
+Band_Wait_Time = 4500
 
 PromptAlias("vetpet1")
 if GetAlias("vetpet1") == 0:
