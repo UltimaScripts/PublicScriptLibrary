@@ -19,7 +19,7 @@ def beginfight():
 def haltcombat():
     if War("self"):
         WarMode("off")
-    Msg("all stop")
+    #Msg("all stop")
 
 def bancount():
     if not FindType(0xe21,0,'backpack'):
