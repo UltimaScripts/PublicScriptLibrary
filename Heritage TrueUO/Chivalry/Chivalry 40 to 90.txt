@@ -1,0 +1,27 @@
+from Assistant import Engine
+
+if Engine.Player.LowerReagentCost < 100:
+    SysMessage("You Need 100 LRC, Stopping.",33)
+    Stop()
+    
+if Skill("Chivalry") < 40.0:
+    SysMessage("Chivalry Below 40.0\nGo To New Haven And\nTrain Chivalry At Instructor\n3526, 2516",33)
+    Stop()
+
+def Caster(spell):
+    Cast(spell)
+    Pause(2000)
+
+while not Dead('self'):
+    Pause(500)
+    if Skill("Chivalry") < 45.0 and Mana() >= 10:
+        Caster("Consecrate Weapon")
+    elif Skill("Chivalry") < 60.0 and Mana() >= 15:
+        Caster("Divine Fury")
+    elif Skill("Chivalry") < 70.0 and Mana() >= 20:
+        Caster("Enemy of One")
+    elif Skill("Chivalry") < 90.0 and Mana() >= 20:
+        Caster("Holy Light")
+    elif Skill("Chivalry") >= 90.0:
+        SysMessage("Chivalry hit 90 Skill, Stopping",33)
+        Stop()

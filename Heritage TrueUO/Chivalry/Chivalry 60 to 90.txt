@@ -1,0 +1,21 @@
+from Assistant import Engine
+
+if Engine.Player.LowerReagentCost < 100:
+    SysMessage("You Need 100 LRC, Stopping.",33)
+    Stop()
+    
+if Skill("Chivalry") < 60.0:
+    SysMessage("You need atleast 60.0 Chivalry to use this script",33)
+    Stop()
+
+while not Dead('self'):
+    Pause(500)
+    if Skill("Chivalry") < 90.0 and Mana() >= 20:
+        Maner = Mana()
+        while Mana() >= Maner:
+            Maner = Mana()
+            Cast("Holy Light")
+            Pause(2200)
+    if Skill("Chivalry") >= 90.0:
+        SysMessage("Chivalry hit 90 Skill, Stopping",33)
+        Stop()
