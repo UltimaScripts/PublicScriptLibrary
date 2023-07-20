@@ -5,6 +5,7 @@
 # Version: 1.0.0
 import clr
 import System
+clr.AddReference("System.Core")
 clr.ImportExtensions(System.Linq)
 from Assistant import Engine
 
@@ -20,6 +21,7 @@ rawcottonList = [0x0DEF,0x0DF9]
 def FindNearest(aa):
     itemz = {}
     items = Engine.Items.Where(lambda i: i.ID in aa and i != None)
+    WaitForProperties(items,5000)
     if items == None:
         return None
     for zz in items:
