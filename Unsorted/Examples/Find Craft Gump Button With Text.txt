@@ -1,0 +1,42 @@
+# Title: Find Craft Gump Button With Text
+# Description: Finds the crafting button number for supplied text and gump id
+# Author: github.com/UltimaScripts/PublicScriptLibrary
+# Usage: FindButton('text',gumpid)
+# Version: 1.0.0
+import clr
+import System
+import re
+clr.AddReference("System.Core")
+clr.ImportExtensions(System.Linq)
+from Assistant import Engine
+from ClassicAssist.UO.Objects.Gumps import GumpParser
+
+def FindButton(string_to_find,gump_id):
+    res, gump = Engine.Gumps.GetGump(gump_id)
+    if res:
+        for pagecount in range(len(gump.Pages)):
+            ele = gump.Pages[pagecount].GumpElements
+            for entry in range(len(ele)):
+                textentry = str(ele[entry].Text)
+                if textentry.rstrip() == string_to_find:
+                    firstc = str(ele[entry].Cliloc)
+                    firstx = str(ele[entry].X)
+                    firsty = str(ele[entry].Y)
+                    entry -= 1
+                    secondt = str(ele[entry].Type)
+                    secondx = str(ele[entry].X)
+                    secondy = str(ele[entry].Y)
+                    text = gump.Layout
+                    test = [x for x in re.split(r'[{}]', text) if x.strip()]
+                    result = [y.split() for y in test]
+                    for foo in range(len(result)):
+                        if (firstc in result[foo] and firstx in result[foo] and firsty in result[foo]):
+                            foo -= 1
+                            if (secondt in result[foo] and secondx in result[foo] and secondy in result[foo]):
+                                rm = len(result[foo]) - 1
+                                return result[foo][rm]
+
+#Blacksmithing example
+#You need to be already on the Shields Category for this to work.
+test = FindButton('metal shield',0x38920abd)
+print test
