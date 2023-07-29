@@ -1,0 +1,12 @@
+if ActiveAbility() == False:
+    SetAbility("primary")
+Pause(100)
+manaa = Mana("self")
+while True:
+    Pause(50)
+    while Mana("self") >= manaa:
+        manaa = Mana("self")
+        Pause(50)
+    if ActiveAbility() == False:
+        break
+HeadMsg("Weapon Ability Used", "self")
