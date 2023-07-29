@@ -1,0 +1,7 @@
+#[string,category_int,button_int]
+crafting_list = [['bascinet',8,2],['metal shield',15,23]]
+for foo in crafting_list:
+	if 'metal shield' in foo:
+		print foo[0]
+		print foo[1]
+		print foo[2]
