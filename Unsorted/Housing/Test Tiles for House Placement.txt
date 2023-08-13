@@ -28,7 +28,7 @@ remove_display = False
 ## If you run it with a higher number and,
 ## want to run it again with a lower number,
 ## you will need to remove_display first.
-## Can run it repeadly with the same value.
+## Can run it repeatedly with the same value.
 square_size = 10
 #
 # ___height_tolerance___
