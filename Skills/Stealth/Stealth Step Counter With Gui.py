@@ -1,4 +1,4 @@
-# Stealth Step Counter With Gui
+# Name: Stealth Step Counter With Gui
 # Description: Counts Stealth Steps, Forces Walk & Has a Gui
 # Usage: Check Options on Window, Hit Start
 # Author: github.com/UltimaScripts/PublicScriptLibrary
