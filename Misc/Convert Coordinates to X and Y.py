@@ -3,7 +3,7 @@
 # Usage: Input Coordinates and click Convert
 # Author: github.com/UltimaScripts/PublicScriptLibrary
 # Version: 1.0.0
-# Credits: Reetus wrote GetLatLong, GetXFromLatLong & GetYFromLatLong
+# Credits: Karasho & Reetus for GetLatLong, GetXFromLatLong & GetYFromLatLong
 import sys
 import clr
 clr.AddReference('System.Windows.Forms')
@@ -124,14 +124,14 @@ class MyForm(Form):
             thread.Start()
 
     def my_function(self):
-        #Credit to Reetus for GetLatLong
+        #Credit to Karasho & Reetus for GetLatLong
         def GetLatLong(degreeLat, minLat, degreeLong, minLong, direction1, direction2):
             lat = degreeLat + minLat / 100.0
             longi = degreeLong + minLong / 100.0
             
             return (GetXFromLatLong(lat, longi, direction1, direction2), GetYFromLatLong(lat, longi, direction1, direction2))
         
-        #Credit to Reetus for GetXFromLatLong
+        #Credit to Karasho & Reetus for GetXFromLatLong
         def GetXFromLatLong(lat, lon, direction1, direction2):
             centerX = 1323
             tempLon = math.floor(lon) * 60.0 + lon % 1 * 100.0 if direction2 != 'W' else -1.0 * math.ceil(lon) * 60.0 + lon % 1 * 100.0
@@ -143,7 +143,7 @@ class MyForm(Form):
                 
             return resultX
     
-        #Credit to Reetus for GetYFromLatLong
+        #Credit to Karasho & Reetus for GetYFromLatLong
         def GetYFromLatLong(lat, lon, direction1, direction2):
             centerY = 1624
             tempLat = math.floor(lat) * 60.0 + lat % 1 * 100.0 if direction1 != 'N' else -1.0 * math.ceil(lat) * 60.0 + lat % 1.0 * 100.0
