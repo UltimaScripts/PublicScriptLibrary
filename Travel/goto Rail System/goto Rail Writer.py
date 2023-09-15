@@ -3,7 +3,7 @@ from Assistant import Engine
 #open the virtue gump to stop this script
 #open the quests gump to make a line seperator
 
-The_File_Name = "Brit Bod File.txt"
+The_File_Name = r"C:\UO\rail.txt"
 distance_between_spots = 6
 Save_Closing_Spot = True
 
