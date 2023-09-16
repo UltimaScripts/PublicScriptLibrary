@@ -26,7 +26,7 @@ def smallbodinfo(debug = False):
                             if "a bulk order" in str(textentry).lower():
                                 if debug == True:
                                     print str("Gump ID (not serial): " + str(x.ID))
-                                smallbod_return_list.append(int(x.ID))
+                                #smallbod_return_list.append(int(x.ID))
                             if "amount to make:" in str(textentry).lower():
                                 #if it finds "amount to make:"
                                 #it advances the entry by 1
