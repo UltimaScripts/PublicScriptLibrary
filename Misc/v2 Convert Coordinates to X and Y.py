@@ -2,7 +2,7 @@
 # Description: Converts Coordinates to X and Y
 # Usage: Input Coordinates and click Convert
 # Author: github.com/UltimaScripts/PublicScriptLibrary
-# Version: 2.0.0
+# Version: 2.1.0
 # Credits: Karasho & Reetus for GetLatLong, GetXFromLatLong & GetYFromLatLong
 import sys
 import clr
@@ -149,7 +149,8 @@ class MyForm(Form):
         result1 = re.search("(\d+)o\s(\d+)'(\w),\s(\d+)o\s(\d+)'(\w)", possible_string)
         result2 = re.search("(\d+)°(\d+)'(\w),(\d+)°(\d+)'(\w)", possible_string)
         result3 = re.search("(\d+)°\s(\d+)'(\w),\s(\d+)°\s(\d+)'(\w)", possible_string)
-        if result1 or result2 or result3:
+        result4 = re.search("(\d+)o\s(\d+)'(\w),\s\s(\d+)o\s(\d+)'(\w)", possible_string)
+        if result1 or result2 or result3 or result4:
             result = MessageBox.Show("Use This Result: " + possible_string + " ?", "Confirmation", MessageBoxButtons.YesNo)
             if result == DialogResult.Yes:
                 proceed_onward = True
@@ -159,7 +160,7 @@ class MyForm(Form):
                 letters = re.findall(r"\d+'\b(\w)", possible_string)
                 letter1, letter2 = letters[:2]
                 # Numbers
-                if result1:
+                if result1 or result4:
                     numbers = re.findall(r'\d+o', possible_string)
                     number1, number3 = numbers[:2]
                 if result2 or result3:
