@@ -16,10 +16,10 @@ from Assistant import Engine
 class MyForm(Form):
     def __init__(self):
         self.Width = 100
-        self.Height = 200
+        self.Height = 212
         self.BackColor = Color.Gray
-        self.MinimumSize = Size(100, 200)
-        self.MaximumSize = Size(100, 200)
+        self.MinimumSize = Size(100, 212)
+        self.MaximumSize = Size(100, 212)
         # always on top
         self.checkBox_aot = CheckBox()
         self.checkBox_aot.Text = "Win On Top"
