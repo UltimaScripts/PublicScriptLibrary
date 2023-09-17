@@ -18,10 +18,10 @@ class MyForm(Form):
     def __init__(self):
         self.Text = "Coord to X Y"
         self.Width = 214
-        self.Height = 140
+        self.Height = 152
         self.BackColor = Color.Gray
-        self.MinimumSize = Size(214, 140)
-        self.MaximumSize = Size(214, 140)
+        self.MinimumSize = Size(214, 152)
+        self.MaximumSize = Size(214, 152)
         # coordinates label
         self.label_coord = Label()
         self.label_coord.Text = "Enter Coordinates"
