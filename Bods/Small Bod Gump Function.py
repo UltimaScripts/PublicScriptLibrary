@@ -10,7 +10,7 @@ from Assistant import Engine
 def smallbodinfo(debug = False):
     smallbod_return_list = []
     material_list = ["dull copper","shadow iron","copper","bronze","gold","agapite","verite","valorite",
-                     "spined","horned","barbed"
+                     "spined","horned","barbed",
                      "oak","ash","yew","heartwood","bloodwood","frostwood"]
     inital_gump_list = []
     gumps = Engine.Gumps.GetGumps()
