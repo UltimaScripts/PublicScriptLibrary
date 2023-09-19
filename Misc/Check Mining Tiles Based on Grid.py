@@ -38,7 +38,7 @@ def CheckTiles():
                 grid = [ex,ey]
                 if grid not in list:
                     list.append([ex,ey])
-                    print("Tile Found in New Grid at x {} y {}".format(spotx,spoty))
-                    print("Valid Mining Spot in Grid x {} y {}".format(ex,ey))
+                    print("Mining Tile Found in Grid at x {} y {}".format(spotx,spoty))
+                    print("In {} by {} Grid ({}, {})".format(vein_sizex,vein_sizey,ex,ey))
 
 CheckTiles()
