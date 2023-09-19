@@ -8,7 +8,7 @@ from ClassicAssist.UO.Data import TileFlags, MapInfo
 from Assistant import Engine
 
 # Set this to the ore vein size your shard uses
-# Most shards use 8x8 by default
+# Most shards use 8 tiles by 8 tiles as default
 vein_sizex = 8
 vein_sizey = 8
 
