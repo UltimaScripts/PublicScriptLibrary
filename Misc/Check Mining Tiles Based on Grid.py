@@ -3,6 +3,7 @@
 # Usage: Stand near minable tiles and hit play
 # Author: github.com/UltimaScripts/PublicScriptLibrary
 # Version: 1.0.0
+# Note: All tiles may not be reachable or seen by the player.
 from ClassicAssist.UO.Data import TileFlags, MapInfo
 from Assistant import Engine
 
