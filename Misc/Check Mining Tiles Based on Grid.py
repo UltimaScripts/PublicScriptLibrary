@@ -1,3 +1,8 @@
+# Name: Check Mining Tiles Based on Grid
+# Description: Checks 2x2 around player for minable tiles and grids
+# Usage: Stand near minable tiles and hit play
+# Author: github.com/UltimaScripts/PublicScriptLibrary
+# Version: 1.0.0
 from ClassicAssist.UO.Data import TileFlags, MapInfo
 from Assistant import Engine
 
@@ -26,7 +31,8 @@ tiles = [220,221,222,223,224,225,226,227,228,229,230,231,236,237,238,239,240,241
     2031,2032,2033,2100,2101,2102,2103,2104,2105,1339,1340,1341,1342,1343,1344,1345,
     1346,1347,1348,1349,1350,1351,1352,1353,1354,1355,1356,1357,1358,1359]
 
-list = []
+grids_list = []
+spots_list = []
 def CheckTiles():
     for x in range(-2,3):
         for y in range(-2,3):
@@ -35,10 +41,13 @@ def CheckTiles():
             if (MapInfo.GetLandTile(int(Engine.Player.Map), spotx, spoty)).ID in tiles:
                 ex = (spotx / vein_sizex)
                 ey = (spoty / vein_sizey)
+                spot = [spotx,spoty]
                 grid = [ex,ey]
-                if grid not in list:
-                    list.append([ex,ey])
-                    print("Mining Tile Found in Grid at x {} y {}".format(spotx,spoty))
+                if grid not in grids_list:
+                    grids_list.append([ex,ey])
                     print("In {} by {} Grid ({}, {})".format(vein_sizex,vein_sizey,ex,ey))
+                if spot not in spots_list:
+                    grids_list.append([spotx,spoty])
+                    print("Mining Tile Found at x {} y {}".format(spotx,spoty))
 
 CheckTiles()
