@@ -26,6 +26,8 @@ Reetus Folder is examples from Discord posted by Reetus
 
 BCrowly Folder is examples from Discord posted by BCrowly
 
+Kevin Folder is examples from Discord posted by Kevin_
+
 ## Warning ##
 Always be careful running other users scripts. ClassicAssist uses ironpython and can access files or even keystrokes.
 
