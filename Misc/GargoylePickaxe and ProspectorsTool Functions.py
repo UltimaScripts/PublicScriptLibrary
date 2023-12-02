@@ -2,14 +2,14 @@
 # Description: -
 # Usage: -
 # Author: github.com/UltimaScripts/PublicScriptLibrary
-# Version: 1.0.0
+# Version: 1.0.1
 from Assistant import Engine
 
 def ProspectorsTool(px,py):
     if FindType(0xfb4,0,'backpack'):
         UseObject("found")
         WaitForTarget(5000)
-        TargetXYZ(px, py, 0)
+        TargetXYZ(px, py, Z())
         Pause(700)
     else:
         HeadMsg("Can't Find ProspectorsTool Returning", "self", 33)
@@ -80,7 +80,7 @@ Pickaxe = 0x4000048b
 HeadMsg(str(Pickaxe), "self")
 UseObject(Pickaxe)
 WaitForTarget(5000)
-TargetXYZ(x, y, 0)
+TargetXYZ(x, y, Z())
 Pause(3500)
 CheckGolem()
 if Hue(Pickaxe) != 1900:
