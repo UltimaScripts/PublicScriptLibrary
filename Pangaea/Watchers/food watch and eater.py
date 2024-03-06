@@ -1,6 +1,6 @@
 # Name: food watch and eater
 # Author: Baler
-# Version: 1.0.4
+# Version: 1.0.5
 from ClassicAssist.Data.Macros import MacroManager
 
 # _____Options Start_____
