@@ -2,6 +2,13 @@ from Assistant import Engine
 from ClassicAssist.UO.Data import Statics
 from ClassicAssist.Data.Macros import MacroManager
 
+# Options Start
+#container1 = GetAlias('backpack')
+container1 = 0x4008a0e8
+container2 = 0x4019d372
+hue = 0
+# Options End
+
 def macroname():
     return str(MacroManager.GetInstance().GetCurrentMacro())
 
@@ -19,9 +26,6 @@ if frg == 0:
     SysMessage("No Forge Found, Stopping.",32)
     Stop(macroname())
 
-container1 = GetAlias('backpack')
-container2 = 0x4019d372
-hue = 0
 UseObject(container2)
 Pause(1000)
 while FindType(0x19b9, 0, container1, hue):
