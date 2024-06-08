@@ -2,10 +2,14 @@
 # Description: Checks House Signs for House Condition
 # Usage: Set Options, Hit Play, Run Around
 # Author: github.com/UltimaScripts/PublicScriptLibrary
-# Version: 1.1.0
+# Version: 1.2.0
 from Assistant import Engine
+from ClassicAssist.UO.Data import Cliloc
 
 #===== OPTIONS START =====
+# __House Condition Cliloc__
+Condition_Cliloc = 1062028
+#
 # __Idoc Alert Type__
 System_Msg_Alert = True
 Head_Msg_Alert = False
@@ -91,15 +95,16 @@ while not Dead('self'):
         for item in items:
             sign_ignore_list.append(item.Serial)
             for props in range(len(item.Properties)):
-                if Like_New_Alert == True and str(Like_New_Substring).lower() in str(item.Properties[props].Text).lower():
-                    options(item.Serial, item.X, item.Y, "Like New")
-                if Slightly_Worn_Alert == True and str(Slightly_Worn_Substring).lower() in str(item.Properties[props].Text).lower():
-                    options(item.Serial, item.X, item.Y, "Slightly Worn")
-                if Somewhat_Worn_Alert == True and str(Somewhat_Worn_Substring).lower() in str(item.Properties[props].Text).lower():
-                    options(item.Serial, item.X, item.Y, "Somewhat Worn")
-                if Fairly_Worn_Alert == True and str(Fairly_Worn_Substring).lower() in str(item.Properties[props].Text).lower():
-                    options(item.Serial, item.X, item.Y, "Fairly Worn")
-                if Greatly_Worn_Alert == True and str(Greatly_Worn_Substring).lower() in str(item.Properties[props].Text).lower():
-                    options(item.Serial, item.X, item.Y, "Greatly Worn")
-                if In_Danger_of_Collapsing_Alert == True and str(In_Danger_of_Collapsing_Substring).lower() in str(item.Properties[props].Text).lower():
-                    options(item.Serial, item.X, item.Y, "In Danger of Collapsing")
+                if item.Properties[props].Cliloc == Condition_Cliloc:
+                    if Like_New_Alert == True and str(Like_New_Substring).lower() in str(item.Properties[props].Text).lower():
+                        options(item.Serial, item.X, item.Y, "Like New")
+                    if Slightly_Worn_Alert == True and str(Slightly_Worn_Substring).lower() in str(item.Properties[props].Text).lower():
+                        options(item.Serial, item.X, item.Y, "Slightly Worn")
+                    if Somewhat_Worn_Alert == True and str(Somewhat_Worn_Substring).lower() in str(item.Properties[props].Text).lower():
+                        options(item.Serial, item.X, item.Y, "Somewhat Worn")
+                    if Fairly_Worn_Alert == True and str(Fairly_Worn_Substring).lower() in str(item.Properties[props].Text).lower():
+                        options(item.Serial, item.X, item.Y, "Fairly Worn")
+                    if Greatly_Worn_Alert == True and str(Greatly_Worn_Substring).lower() in str(item.Properties[props].Text).lower():
+                        options(item.Serial, item.X, item.Y, "Greatly Worn")
+                    if In_Danger_of_Collapsing_Alert == True and str(In_Danger_of_Collapsing_Substring).lower() in str(item.Properties[props].Text).lower():
+                        options(item.Serial, item.X, item.Y, "In Danger of Collapsing")
