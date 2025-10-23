@@ -30,7 +30,7 @@ def menustuff(var0,var1):
                     for me in m.Entries:
                         if me is not None:
                             if me.Title == var1:
-                                return me.Index
+                                return [me.Index, me.ID]
     HeadMsg("Can't Find ID, Stopping.", "self", 32)
     Stop(macroname())
 
@@ -53,7 +53,7 @@ def craftin(craft_count):
             Stop(macroname())
         WaitForMenu(0x0, 5000)
         lpi = menustuff("Tinkering:","Lockpicks ( 1 )")
-        ReplyMenu(0x0, lpi, 0x14fb, 0)
+        ReplyMenu(0x0, lpi[0], lpi[1])
         ClearJournal()
         Pause(500)
         #Packet function call, 1 to 10
@@ -73,4 +73,5 @@ def craftin(craft_count):
         Stop(macroname())
 
 while True:
+
     craftin(1)
