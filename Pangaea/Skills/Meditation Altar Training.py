@@ -1,16 +1,19 @@
-# Name: Meditation Altar Training
+# Name: Meditation Britain Altar
 # Author: Baler
 # URL: github.com/UltimaScripts/PublicScriptLibrary
 # Version: 1.0.1
 # Notes: Altar med training caps out at 40.0 skill
 ## Options Start ##
 ## Set your food graphic ID
+## Set 0 to disable
 Food_GraphicID = 0x97b
 ## Options End ##
 
 from Assistant import Engine
 
 def Checkhunger(foodid):
+    if foodid == 0:
+        return
     if not TimerExists("food"):
         SetTimer("food", 0)
     elif Timer("food") < 600000:
@@ -65,4 +68,3 @@ while True:
     while Mana("self") < MaxMana("self"): 
         UseSkill("Meditation")
         Pause(16000)
-
