@@ -65,6 +65,8 @@ def findaltar():
 def checkskill():
     if Skill("Meditation") >= 40:
         HeadMsg("Altars can only train to 40 skill, Stopping...", "self", 32)
+        if TimerExists("altarskilltimer"):
+            RemoveTimer("altarskilltimer")
         Stop(macroname())
 
 altarserial = findaltar()
@@ -76,11 +78,11 @@ while True:
         Pause(100)
     Pause(1000)
     while Mana("self") < MaxMana("self"):
-        SetTimer("skill", 0)
+        SetTimer("altarskilltimer", 0)
         UseSkill("Meditation")
         if WaitForJournal("You enter a meditative trance.", 5000):
             while Mana("self") < MaxMana("self"):
                 Pause(100)
         else:
-            while Timer("skill") < 16000:
+            while Timer("altarskilltimer") < 16000:
                 Pause(100)
