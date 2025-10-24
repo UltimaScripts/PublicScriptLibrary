@@ -1,4 +1,4 @@
-# Name: Meditation Britain Altar
+# Name: Meditation Altar Training
 # Author: Baler
 # URL: github.com/UltimaScripts/PublicScriptLibrary
 # Version: 1.0.1
@@ -65,3 +65,4 @@ while True:
     while Mana("self") < MaxMana("self"): 
         UseSkill("Meditation")
         Pause(16000)
+
