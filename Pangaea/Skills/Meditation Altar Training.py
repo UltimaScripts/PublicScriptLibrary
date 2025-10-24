@@ -1,7 +1,7 @@
-# Name: Meditation Britain Altar
+# Name: Meditation Altar Training
 # Author: Baler
 # URL: github.com/UltimaScripts/PublicScriptLibrary
-# Version: 1.0.1
+# Version: 1.0.3
 # Notes: Altar med training caps out at 40.0 skill
 ## Options Start ##
 ## Set your food graphic ID
@@ -10,8 +10,12 @@ Food_GraphicID = 0x97b
 ## Options End ##
 
 from Assistant import Engine
+from ClassicAssist.Data.Macros import MacroManager
 
-def Checkhunger(foodid):
+def macroname():
+    return str(MacroManager.GetInstance().GetCurrentMacro())
+
+def checkhunger(foodid):
     if foodid == 0:
         return
     if not TimerExists("food"):
@@ -32,7 +36,7 @@ def Checkhunger(foodid):
         else:
             HeadMsg("Need Food, Stopping...", "self", 32)
             PlaySound("Bike Horn.wav")
-            Stop()
+            Stop(macroname())
 
 def altergump(aserial):
     for delay in range(3):
@@ -47,7 +51,7 @@ def altergump(aserial):
                             ReplyGump(gump.ID, 42)
                             return
     SysMessage("Can't find altar Gump, Stopping...",32)
-    Stop()
+    Stop(macroname())
 
 def findaltar():
     alterpieces = [0x1DC1,0x1DC2,0x1DC3,0x1DC4,0x1DC5,0x1DC6]
@@ -56,15 +60,27 @@ def findaltar():
             if Name("found") == "a altar":
                 return GetAlias("found")
     SysMessage("Can't find altar, Stopping...",32)
-    Stop()
+    Stop(macroname())
+
+def checkskill():
+    if Skill("Meditation") >= 40:
+        HeadMsg("Altars can only train to 40 skill, Stopping...", "self", 32)
+        Stop(macroname())
 
 altarserial = findaltar()
 while True:
-    Checkhunger(Food_GraphicID)
+    checkskill()
+    checkhunger(Food_GraphicID)
     altergump(altarserial)
     while Mana("self") == MaxMana("self"):
         Pause(100)
     Pause(1000)
-    while Mana("self") < MaxMana("self"): 
+    while Mana("self") < MaxMana("self"):
+        SetTimer("skill", 0)
         UseSkill("Meditation")
-        Pause(16000)
+        if WaitForJournal("You enter a meditative trance.", 5000):
+            while Mana("self") < MaxMana("self"):
+                Pause(100)
+        else:
+            while Timer("skill") < 16000:
+                Pause(100)
