@@ -1,7 +1,7 @@
 # Name: Meditation Britain Altar
 # Author: Baler
 # URL: github.com/UltimaScripts/PublicScriptLibrary
-# Version: 1.0.0
+# Version: 1.0.1
 # Notes: Altar med training caps out at 40.0 skill
 ## Options Start ##
 ## Set your food graphic ID
@@ -31,8 +31,9 @@ def Checkhunger(foodid):
             PlaySound("Bike Horn.wav")
             Stop()
 
-def altergump():
-    for delay in range(6):
+def altergump(aserial):
+    for delay in range(3):
+        UseObject(aserial)
         Pause(1000)
         gumps = Engine.Gumps.GetGumps()
         if gumps[0] == True and gumps[1] is not None:
@@ -42,22 +43,22 @@ def altergump():
                         if "sacrifice" in gump.Strings[0]:
                             ReplyGump(gump.ID, 42)
                             return
-    else:
-        SysMessage("Can't find altar Gump, Stopping...",32)
-        Stop()
+    SysMessage("Can't find altar Gump, Stopping...",32)
+    Stop()
 
 def findaltar():
-    if FindType(0x1dc3,1,'ground',2999):
-        return GetAlias("found")
-    else:
-        SysMessage("Can't find altar, Stopping...",32)
-        Stop()
+    alterpieces = [0x1DC1,0x1DC2,0x1DC3,0x1DC4,0x1DC5,0x1DC6]
+    for piece in alterpieces:
+        if FindType(piece, 1, 'ground'):
+            if Name("found") == "a altar":
+                return GetAlias("found")
+    SysMessage("Can't find altar, Stopping...",32)
+    Stop()
 
 altarserial = findaltar()
 while True:
     Checkhunger(Food_GraphicID)
-    UseObject(altarserial)
-    altergump()
+    altergump(altarserial)
     while Mana("self") == MaxMana("self"):
         Pause(100)
     Pause(1000)
