@@ -8,17 +8,16 @@ Many scripts may be personalized for my own use.
 If you have trouble understanding these scripts, look up python tutorials or ask for help!
 
 ## Credits & Thanks ##
-Thanks to Reetus for ClassisAssist, Ultima Online ClassicUO assistant program.
-
+Thanks to Reetus for ClassisAssist, Ultima Online ClassicUO assistant program. <br>
 https://github.com/Reetus/ClassicAssist
 
-Thanks to Karasho and all contributors for ClassicUO.
+Thanks to Karasho and all contributors for ClassicUO. <br>
+For ClassicAssist to fully work you'll want to use version 1.0.0.0 <br>
+[https://github.com/ClassicUO/ClassicUO](https://github.com/ClassicUO/ClassicUO/releases)
 
-https://github.com/ClassicUO/ClassicUO
-
-Be sure to check out the ClassicUO Fork, TazUO! It has additional features!
-
-https://github.com/bittiez/ClassicUO
+Be sure to check out the ClassicUO Fork, TazUO! It has additional features! <br>
+For ClassicAssist to work you'll want to use the Legacy Build. <br>
+[https://github.com/PlayTazUO/TazUO](https://github.com/PlayTazUO/TazUO/releases)
 
 -----
 
