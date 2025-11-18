@@ -11,7 +11,7 @@ Thanks to Karasho and all contributors for ClassicUO. <br>
 For ClassicAssist to fully work you'll want to use version 1.0.0.0 <br>
 [https://github.com/ClassicUO/ClassicUO](https://github.com/ClassicUO/ClassicUO/releases)
 
-Be sure to check out the ClassicUO Fork, TazUO! It has additional features! <br>
+There is a ClassicUO Fork, TazUO which has additional features. <br>
 For ClassicAssist to work you'll want to use the Legacy Build. <br>
 [https://github.com/PlayTazUO/TazUO](https://github.com/PlayTazUO/TazUO/releases)
 
