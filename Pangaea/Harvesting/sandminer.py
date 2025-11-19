@@ -100,9 +100,9 @@ def CheckTiles(minx, maxx, miny, maxy, direction):
     if len(spots_list) > 0:
         scp = []
         if direction == True or direction != False:
-            scp = sorted(spots_list, key=lambda x: (-x[1], -x[0]) )
-        elif direction == False:
             scp = sorted(spots_list, key=lambda x: (-x[1], x[0]) )
+        elif direction == False:
+            scp = sorted(spots_list, key=lambda x: (x[1], -x[0]) )
         return scp
     return 0
 
@@ -144,3 +144,4 @@ else:
     stopscript("No sand found.", 32)
 
 stopscript("")
+
